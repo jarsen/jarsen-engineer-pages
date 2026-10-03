@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>The Truth About Microservices Will Shock You! · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>The Truth About Microservices Will Shock You!</h1>
+    <time datetime="2020-02-02T00:00:00Z">2020-02-02</time>
+    
+    <span class="tags"><a href="https://jarsen.github.io/jarsen-engineer-pages/tags/design/">#design</a></span>
+    
+  </header>
+  <div class="prose"><p>It’s that time again… monolith vs microservices architecture debate on twitter! What better time to throw my hat into the ring and scream my raw, non-peer-reviewed thoughts into the void?</p>
+<p><a rel="external" href="https://twitter.com/i/web/status/1222966700913479681">Referenced post on X</a></p>
+<p>Like all patterns, implementing a microservices architecture pattern is a transaction that exchanges one set of problems for a different set of problems. The cost and benefits together are known as “tradeoffs.” If anyone ever talks about a pattern without talking about its tradeoffs, slowly back away until you are at a safe distance. Then flee.</p>
+<p>Given that choosing a design pattern is about trading problem sets, <em>before you implement a solution you must know what problem you have</em>. If you are starting with a solution looking for problems, you are in for a long dark journey ahead.</p>
+<p>One of the common problems people try to address with a microservices architecture is “shitty code.” More specifically, your monolith has become a tangled mess of connections between various “boundaries.” ¹ (I am rather fond of the german word kabelsalat, meaning literally “cable-salad,” refering to the hellscape of tangled cables behind your TV, etc. Wouldn’t it be fun refer to our spaghetti code as kōdsalat?)</p>
+<p>Here’s the thing, the microservices architecture is a pattern about <em>deployment</em>, not code boundaries. The problems microservices seek to give away by changing deployment strategy are:</p>
+<ul>
+<li>bad performance in critical bottlenecks where you may want to switch language, or scale the number of servers/pods etc.</li>
+<li>critical inefficiencies for teams in delivering software due to awkward mappings between large codebases and large org structures (see <a rel="external" href="https://en.wikipedia.org/wiki/Conway%27s_law">Conway’s Law</a> and the Inverse Conway Maneuver)</li>
+</ul>
+<p>If you think microservices are the solution to your kōdsalat problem, you will find yourself filled with regret on your dying bed, slain by your new <strong>distributed monolith</strong>.</p>
+<p>This quote from Kelsey Hightower’s <a rel="external" href="https://changelog.com/posts/monoliths-are-the-future">interview called “Monoliths are the future”</a> is priceless:</p>
+<blockquote>
+<p>“Now you went from writing bad code to building bad infrastructure that you deploy the bad code on top of.”</p>
+</blockquote>
+<p>The irony of the distributed monolith is that now you have all the problems of a microservices architecture, but with none of the benefits. You paid the price for none of the gain.</p>
+<p>If the problems you are trying to address are not focused on increasing the ability for a team to ship (an organizational and human challenge, not a code one), or critical performance bottlenecks affecting users (a user problem, not a code one), then you should pack up your microservice bags and leave—all you are going to do is trade problems you don’t have for new problems. If one or both of these are the problems you are trying to solve, microservices <em>may</em> be the solution for you. You may now proceed to weigh the tradeoffs.</p>
+<p>The problems you receive as part of your trade when introducing a microservices architecture include:</p>
+<ul>
+<li>complexity of debugging/tracing events across a distributed system ²</li>
+<li>complexity of dealing with failure in a distributed system.</li>
+<li>complexity of more integration/system testing.</li>
+<li>complexity of creating and maintaining your new infrastructure (e.g. going from a single simple deploy to heroku vs rolling and managing your own k8s behemoth).</li>
+<li>complex new toolchains.</li>
+</ul>
+<hr />
+<p>The conversation about clean code is orthogonal to the deployment conversation. If your kōdsalat is causing you to lose sleep, instead of reading about microservices, pick up your dusty copy of <a rel="external" href="https://www.amazon.com/Design-Patterns-Object-Oriented-Addison-Wesley-Professional-ebook/dp/B000SEIBB8">Gang of Four</a>, or your fresh, wonderful smelling new edition of <a rel="external" href="https://pragprog.com/book/tpp20/the-pragmatic-programmer-20th-anniversary-edition">The Pragmatic Programmer</a>. In them you can find decades old solutions to your decades old problems.</p>
+<p>To deal with the tangled mess of code, what you need are better boundaries in your code. What are boundaries? <strong>Boundaries are interfaces around an abstraction.</strong> In other words, boundaries are an API. Often in the web world we use API exclusively to refer to endpoints on a server somewhere, but used more broadly, the interface of a boundary is its public API. You must interact with a boundary <em>only</em> via its public interface—that’s what makes it a “boundary.” The opposite of a boundary is a spaghetti or a salad.</p>
+<p>A boundary also dictates a method of transport. <strong>Transport is the method by which you send data and receive data from a boundary.</strong> ³ Sometimes communicating with a boundary is as simple as internal message passing to a class/module, or a function call. Sometimes it may look like sharing memory ⁴, or inter-process communication. Other times it may be a calling out across a network to a REST API, gRPC, web sockets, etc.</p>
+<p>When boundaries are well defined, the context in which they execute (same process, different process, different core, different machine) becomes irrelevant from the perspective of the caller.⁵ The only thing that matters to the caller is the contract established by the API, and the method of transport so that it knows by what method to actually speak to the boundary. This means, with proper boundaries in a monolith, microservices can be extracted as necessary by changing the location of execution, and having the caller send its data via a new transport.</p>
+<p>For a more concrete example, imagine a Billing module in my monolith. If it defines a good interface, then one day if extracting it to a microservice will help me solve a team problem or performance bottleneck and is worth the tradeoffs, I can pull the module’s logic into a new microservice, and then I change the Billing module to make calls to the microservice. Neato.</p>
+<p>Granted, this is potentially an oversimplification. Often there are implicit APIs relying on shared memory/data that we forget about when designing boundaries. A prime example is the database, especially when involving foreign key constraints.</p>
+<p>Considering execution an implementation detail of a boundary is a blade that cuts both ways. Practicing Domain Driven Design and developing strong <a rel="external" href="https://martinfowler.com/bliki/BoundedContext.html">Bounded Contexts</a> means that to truly get the benefits of strong boundaries, you must also accept the tradeoffs as well. These tradeoffs can start to look like some of the tradeoffs you might expect from microservices. In fact, when going full DDD and ending up with things like an event message bus, it starts to look an awful like a distributed system in spite of it perhaps executing in the same system process. But, unlike microservices, you will not need new complex infrastructure, and you will be focused on creating boundaries, so you should not be led to a distributed monolith.</p>
+<p>Anyway, now that we’ve come full circle and I have seemingly undermined my own arguments, I have two final points to make.</p>
+<h2 id="1-there-is-no-single-right-answer-and-anyone-who-doesn-t-talk-about-decisions-in-terms-of-tradeoffs-is-either-a-dogmatist-and-or-is-selling-you-something">1. There is no single “right” answer and anyone who doesn’t talk about decisions in terms of tradeoffs is either a dogmatist and/or is selling you something.</h2>
+<p>It’s easy to think we’re fancy and treading new ground with our “modern” monolith vs microservices debates. But really it’s just a variation of the same age-old debates that have been going on for decades: monolithic kernels vs microkernels, lots of small specialized tools vs one integrated one, etc. The benefits of boundaries comes with a cost; abstraction is not free. If we are still having the same fundamental debate after decades, it’s likely because there is no one size fits all solution, and ultimately you need to choose what problems you want to have. ⁶</p>
+<h2 id="2-if-this-problem-is-not-a-pain-that-affects-your-users-it-s-not-a-problem-to-be-spending-time-on">2. If this problem is not a pain that affects your users, it’s not a problem to be spending time on.</h2>
+<p>Yehuda Katz went on an interesting twitter rant the other day spurred by the recent resurgence in microservice debate.</p>
+<p><a rel="external" href="https://twitter.com/i/web/status/1223051812862861312">Referenced post on X</a></p>
+<p>I find these thoughts off-putting because it illustrates a fundamental misalignment amongst many engineering organizations—a world in which not not everyone on the team (including design, product, qa, tech writing–not just engineering disciplines) feel they have a seat at the table. If you’re not sitting at the same table as a team<a rel="external" href="https://jasonlarsen.me/2020/02/2/the-truth-about-microservices-will-shock-you#footnote-7133">⁷</a> what are you doing? It’s a dark world where employees are siloed and bickering and unhappy, and it will surely show in the product.</p>
+<p>Start with problems that affect your customers, not solutions. Learn to state your problems in terms of customer benefit.</p>
+<p>Fortunately, the problems microservices intend to address are easily measurable. Trouble shipping? Track deployment frequency. Stay focused on how frequent deployment benefits the user. Performance bottlenecks? Start measuring times from a user’s perspective. Now that you have a problem identified and a baseline you can begin to explore solutions, including microservices.</p>
+<p>Aligning on the problems to solve and tracking key metrics will help ensure the focus is driven by business priorities, not by siloed engineering street cred, hype, or fun with computers. Don’t let microservices become an intellectual flex that hurts people you care about.</p>
+<hr />
+<ol>
+<li>I use air quotes here because in all likelihood if you are feeling this pain we should be using the term very loosely.</li>
+<li>See: <a rel="external" href="https://www.honeycomb.io/wp-content/uploads/2018/07/Honeycomb-Guide-Achieving-Observability-v1.pdf">observability</a></li>
+<li>In practice, the line between an API and it’s transport mechanism is pretty blurred. For example, the fact a service uses GraphQL both defines the API, and the transport mechanism.</li>
+<li>Sharing memory is usually a good example of a lack of boundaries—a sort of implicit API.</li>
+<li>Working a lot in Elixir has really helped me start to understand better the difference between code and its execution–a function is just a function, and module a module. Whether it executes in a new process or not is an implementation detail hidden behind my public interface.</li>
+<li>Choosing what problems you want to have is a great way to think about life, as well. Accepting that all decisions come with a price, and being intentional about those decisions can lead to much peace and understanding. 🧘🏻‍♂️</li>
+<li>metaphorically, although this could be taken literally and be very beneficial as well.</li>
+</ol>
+</div>
+</article>
+</main>
+</body>
+</html>

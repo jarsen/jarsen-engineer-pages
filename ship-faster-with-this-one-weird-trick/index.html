@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Ship Faster with this One Weird Trick · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>Ship Faster with this One Weird Trick</h1>
+    <time datetime="2020-02-16T00:00:00Z">2020-02-16</time>
+    
+    <span class="tags"><a href="https://jarsen.github.io/jarsen-engineer-pages/tags/agile/">#agile</a> <a href="https://jarsen.github.io/jarsen-engineer-pages/tags/philosophy/">#philosophy</a> <a href="https://jarsen.github.io/jarsen-engineer-pages/tags/teams/">#teams</a></span>
+    
+  </header>
+  <div class="prose"><p>Last year our team decided to start documenting a list of our pain points as developers. We created a spreadsheet with columns for the original reporter, a quick description, and a pain rating on scale of 1-10 of how bad it hurts. We started to review the the document weekly in our team Dev Discussion meeting, using it to decide if there were techincal problems we needed to prioritize and address.</p>
+<p>As some time passed we started to recognize a cluster of pains. They looked something like this:</p>
+<ul>
+<li>MERGE CONFLICTS :( - 10/10</li>
+<li>Code review sucks - and let’s be real ppl see a 1k+ line PR and only do a quick scan. - 10/10</li>
+<li>I don’t know what environment has what “Is this merged into staging?” - 9/10</li>
+<li>PRs are open too long - 8/10</li>
+<li>Too much WIP and context switching - 8/10</li>
+<li>We keep stepping on each others toes as we refactor the same code or introduce similar ideas similtaenously. - 8/10</li>
+<li>Between the time of a feature being “dev complete” and approved by QA and Product, someone else may have merged and then we need to merge, deal with conflicts, and if it was big enough ask for another code review and get QA to check it out again. - 8/10</li>
+<li>Time from start of feature dev to release is too long - 7/10</li>
+</ul>
+<p>All these pain points were related in some way to our branching strategy–a fairly generic git flow inspired approach. We had a master, which on merge would run our test suite in Circle CI, build our image, and deploy to prod. We had feature branches that could contain the work for anything from a small ticket to a small epic. We also had long-lived branches for an ungoldy number of staging/test environments. We would often have to ask “hey does anyone know if X feature is merged into Y environment?”</p>
+<p>The merge conflicts were where we felt the pain most accutely: since all of the branches were long lived, at best the conflicts were just dealing with a few renames, new methods, etc., at worst we would have totally refactored code someone else modified, or similtaenously introduced related/competing concepts and structures.</p>
+<p>We knew what hurt. We had a list of the symptoms. We had tried a few things in the past to bandaid some of the ouchies, but they didn’t stick.</p>
+<hr />
+<p>One experiment we tried was making PRs really small. We called this experiment <strong>“smol PRs”</strong>. The idea was that if we did small PRs, they would be easy to review and we could merge more frequently and have less painful merges.</p>
+<p>The wise among you may already be able to guess what happened next: the number of open PRs exploded, and they were all big nasty chains of dependent branches. Our WIP remained the same, except now it was distributed and harder to manage. We had to review and merge all PRs in the right order. A PR review that required changes led to all downstream branches to rebase. It was bad.</p>
+<hr />
+<p>Stepping back, we had to think more about what was really wrong: what was the core of these problems? We knew they shared the same root but couldn’t articulate the essence of the relationship.</p>
+<p>Eventually we started to frame our problems in another context: our branching strategy, deployments, and release cycles were all tightly coupled. More specifically, our release strategy was driving how we managed the other two–did these things really need to be interdependent?</p>
+<p>We had been doing a lot of reading over the months for company sponsored bookclubs. Two books seemed to contain some potential answers: <a rel="external" href="https://www.amazon.com/Accelerate-Software-Performing-Technology-Organizations-ebook/dp/B07B9F83WM">Accelerate</a>and <a rel="external" href="https://www.amazon.com/Extreme-Programming-Explained-Embrace-Change/dp/0321278658">XP Explained</a>. From Accelerate we knew that our deployment frequency was really at the core of the pain we felt–all of these things were <em>deployment pains</em>. We knew what we wanted to do was focus on things that allowed us to deploy frequently. Both books contained a lot principles focused on deploying more frequently. Some of them we were already doing. Some of them we were not. And some of them we <em>thought</em> we were doing, but were not. A few practices that stuck out to us were Continuous Integration (introduced by Extreme Programming over two decades ago), Trunk-Based Development, Continuous Delivery, and Continuous Deployment.</p>
+<hr />
+<h2 id="continuous-integration">Continuous Integration</h2>
+<p>Accelerate says the following about Continuous Integration:</p>
+<blockquote>
+<p>“Many software development teams are used to developing features on branches for days or even weeks. Integrating all these branches requires significant time and rework. […] High-performing teams keep branches short-lived (less than one day’s work) and integrate them <em>into</em> trunk/master frequently. Each change triggers a build process that includes running unit tests. If any part of this process fails, developers fix it immediately.”</p>
+</blockquote>
+<p>I was shooketh. I had always thought I was doing CI–after all, I had a CI server running my tests in the cloud! But running an automated test suite on commit is not Continous Integration. I’d been using the word CI <a rel="external" href="https://trunkbaseddevelopment.com/continuous-integration/">incorrectly</a>for maybe a decade, without knowing where it came from and what it really meant.</p>
+<p>All of a sudden it was so obvious. I don’t know if you’ve had this experience: but sometimes you will learn a new word and all of a sudden you start to hear it <em>everywhere</em>. And then you realize, people didn’t start using it just after you learned it, it was there the whole time and you just didn’t hear it.<a rel="external" href="https://jasonlarsen.me/2020/02/16/ship-faster-with-this-one-weird-trick#footnote-18KR">¹</a> It was a similar experience to read a 20+ year old book and see it right there in the words.</p>
+<blockquote>
+<p>“The Extreme Programming practice of Continuous Integration encourages all members of a development team to integrate their work daily, instead of developing features in isolation for days or weeks.”<br />
+<br />
+– Martin Fowler</p>
+</blockquote>
+<p>There you have it. <strong>If you are not merging all your team’s work into the same place every day, you are not doing Continuous Integration.</strong></p>
+<p>We had the automated tests part of CI down, what we were missing was trunk-based development.</p>
+<blockquote>
+<p>“Trunk-based development is a required practice for continuous integration. Continuous integration (CI) is the combination of practicing trunk-based development and maintaining a suite of fast automated tests that run after each commit to trunk to make sure the system is always working.”<br />
+<br />
+– <a rel="external" href="https://cloud.google.com/solutions/devops/devops-tech-trunk-based-development">Google Solutions DevOps</a></p>
+</blockquote>
+<p>There are a few styles of trunk-based development, but since we are a small team working in our own product we decided on the simplest route: everyone on the team began developing and pushing directly to <code>master</code>.</p>
+<hr />
+<p>It sounded a bit crazy at first. What if someone broke the build? We need to be able to deploy at any point. There also would almost always be “unfinished” features in the code that we did not want enabled yet in our production environment.</p>
+<p>We knew there would be tradeoffs, even if we didn’t yet know what new problems and friction we’d experience, but in the words of <a rel="external" href="https://www.martinfowler.com/bliki/FrequencyReducesDifficulty.html">Martin Fowler</a>:</p>
+<blockquote>
+<p>“If it hurts, do it more often.”</p>
+</blockquote>
+<h2 id="goodbye-code-review">Goodbye, Code Review</h2>
+<p>One of the first things to go was PR based code review. Given that we were commiting directly to <code>master</code>, this really wasn’t going to work for us.</p>
+<p>Our <a rel="external" href="https://mavenlink.com/">company</a> practices Extreme Programming. As part of that we spend most of our coding time pairing and mobbing–this means that our code already has had multiple sets of eyes on it. We decided that this was enough, along with our practice of TDD, to feel confident that we could push commits directly to master.<a rel="external" href="https://jasonlarsen.me/2020/02/16/ship-faster-with-this-one-weird-trick#footnote-28KR">²</a></p>
+<p>Without PR code review, we were never blocked on review or chaining up WIP. Our momentum skyrocketed. And like a snowball rolling down a mountain, it accelerated as the wins began to compound.</p>
+<h2 id="gaming-the-system-with-small-commits">Gaming the System with Small Commits</h2>
+<p>When we first got started, one thing we expected was to have more frequent merge conflicts. We thought, “We will see them more often, but they will be smaller and more manageable.”</p>
+<p>Then something funny happened: no one wanted to be the pair to deal with merge conflicts, so unspoken, pairs started to commit more frequently in an attempt to get all their changes in so the <em>other</em> pair had to deal with the conflicts. Commits got smaller, and as soon as you finished a commit pairs would push so it wasn’t sitting queued up locally.</p>
+<p>The surprising result, however, was that we now almost never see merge conflicts at all. Since everyone is working in small commits and constantly pushing, we were forced to <code>git pull --rebase</code> if you wanted to push your change, and thus had to deal with merge conflicts immediately. If we found we were working on similar abstractions, we were able to collaborate early. This meant less time in slack asking questions about other people’s architectural opinions, and we began to communicate through the changes in the code more and more. This led to other changes in our team like self organizing pairs–we used plan a pairing schedule in standup, but now we just sort of pair up however we feel.</p>
+<p>The natural shift in behavior by developers trying to avoid pain resulted in a superior process in almost every way. Our retros became a constant refrain of “God, this is fun.”</p>
+<p>It reminded me of reading Kent Back on Test-Commit-Revert (TCR). Basically, with TCR, you write some code and tests, and if your tests fail, your git repository automatically does a hard reset and all of your work is lost. Sounds whack? It is. At first…</p>
+<blockquote>
+<p>Every time we make a mistake, as expected–<em>poof</em>–our changes disappear. At first, the disappearing code startles us. Then we notice our programming style changing.<br />
+<br />
+Initially, we just make the same change again, but the computer eventually out-stubborns us. Then, if we’ve been making changes and we aren’t sure if we’ve broken anything, we just run the command line. If we disagree with the computer about whether we’ve made a mistake, we figure out how to make the change in several smaller steps.<br />
+<br />
+We know that we’re on to something with this new workflow. Despite its simplicity and similarity to test-driven development, it creates intense incentives for making changes in small steps.<br />
+<br />
+With a couple days’ practice, we gain confidence in our shiny new TCR skills. TCR incentivizes us to create an endless stream of tiny changes, each of which results in working software.<br />
+<br />
+– Kent Beck, <a rel="external" href="https://increment.com/testing/testing-the-boundaries-of-collaboration/">Testing the Boundaries of Collaboration</a></p>
+</blockquote>
+<p>Focusing on the smallest and simplest changes keep everyone adaptible and agile, armed with fast feedback loops. We moved away from the common tendency to tackle multiple problems at once (humans are bad at multitasking), and focused on doing one thing well at at time. It’s pretty common on our team now to realize we are falling into that trap and to stash/reset all our changes and start over with a more clear direction.</p>
+<p>Small changes also mean we are less likely to break the build.</p>
+<h2 id="not-breaking-the-build">Not Breaking the Build</h2>
+<p>This was one of the big unknowns and concerns when starting to practice trunk-based development. I think it is also likely a concern that keeps many people from wanting to practice it: “Sounds nice maybe for small teams. But won’t work at our scale.”</p>
+<p>We already were comfortable with our build system (Circle CI) and had no problem quickly setting up a workflow to build our docker image for deployment and run our tests. If both steps are successful, we configured it to deploy directly to our production environment. We set up a Circle integration with slack to notify us when the build failed.</p>
+<p>We did break the build a few times, and still do occasionaly (many of the cases seem to have been issues with intermittent failures in our browser tests 💀. The friction means we deal with these issues quickly).</p>
+<p>If the build breaks, the pair responsible stops immediately to fix it. This is easy to do since we were working in such small commits–there really isn’t much context switching. It also means we spend effort keeping our tests fast and clean.</p>
+<h2 id="commiting-unfinished-features-to-prod">Commiting Unfinished Features to Prod</h2>
+<p>Working in small commits on top of master means you are usually commiting an unfinished feature directly to the production environment. Yikes. This was another thing that really required us to shift the way we thought about development (for the better again).</p>
+<p><code>git</code> branches are not the only way to branch code.</p>
+<p>Firstly, you can commit dead code–code that can’t be called isn’t likely to cause problems. This is what we do most of the time. Since we practice TDD we get lots of feedback about the code without having to run it. We also can use tricks like commenting out routes, or only exposing routes when we are in developer mode to make sure our code is dead in prod.</p>
+<p>You can branch by <a rel="external" href="https://martinfowler.com/bliki/BranchByAbstraction.html">abstraction</a>. Instead of doing something to a function, class, etc., that would change current behavior, replace it with an interface and you can gradually make your changes while the overall system sees no difference.</p>
+<p>You can also branch by feature flagging. At first I thought we would be doing a decent amount of feature flagging. However we almost never feature flag (at least in the way I used to understand it), and we certainly have not installed a complex feature flagging library or <a rel="external" href="https://launchdarkly.com/">service</a>.<a rel="external" href="https://jasonlarsen.me/2020/02/16/ship-faster-with-this-one-weird-trick#footnote-38KR">³</a></p>
+<p>Your feature flag doesn’t need to be fancy: it can be an <code>if(false)</code> statement you comment out during dev, or a GET param depending on your needs. Martin Fowler has some great ideas in his <a rel="external" href="https://www.martinfowler.com/articles/feature-toggles.html">Feature Toggles</a> article. I love this one:</p>
+<pre><code>function reticulateSplines(){
+    var useNewAlgorithm = false;
+    // useNewAlgorithm = true; // UNCOMMENT TO WORK ON
+
+    if( useNewAlgorithm ){
+      return enhancedSplineReticulation();
+    }else{
+      return oldFashionedSplineReticulation();
+    }
+  }
+
+  function oldFashionedSplineReticulation(){
+    // current implementation lives here
+  }
+
+  function enhancedSplineReticulation(){
+    // TODO: implement better SR algorithm
+  }
+</code></pre>
+<p>“Ahhh!!! But what if accidentaly forget to recomment it?” Don’t. And if your tests don’t fail when you forget you’ve got other problems. Or you’re actually done anyway.</p>
+<p>What about migrations? Migrations can’t really be feature flagged or commited as dead code. So, don’t commit migrations that break things. You’re going to have to think about order of operations a lot. Your brain may not be trained to tackle thinking about breaking problems up this way (mine certainly wasn’t, and still has a lot to learn). But the benefits are worth it.</p>
+<h2 id="testing-in-prod">Testing in Prod</h2>
+<p>We all love a good meme about testing in prod. The funny thing is though, testing in prod is actually awesome—we just need to talk about what it means.</p>
+<blockquote>
+<p>“Testing in production is a superpower. It’s our inability to acknowledge it that’s the trouble.”<br />
+<br />
+– <a rel="external" href="https://increment.com/testing/i-test-in-production/">Charity Majors</a> (a must read article)</p>
+</blockquote>
+<p>Testing in Prod does not mean: just push up unvalidated code and see what happens. It means that we have another tool to understand our systems. It also means we don’t have so many environments to manage. And it puts us closer to the user.</p>
+<p>As you might guess from how often I quote Martin Fowler’s blog… there is something about it there too… <a rel="external" href="https://www.martinfowler.com/articles/qa-in-production.html">QA in Production</a>.</p>
+<p>One of the consequences of our decisions as a team, is that every green commit is deployed to prod. After something goes live, pairs get on and manually verify features as needed. And not test in a “looking for regressions” way–our tests should catch that. This is an <em>exploratory</em> style of testing. Our QA team member and product are also doing their tests on the production environment.</p>
+<p>We don’t have a lot of overhead in this process. Frankly, a lot of that is because we are a tiny team and we are developing a new product with no daily users. When we get to the right scale, we will probably start experiencing some pains that cause us to explore new things. We already have some ideas of what the future may hold: canary deploys, blue green deployements, automated rollbacks, super rad dashboards, observability tools… but we look at these only when we start to feel the pains.</p>
+<hr />
+<p>It’s certainly not perfect. We have some new pains that we are experiencing. For example, because our deployements are push based (build and deploy on commit), if we commit faster than Circle CI can build and deploy our image, we end up with error when one of the Circle Workflows tries to deploy an image for a commit that is no longer the head of master. We’re not sure how we’ll address this yet–the noise hasn’t hurt bad enough yet–but maybe we’ll look at decoupling our deploys from the CircleCI workflows and doing something more pull based. Who knows?</p>
+<p>Another tradeoff is that code review used to serve as a sort of visiblity function: reviewing code would help you see changes you might not see otherwise. We’ve been trying to tackle this by having more frequent pair rotations (we usually rotate daily, sometimes we rotate during the same day), and also by mobbing more. I think there are other things we could learn here still.</p>
+<p>But the benefits have been undeniable and drastic in impact:</p>
+<ul>
+<li>We are deploying many times a day, and it’s super easy to track.</li>
+<li>We never deal with paintful merge conflicts.</li>
+<li>We have have a much better incremental problem solving style.</li>
+<li>Our code is better.</li>
+<li>Engineering is more integrated with QA, Product, &amp; Design.</li>
+</ul>
+<p>We are able to move so fast–too fast. My new challenge is working with product &amp; design keeping to keep up with how fast our “full stack” team of 4.5 engineers moves.<a rel="external" href="https://jasonlarsen.me/2020/02/16/ship-faster-with-this-one-weird-trick#footnote-48KR">⁴</a></p>
+<p>It may sound like “high-performance team” snake oil, but I really do believe we can attribute so much of the great change on our team to our new favorite weird trick: trunk-based development.</p>
+<p>🛳</p>
+<hr />
+<ol>
+<li>I’ve experienced this a lot–especially with Spanish, a second language to me.<a rel="external" href="https://jasonlarsen.me/2020/02/16/ship-faster-with-this-one-weird-trick#ref-18KR">↩</a></li>
+<li>We did add caveats that if someone was working solo, they needed to ask somebody near them to pass off and their name added as co-author with <a rel="external" href="https://github.com/git-duet/git-duet"><code>git-duet</code></a>, or they needed to open a PR. Since we don’t solo often, that amount of work has remained small and at a scale that is trivial to manage.<a rel="external" href="https://jasonlarsen.me/2020/02/16/ship-faster-with-this-one-weird-trick#ref-28KR">↩</a></li>
+<li>Yet. We may very well need this one day but avoiding any unecessary overhead helps us move fast. If we do it will be to help decouple our <em>deployment</em> from our <em>releases</em>. It will because we want the ability for product to control the toggle, and/or control percentages of people getting new features so we can a/b test, do a gradual rollout while monitoring the system, etc.<a rel="external" href="https://jasonlarsen.me/2020/02/16/ship-faster-with-this-one-weird-trick#ref-38KR">↩</a></li>
+<li>I only count myself as half. Meetings, you know.<a rel="external" href="https://jasonlarsen.me/2020/02/16/ship-faster-with-this-one-weird-trick#ref-48KR">↩</a></li>
+</ol>
+</div>
+</article>
+</main>
+</body>
+</html>

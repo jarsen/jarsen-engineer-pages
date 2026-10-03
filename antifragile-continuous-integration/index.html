@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>antifrAGILE: Continuous Integration · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>antifrAGILE: Continuous Integration</h1>
+    <time datetime="2020-12-17T00:00:00Z">2020-12-17</time>
+    
+    <span class="tags"><a href="https://jarsen.github.io/jarsen-engineer-pages/tags/agile/">#agile</a> <a href="https://jarsen.github.io/jarsen-engineer-pages/tags/devops/">#devops</a></span>
+    
+  </header>
+  <div class="prose"><h2 id="big-changes-are-fragile">Big Changes Are Fragile</h2>
+<p>Big changes carry more risk than small changes.</p>
+<p>Ambitious, “big bang” style changes often fail, or generate more organizational ill-will than they do business value. There’s a reason just whispering the word refactor can send a Product Manager into a fugue state.</p>
+<p>Merging and deploying months worth of work is much riskier than merging in a days worth; a 5 line PR is less risky than a 500 line PR.</p>
+<p><a rel="external" href="https://twitter.com/i/web/status/1332679390212263945">Referenced post on X</a></p>
+<p>Does that mean that a bad 5 line PR can’t do more damage than a 500 line one? Of course not. But the human brain is much better at handling small changes—at being able to contextualize and model one thing at a time.</p>
+<p>We just understand small changes better. This is why software teams are incredibly intuitive and accurate when estimating in the short term, and terrible with anything more than a week or two out.</p>
+<p>Dealing with large and/or long term changes is more fragile, because it involves more prediction. Prediction is fragile. Prediction tries to deal in the probability of a particular outcome, and can never account for Black Swan events swimming in the tails of the bell curve. Hell, it doesn’t even take Black Swans, just sustained mild volatility will break many predictive models.</p>
+<p>Antifragility views prediction as a distraction at best, and instead focuses on building options so that no matter what, you have good choices.</p>
+<p>By focusing on making our changes small, we become antifrAGILE, and able to change quickly.</p>
+<hr />
+<h2 id="continuous-integration">Continuous Integration</h2>
+<p>Continuous Integration (CI) is a practice to reduce risk by making changes small and continuous.</p>
+<p>CI is a practice first introduced by Extreme Programming. Over the past decade, the term CI has begun to be misused to refer to build servers and services that form an important part of CI. But <strong>CI is not something you can buy, CI is a practice you must develop.</strong></p>
+<p>What does it mean to “integrate?” Integrate means integrate your work with the work of everyone else on your team. Continuous means, in this context, frequent. You must be merging everyone’s code frequently.</p>
+<blockquote>
+<p>The Extreme Programming practice of Continuous Integration encourages all members of a development team to integrate their work daily, instead of developing features in isolation for days or weeks.” — Martin Fowler</p>
+</blockquote>
+<p>Jez Humble, author and influential member of the DevOps movement, likes to ask folks who believe they are doing CI three questions:</p>
+<ol>
+<li>Does every developer check their work into the main branch (master, trunk, etc.) at least once a day?</li>
+<li>Does every checkin to the main branch result in an automated build and test?</li>
+<li>If the build fails, is it back to green within 10 minutes?</li>
+</ol>
+<p>If you cannot answer yes to all of these questions, you are not practicing Continuous Integration (even if you own a CircleCI license and you run all your integration tests on every commit to your feature branch 😢).¹</p>
+<h2 id="sounds-wild">Sounds Wild.</h2>
+<p>If you’re like me a year and a half ago, this revelation feels radical—wrong somehow. Merge conflicts are awful, I’d like to deal with that less, so I’ll wait longer to merge, thank you very much. Also, how can I just merge into main? What about my bugs?! Where does QA fit in? What if it’s not done?</p>
+<p>The intuition is that merging daily will lead to smaller, but more frequent merge conflicts, resulting in the same amount of work—just perhaps distributed into more manageable amounts. The reality is that the relationship here is non-linear. Volatility, randomness, time, chaos, change—they all compound. Counterintuitively, more frequent integration will result in not only smaller merge conflicts, but also fewer merge conflicts.</p>
+<p>One of Martin Fowler’s favorite phrases is “If it hurts, do it more often.” He gives three reasons to do it more often: First, many tasks become more difficult to do as the amount of work to do increases. Second, we need feedback. We cannot receive feedback if we are not doing the thing. Third, we need practice. Often practice will refine our process and help us really understand.</p>
+<h2 id="an-attempt-at-analogy">An attempt at analogy.</h2>
+<p>Imagine you need to collaborate on a presentation. The most frustrating way to do this is to set up an email chain where everyone keeps emailing new versions of the document and you need to integrate everyone else’s changes while also incorporating your own.</p>
+<p>The simplest and most collaborative way for me to do this is use a Google Doc where I can see everyone editing in real time. I rarely have conflicts, and if I do I know before I make the changes and I am communicating with someone who recently made the conflicting change. This conflict is a conceptual conflict—a departure in ideas or direction—not an editing conflict. The live nature of the document has helped bring the conflict to the forefront where we can discuss it before moving on.</p>
+<p>The more continuously you integrate, the more you are turning your main branch into a Google Doc.</p>
+<h2 id="scale">Scale</h2>
+<p>“Ok, Jason. But I work at X Big-Co. Maybe that works for small teams, but we have 1000 engineers. We can’t all be editing the same Google Doc at the same time!”</p>
+<p>Honestly, I haven’t experienced CI at this scale. But as I understand, Google, Facebook, and many very large codebases work this way. It takes some more tooling, but also… can you imagine the massive game of car-chicken over merging pull-requests between 1000 engineers? Hopefully at this point you have developed some good boundaries if you are still developing in a monorepo.</p>
+<p>Fast Feedback Loops</p>
+<p><a rel="external" href="https://twitter.com/i/web/status/1338898497634848773">Referenced post on X</a></p>
+<p>(Don’t get me started on how rad darklang is philosophically. A newsletter for another time.)</p>
+<p>One of the keys to any successful agile practice is feedback loops. How you you know when to zig if you aren’t paying attention, let alone zag?</p>
+<p>Feature Branches receive certain types of feedback. Perhaps there was already feedback collected by UX research before implementation even began. Perhaps I got a code review at the end—or even review or a pair of eyes along the way. This is all great feedback. But one very important bit of feedback is missing: does it blend?</p>
+<p><strong>Until I’ve integrated my code with the work that everyone else is doing, I don’t know if my code works.</strong> My code might work perfectly and pass QA on my feature branch, but I have no clue how it will interact one I merge with trunk, let alone the feature branches of my colleagues.² (Does your QA vet the merged artifact?!)</p>
+<p>Or perhaps, like in the Google Doc analogy, there’s been an important misalignment in direction or intent of an interface or service, and we’ve spent weeks or worse pulling in different directions. Integrating early and frequently provides feedback that brings these conceptual conflicts to the surface sooner.</p>
+<p>Finally, forcing ourselves to start to think small leads to smaller experiments. As Charity pointed out in her tweet: we shrink the lead time to get something into product to be so quick that we can go from idea, to implementation, to running in production and observing the results of our product hypothesis in no time.</p>
+<h2 id="continuous-integration-is-for-teams">Continuous Integration Is For Teams</h2>
+<p>It may go without saying, but Continuous Integration is probably not a very useful idea for solo development—there aren’t many things to integrate with.</p>
+<p>But what this means it that CI is a practice specifically designed for teams.</p>
+<p><a rel="external" href="https://twitter.com/i/web/status/1335595612159553537">Referenced post on X</a></p>
+<p>(Trunk Based Development is a key requirement for CI)</p>
+<p>It feels pretty smooth to throw on a headset and go heads-down for a week after Monday planning meetings, surfacing here and there for a morning standup. You knock out your tickets, pat yourself on the back, and throw it over the wall for QA to test in some sort of temporary staging environment. You pick up your next story, only to be interrupted by QA when it’s approved and you’re ready to merge. Hopefully there’s no merge conflicts. Or oops, QA found a bug and now you gotta context switch back to where you were a week ago. Either way, minor inconvenience for you.</p>
+<p>Now multiply this by the number of people on your team/in your code base. The cost is worse than that, because again with volatility, the response is non-linear. We want practices that optimize for the flow of the product, not for individual productivity. (Optimization for individual flow is one reason Cal Newport has declared the <a rel="external" href="https://www.newyorker.com/tech/annals-of-technology/the-rise-and-fall-of-getting-things-done">fall of GTD</a>.</p>
+<p>One teamwork analogy I heard growing up was about yokes and oxen. Imagine a covered Conestoga wagon being pulled by two oxen. Those oxen probably are not the same strength—it’s very likely that one could be pulling faster. But it couldn’t be pulling more without its partner. Even though the yoke slows down one of the oxen, they can pull more together.</p>
+<p>Teams are the same way. You may be a “rock star”/ninja programmer and you can code way faster on a feature branch and if you merge first maybe you avoid conflicts. But you can’t out-code your whole team. Continuous Integration optimizes for team flow.</p>
+<h2 id="i-m-still-worried-about-quality">I’m Still Worried About Quality</h2>
+<p>One of the big concerns with most folks learning about the Truth of Continuous Integration is quality. This is good. This means you are a good engineer—you want to deliver quality software that your customers want to pay for.</p>
+<p>The concern is that Continuous Integration bypasses many of the common quality assurance steps we may be used to. If we are all merging daily into trunk, how do we make sure we have something reliable to deploy?</p>
+<p>Remember that one of the three keys of practicing CI is that every commit to the trunk triggers an automated build and test. Your automated tests should be a good signal that your existing features are working as intended.</p>
+<p>But even with tests, there are some things that having passing tests, but are not done. They are not ready to be released! And if everyone is doing this all the time, how do we ever end up with an artifact that we can release? A code freeze??</p>
+<p>Alas, it is 11PM the night before the Thursday morning this newsletter will go out and it is past my bedtime. This got a lot longer than I expected. I was hoping to get into the next topic to answer this question, but it will have to wait! I will give you a hint though, it starts with Continuous and ends with elivery.</p>
+<hr />
+<h2 id="resources">Resources:</h2>
+<ol>
+<li>This is a very good <a rel="external" href="https://www.martinfowler.com/articles/continuousIntegration.html">guide</a> to read about Continuous Integration. You might notice I keep referencing Martin Fowler. Sorry, but he writes a lot of good stuff.</li>
+<li>If you want to get deep into the patterns for branching, read <a rel="external" href="https://martinfowler.com/articles/branching-patterns.html">Patterns for Managing Source Code Branches</a> by… Martin Fowler. 😅</li>
+<li>Read XP Explained, by Kent Beck.</li>
+<li>I wrote a little bit about CI earlier this year on my <a rel="external" href="https://jarsen.engineer/ship-faster-with-this-one-weird-trick">blog</a>. There’s some other inspiring quotes and stuff there.</li>
+</ol>
+</div>
+</article>
+</main>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Getting Into Vibes · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>Getting Into Vibes</h1>
+    <time datetime="2026-01-08T05:26:29Z">2026-01-08</time>
+    
+  </header>
+  <div class="prose"><p>So it’s the year of our Lord 2026 and you’ve decided you procrastinated understanding how AI is going to change your career as a software engineer for too long. Now you want to learn to vibe code or vibe engineer or whatever people are calling it these days…<br />
+<br />
+Well, depending on your attitude I have bad or good news for you… even Andrew Karpathy, the man who coined “vibe coding,” <a rel="external" href="https://x.com/karpathy/status/2004607146781278521">tweeted</a> that he feels behind:</p>
+<blockquote>
+<p>I’ve never felt this much behind as a programmer. The profession is being dramatically refactored as the bits contributed by the programmer are increasingly sparse and between. I have a sense that I could be 10X more powerful if I just properly string together what has become available over the last ~year and a failure to claim the boost feels decidedly like skill issue. There’s a new programmable layer of abstraction to master (in addition to the usual layers below) involving agents, subagents, their prompts, contexts, memory, modes, permissions, tools, plugins, skills, hooks, MCP, LSP, slash commands, workflows, IDE integrations, and a need to build an all-encompassing mental model for strengths and pitfalls of fundamentally stochastic, fallible, unintelligible and changing entities suddenly intermingled with what used to be good old fashioned engineering. Clearly some powerful alien tool was handed around except it comes with no manual and everyone has to figure out how to hold it and operate it, while the resulting magnitude 9 earthquake is rocking the profession. Roll up your sleeves to not fall behind.</p>
+</blockquote>
+<p>So, where should a mortal even hope to start? How does one get rolling without absolutely drowning in the deluge of AI hype and noise?</p>
+<p>I’ve been talking to several people, and the following is the opinionated advice I’ve settled on. It’s not “right,” it’s just good and I think will get momentum in the right direction.<br />
+\</p>
+<ol>
+<li><strong>Just get the</strong> <a rel="external" href="https://claude.com/pricing/max"><strong>$100/mo Claude code max subscription</strong></a><strong>.</strong> Yes, really. The $20 plan is not good enough. You probably won’t hit the rate limits on the $100 plan unless you start going psycho multi-agent, so you don’t need the $200 plan. It might feel expensive, but this is an important investment in yourself. If you’re lucky your employer will pay for it. There are other great models but Opus 4.5 is the only one you should start with.\</li>
+<li><strong>Pick a CLI:</strong> <a rel="external" href="https://claude.com/product/claude-code"><strong>Claude Code</strong></a><strong>, or</strong> <a rel="external" href="https://opencode.ai/"><strong>Opencode</strong></a> if you really want to jump straight into something hackable. If you have to think longer than 5 seconds about it, or need minimal friction, you should start with Claude Code. Amp is a wonderful CLI tool as well but has its own token based pricing model that will probably make you nervous if you are getting started, and the free mode is not right for us. Both Claude Code and <del>Opencode will let you log in with your Claude max subscription</del> (update, 1 day after I posted this, Anthropic cracked down on Claude Max outside of Claude Code, so just use Claude Code getting started). Both of these have desktop versions, and there are other good apps like Cursor, but the reason to pick a CLI client is because it is not well integrated with any IDE. We’ll dive in more later, but you will force yourself to work in better modes with agents if you can’t be in your IDE. Once you achieve some more mastery you can be allowed to use an IDE again (but you may not want to).<br />
+2.5 (bonus) Install <a rel="external" href="https://ghostty.org/">ghostty</a>. iterm belongs in our hearts and memories, not on our computers. You don’t need Warp because your agent is going to run all your bash commands for you anyway. We will allow wezterm or kitty.\</li>
+<li>Pick a project, and commit to using agentic workflows as much as possible. Just like the best way to learn vim is by taking away your mouse, you need to go through some pain to finally see the light. If you can’t use it for work either because of policies or it really is slowing you down right now, then start a new side project. If you are starting a side project, consider that agents are particularly good with more popular languages, and excel when given a framework. (claude code, open code, and amp code and seemingly everything now are typescript+<a rel="external" href="https://bun.com/">bun</a>. if you find yourself in paralysis about what stack to pick try it and you’ll be in good company).\</li>
+</ol>
+<p>Whether you are going greenfield or brownfield, the first thing you will want to do is run <code>/init</code> in Claude Code or Opencode. This will generate a <code>CLAUDE.md</code> or <code>AGENTS.md</code> respectively. Yes, we are already into the world where every tool has its own config and dotfiles and we have no standards in sight. Go ahead and stop and read the file after it’s generated. This is the file your agent is going to load up every conversation, it is going to be its compass as it navigates your application. Use your agents to keep this file up to date as your app evolves.<br />
+<br />
+Now, we are going to try to do our first task. To do that, we need to talk about workflows. There are many stages of development, and the stage you’re at will greatly influence your workflow. Steve Yegge gives a great framework for understanding levels in his article about his insane new multi-agent orchestration tool <a rel="external" href="https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04">Gas Town</a> (that you should not use):</p>
+<blockquote>
+<p>Stage 1: <strong>Zero or Near-Zero AI:</strong> maybe code completions, sometimes ask Chat questions<br />
+Stage 2: <strong>Coding agent in IDE</strong>, permissions turned on. A narrow coding agent in a sidebar asks your permission to run tools.<br />
+Stage 3: <strong>Agent in IDE, YOLO mode:</strong> Trust goes up. You turn off permissions, agent gets wider.<br />
+Stage 4: <strong>In IDE, wide agent</strong>: Your agent gradually grows to fill the screen. Code is just for diffs.<br />
+Stage 5: <strong>CLI, single agent. YOLO</strong>. Diffs scroll by. You may or may not look at them.<br />
+Stage 6: <strong>CLI, multi-agent, YOLO</strong>. You regularly use 3 to 5 parallel instances. You are very fast.<br />
+Stage 7: <strong>10+ agents</strong>, <strong>hand-managed</strong>. You are starting to push the limits of hand-management.<br />
+Stage 8: <strong>Building your own orchestrator</strong>. You are on the frontier, automating your workflow.</p>
+</blockquote>
+<p>We are going to jump straight to Stage 5. It’s going to work.<br />
+<br />
+Here is your workflow:</p>
+<ol>
+<li>Start a new chat. Tell the agent “I want you to help me plan my next feature. At the end of this we are going to write a PRD to our <code>.ai/prd</code> directory.” Then describe the next feature/task to the AI and hit enter. Have a conversation with it. You will begin to see how it works. Stop to expand some of its collapsed thinking blocks to see the details. Look at what bash commands it runs. When you get to a point you are happy with and you think it mostly gets it, tell it it’s done and to write the file. If it’s not getting it, open a new chat and start over. This is all vibes. It will take more or less practice depending on your AI experience and how your brain works. Try to forget for a moment it’s an AI and talk to it like a human. Let it infer some of your meaning. Ask it questions when you don’t know what to do next.</li>
+<li>When you have your PRD written, open a new chat. It is very important it’s a new chat. Every agent has a Context Window, which is the amount of memory it’s currently holding from all the files its read, tool calls its made, web pages its fetched, and your messages. Once you start getting over a certain threshold, even as low as 60ish%, your AI will get into what we now call the “dumb zone.” Avoid it, you want to stay low in context %. (run <code>/statusline</code> in claude code and make sure it sets up showing you what your context window % is. open code already shows the context window by default).</li>
+<li>Tell the new agent chat to read the PRD you just wrote, and to implement it. Don’t bother telling it bullcrap like “you are an expert Rails developer with 15 years of experience.” Just give it the PRD and watch it go. Give it permissions yes or no as it works. Look at the diffs. If you see it going the wrong direction, let it go for a teeny bit. See if it course corrects itself. If you don’t believe in it, hit escape to interrupt it. Tell it what it’s doing wrong, or ask it why it’s doing something a certain way. Keep going.</li>
+<li>Eventually your task will either be completed, or you will start getting into the “dumb zone.” As you get into the dumb zone, pause the agent. Tell it to help you generate a ‘handoff prompt’ that you are going to give to another agent to continue the work. It will print out a blob of text for you. Copy it. Create a new chat. Paste. Enter. Rinse and repeat until your task is done.</li>
+<li>But wait, how do we know when it’s “done?” this becomes increasingly difficult, especially as tasks span multiple chats. The way I like to do this is github. Your agent can use the <code>gh</code> cli tool. It’s very good at it. Have it constantly commit to a branch. Tell it to open a PR. Review the PR, leave comments. Open a new chat. Tell it to use <code>gh</code> to look at the comments you just left and fix them. Your agent is now your team member and you are its team lead. Guide it, give it some autonomy. Verify.</li>
+</ol>
+<p>Do this a bunch of times, for a few days. Really really try to not write a line of code with your own fingers, even if you really want to.<br />
+<br />
+You will find you start to anticipate where the agent will get stuck. Other times it will blow your mind and do something surprising. You’ll get excited when it succeeds, you’ll get frustrated when it keeps ramming against the same problem.</p>
+<p>As you and the agent learn, the one thing you’ll want to do is keep updating your <code>CLAUDE.md</code> or <code>AGENTS.md</code> file. But don’t do this by hand—instruct the agent to do it. Have a session where the agent really struggled to figure out how to run an individual test? Tell it to update the <code>CLAUDE.md</code> with what it learned. Tired of having to remind the agent to commit and push after it does something substantial? Ask the agent to encode that in the <code>AGENTS.md</code> file. There is a lot of other stuff you’ll hear about – custom commands, custom agents, claude skills, MCP servers… hold off on those for a little bit. Hold off until you feel like you really have the hang of this loop, and now you are ready to learn some power user keybinds.<br />
+<br />
+Think about feedback loops. For the agent flywheel really to get get going—it needs to be able to create its own feedback loops. Having tests is one of the best ways to do this. AI is great at writing tests. Encourage it to do so. You may even consider starting with tests, or go as far as having your PRD define specs from a product point of view (and like that, we have come full circle to TDD/BDD, except now AI people who think it’s new call it “spec-driven development”).<br />
+<br />
+And that’s it. That’s my advice for someone just getting into vibes. Get Claude Max $100/mo. Get a CLI tool (probably Claude Code). Init your your <code>CLAUDE.md</code>. Use the agent to plan to the work into a markdown file. Use other agents to implement the plan. If a chat gets to 60%+ context window, start getting a handoff prompt to give to the next agent chat. Update your meta repository and AI learnings in the <code>CLAUDE.md</code>. Loop.<br />
+<br />
+If you get really comfy, maybe you start to learn about claude skills, or open up another tab to run a second Claude Code at the same time. Maybe you dare to learn what the hell “Ralph loops” are. If you do get to any of this, let me know! Hopefully this can be helpful to someone. And if you have lots of experience, what do you think about this approach? Any different advice? Drop me a line on <a rel="external" href="https://x.com/jarsen">twitter</a>.<br />
+\</p>
+</div>
+</article>
+</main>
+</body>
+</html>

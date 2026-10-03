@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>AI Sidecar Workspaces · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>AI Sidecar Workspaces</h1>
+    <time datetime="2026-02-13T18:20:23Z">2026-02-13</time>
+    
+  </header>
+  <div class="prose"><p><em>Creating a (buzzword warning</em> 🤢<em>) “AI-Native” workspace without touching existing stuff or giving a fully autonomous agent unhinged access.</em></p>
+<p>A few weeks ago, I sat down to help show our Head of Product how he could use Claude Code for… Not Code. I gave the usual rant about how it was poorly named, and to back up my argument days later Anthropic released Claude CoWork which is extra-sandboxed Claude Code with an opinionated UX and friendly name.<br />
+<br />
+Anyway, after walking through and setting up an environment with him (which ended with him submitting his first teeny PR fix within an hour of starting) I thought about how I might help other colleagues (data, compliance, marketing) set up similar workspaces… and I realized that I should put together something everyone at work could just copy and share.<br />
+<br />
+And so our new internal AI tool Seis Leches (inside joke), or <code>leches</code> for short, was born.</p>
+<p>Within the week I would turn around and see it up on the data teams screens next to a browser with snowflake. Soon our Head of Compliance was telling his friends how in love he was with his new Claude Code workflows.<br />
+<br />
+This pattern, which I will call the AI Sidecar pattern, took people from mostly just using ChatGPT to doing real workflows within a week. And it did it without breaking any existing workflows, requiring modifications to any existing repositories, or giving unhinged levels of autonomous access to a bot running on a mac mini (lol). You don’t need a team of cracked engineers spending cycles building and maintaining a <a rel="external" href="https://builders.ramp.com/post/why-we-built-our-background-agent">complicated new internal background agent tool</a>. I did this in a few hours, and has required almost no support once set up. (It also relies on the strength and expertise of the frontier AI labs, without needing AI engineering expertise in-house, your own evals, etc.)<br />
+<br />
+It may require someone with a little more intermediate technical skills to do the initial bootstrapping, but once done people who have never opened a terminal in their life can use the workspace. It works with Claude Code (terminal or desktop app), Claude CoWork, and any other agentic harness your team might want to use (Codex, OpenCode, Amp, etc).<br />
+<br />
+It is deeply customized from the get-go to your org, your software and data stack, your rules, procedures, and compliance. It runs all on individual employees hardware and the AI Provider’s cloud of choice (if you were really crazy+technical you could move this to your own AI inference). Employees are monitoring and in-the-loop, with only the level of access they have/give to the agent.<br />
+<br />
+Note: this is not how I would set up a brand new product/team/repository (I will write about that at a later date), but I think this is the best option I know of for people who already have existing systems.<br />
+<br />
+Anyway, enough yapping. Let’s dive in.</p>
+<hr />
+<h2 id="the-ai-sidecar-pattern">The AI Sidecar pattern</h2>
+<p>In a nutshell, it looks something like this</p>
+<pre><code>.
+├─ CLAUDE.md              # shared workspace-level instructions
+├─ claude.local.md        # gitignored. user specific customization
+├─ .claude/
+│  └─ skills/
+│     └─ snowflake/       # skills on how to use your db and analytics tools
+│        └─ SKILL.md
+│     └─ setup/           # skill to help the agent set up its env
+│        └─ SKILL.md
+├─ repos/                 # clone everything from github into this dir
+│  ├─ backend/
+│  ├─ mobile/
+│  └─ docs/
+├─ scripts/               # anything programatic the agent can use/repeat
+│  ├─ check-setup.sh
+│  └─ setup.sh
+├─ shared/                # shared artifacts for team
+│  ├─ reports/
+│  └─ prds/
+└─ private/               # gitignored. contains drafts, personal work
+</code></pre>
+<p>Let’s talk about the most critical pieces first:</p>
+<ol>
+<li>You want a shared <code>CLAUDE.md</code> (or <code>AGENTS.md</code>, etc. you can symlink and use other tools but this tutorial is claude-specific for brevity’s sake). This is useful because most folks who are new to agents need help setting up a good CLAUDE.md file. You can get a decent start from <code>/init</code> inside CC itself, but there is a lot more to maintaining a good CLAUDE.md. This lets people who just want to do work and not think about what goes on under the hood (yet) get started right away. We could write articles about theory on how to make good instruction files for agents. We don’t have time or space for that here.</li>
+<li><code>repos/</code> – this is where you put everything from github. this had our backend monorepo, our mobile apps, and we had an internal kb repo and external customer facing articles repo. all were in here. No git submodules, just a directory with all the repos cloned. This is important because it doesn’t require any changes to any existing development, build, or deployment processes and pipelines. You just cloned the repos where CC can find it, without having to to use <code>/add-dir</code> and/or constantly deal with annoying permissions to read directories outside the initial project root.</li>
+<li>Data and Analytic tools <code>skills/</code> - we used snowflake and mixpanel, so I set up the snowflake cli tool and the mixpanel MCP server, and gave skills instructions on how to use them best (including where to look for schema definitions in the repos). This piece is likely the trickiest in any org—you might have differing rules around who can read what data, and you certainly don’t want write access from this thing. For us, at a small org, everyone already had snowflake access so that gave us a read-only replica. You could create all sorts of controls you need with this sort of layer.</li>
+</ol>
+<p>And honestly you could get started with just these 3 things. The Code and the Data are The Ultimate Source of Truth™. Not docs. Not mental models or tribal knowledge. This is what you want to give to the agent above all. If your agent can read code and query real data, it’s going to give non-technical people a good feedback loop before they need to hit up the data or eng teams.\</p>
+<hr />
+<h2 id="setup-and-self-healing">Setup and Self-Healing</h2>
+<p><br />
+We could stop there, but less technical users may not be able to set this all up by themselves. That’s where the <code>scripts/</code> dir and skill start to come in.</p>
+<p>The <code>setup</code> script sets up any tools and mcp servers you want to give to people. It clones the repos. Not pictured, but it is also useful to have some <code>check-sync</code> and <code>sync</code> type scripts to help git pull the repos at some regular interval so that people don’t get too behind the current source of truth.<br />
+<br />
+<code>setup/SKILL.md</code> – markdown is sometimes referred to as the “new programming language” and I think this has a lot of truth to it. Having a good setup markdown file allows the agent to troubleshoot its own setup. This way the system can more effectively self-heal, which is very ideal when working with less-technical folks.<br />
+<br />
+Even though markdown may be “the new programming language”, it is not deterministic. There are certain activities that can be deterministic, and that’s what goes in the <code>scripts/</code> dir. These are things I don’t need the LLM to spend context on in sessions. (use the agent to bootstrap these bash scripts though).<br />
+<br />
+Another pattern I have been using is I have two scripts here for each activity the first script returns the state of things, and the second does the things. This is a pattern I have been using with agents so that the agent can decide whether or not to do something.<br />
+<br />
+So for example, the <code>CLAUDE.md</code> tells the agent to always run <code>check-sync</code> if it thinks it’s important to check the freshness of the code for the users current task. If it thinks that it’s too stale, it will run <code>sync</code>. I like this pattern as it decomposes things a bit and makes the UX better when you are working from within agents.</p>
+<hr />
+<h2 id="storing-work">Storing Work</h2>
+<p>Now we have a system that can set itself up, do work against the source of truth, and self-heal and sync.</p>
+<p>But it gets a lot more useful if you have somewhere to store your work. That’s where <code>shared/</code> and <code>private/</code> come into play.</p>
+<p><code>shared</code> is for… well, putting documents that you want shared.</p>
+<p><code>private/</code> is gitignored so nothing ever makes itself upstream. This is great for work that is either a draft, or that I am using right now but would be noise for other folks.<br />
+<br />
+You can add skills for docs, reports, prds—whatever workflows are useful for your org—and let the agent know about shared vs private. It will help the users create and put these docs in the right places, follow any consistent formatting or workflows.</p>
+<hr />
+<h2 id="extras">Extras</h2>
+<p>Things that are not necessary, but that I set up and thought were cool/promising (not necessarily proven to be productive yet).</p>
+<ul>
+<li>a “commit”/sync upstream skill – this is very untested, but I wrote a skill that would help be unfamiliar with git to rebase and push to github (yes, main. not a production app and things are in VCS so I was not worried about it at our scale). Things that were in <code>shared/</code>, or changes from the reflect skill (later) need to make it back to github so everyone else can get them.</li>
+<li>semantic search with <code>qmd</code> - Agents do amazing search with only grep. However, if you could have semantic search on your docs, reports, etc., you might get more powerful and relevant results. For this, I setup <a rel="external" href="https://github.com/tobi/qmd">qmd</a> by [Tobi](<a rel="external" href="https://x.com/tobi">https://x.com/tobi</a>) (Shopify CEO). <code>qmd</code> uses local models to do embeddings so it has not extra cost. This does require that everything people are putting into your directories are markdown. Power users could theoretically use qmd to index and query other documents outside the AI Sidecar monorepo as well.</li>
+<li><code>pandoc</code> + <code>pdftotext</code> for non-markdown documents — I didn’t get deep into this, but as proof-of-concept I set up skills to convert our existing compliance docs to markdown. these were then indexable for qmd. I would have the markdown become the source of truth, and setup skills/scripts to re-generate pdfs/docx files when markdown files are more recently updated than their counterpart.</li>
+<li><code>interview</code> skill - if the <code>claude.local.md</code> did not exist, I set up the agent to ask the user a few questions (name, role, tasks, AI experience level) and set up the personal instructions file. I think this has potential but is unecessary.</li>
+<li><code>reflect</code> skill - This skill extract learnings from session, and automatically updates instruction files, suggesting whether it thinks its useful to share (add to <code>CLAUDE.md</code> ) or if it feels like a more user-personal instruction (<code>claude.local.md</code>).</li>
+<li>Progressive disclosure with nested <code>CLAUDE.md</code> files – you can add <code>CLAUDE.md</code> files with more context relevant to particular subdirectories. This can be useful for the agent so that it loads more context relevant to directories it may be working in. This is particularly useful for the code repos.</li>
+<li><code>handoff</code> skill – a skill that generates a handoff prompt for a user, and uses <code>pbcopy</code> (if on mac) to put the it automatically in the system clipboard to the user can just paste it (this helps with weird markdown rendering stuff you often get copying from agents). This skill is really unnecessary, but I personally like it because it starts to teach less AI-literate folks to watch their context-windows for the “dumb zone”, and to start new sessions before just waiting for compaction.</li>
+<li><code>gh</code> - github cli tool. even if people aren’t devs, i think this tool is useful. easy way for non-technical users to clone repos after logging in via web (no manual ssh key creation), and it can read issues if you use those, scan PRs which can be useful for knowing who to ask about something or understand what is in WIP.</li>
+<li>MCP servers for your ticketing system (Linear, etc.) – this could require an integration user or incur more cost from seats, but I think can be neat if you want to be transparent about planning, WIP, or let other folks create/update tickets and requests.</li>
+</ul>
+<hr />
+<p>And that’s it, really. There’s a lot of opportunities and room for creativity and customization to your needs and your orgs needs.<br />
+<br />
+I think the core principles are:</p>
+<ol>
+<li>Put all the repos in one place, and figure out how to get access to reasonable production data. This creates the Ultimate Source of Truth feedback loop.</li>
+<li>Use the agent to bootstrap, set up and maintain its own environment, skills, etc. This helps ensure it is usable by less-technical teammates, and that they can begin to tailor it to their own needs without engineering help.</li>
+</ol>
+<p>Hopefully this helps someone, or at least gives someone who has been thinking about doing the same thing the interest/confidence to try it out! Our team loved it and many people said they wished they had it sooner.<br />
+<br />
+What do you think? let me know on <a rel="external" href="https://twitter.com/jarsen">Twitter</a>.</p>
+</div>
+</article>
+</main>
+</body>
+</html>

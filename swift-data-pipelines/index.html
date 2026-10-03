@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Swift Data Pipelines · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>Swift Data Pipelines</h1>
+    <time datetime="2015-05-23T00:00:00Z">2015-05-23</time>
+    
+    <span class="tags"><a href="https://jarsen.github.io/jarsen-engineer-pages/tags/swift/">#swift</a></span>
+    
+  </header>
+  <div class="prose"><p>The forward pipe operator is an infix operator taken from languages like F# and Elixir. I’ve been working on a <a rel="external" href="https://github.com/jarsen/Pipes">Swift implementation</a> that will help clean up data processing pipelines.</p>
+<p>In order to understand the motivation for the forward pipe operator, let’s first look at some regular looking code.</p>
+<pre><code data-lang="Swift">let students = Database.allStudents()
+let grades = Grades.forStudents(students)
+let curvedGrades = curve(grades, average: 0.6)
+let finalGrades = prepareGrades(curvedGrades)
+</code></pre>
+<p>This code is simple and has clear variable naming. However, even with clear variable names, it may still be difficult for a reader to immediately realize that each variable declaration’s real purpose is only to hold a value to be used in the next line. These temporary variables introduce noise that may obfuscate the simple flow of data. So why all the temporary variables? Well, the alternative is this:</p>
+<p><code>prepareGrades(curve(Grades.forStudents(Database.allStudents()), average: 0.6))</code></p>
+<p>Clearly, the temporary variables are the lesser evil.</p>
+<p>The <code>.</code> operator allows us to chain class and instance methods together in a clean an consistent manner, but it does not help when we want to chain together method calls between distinct entities or stand-alone functions.</p>
+<h3 id="meet-the-forward-pipe-operator">Meet the Forward Pipe Operator</h3>
+<p>The forward pipe simply takes the left hand side of the expression and applies it as the first argument of the function on the right.</p>
+<pre><code data-lang="Swift">increment(1) // becomes
+1 |&gt; increment
+
+divide(5, 10) // becomes
+5 |&gt; divide(10)
+
+map(1...100, increment) // becomes
+1...100 |&gt; map(increment)
+</code></pre>
+<p>That’s nothing special in and of itself—all it has done is provide a new way to call methods and functions. But look at how it lets us rewrite our original example:</p>
+<pre><code data-lang="Swift">let finalGrades = Database.allStudents()
+                  |&gt; Grades.forStudents
+                  |&gt; curve(average: 0.6)
+                  |&gt; prepareGrades
+</code></pre>
+<p>This is much cleaner. The forward pipe expresses the series of function calls as a clear data pipeline; it reads like a sequential list of operations to be performed.</p>
+<p>It does’t matter if you’re chaining instance methods, class methods, or functions—the forward pipe chains them all together.</p>
+<h3 id="optional-pipelines">Optional Pipelines</h3>
+<p>We’ve seen that the forward pipe can clean up our data pipelines, but one of the stumbling blocks in Swift is learning to deal with one of it’s best features: optionals.</p>
+<p>Optionals show up almost everywhere in your swift code. Want to use a <code>Dictionary</code>? You’re going to have to deal with optionals.</p>
+<pre><code data-lang="Swift">let animalNoiseMap = [&quot;cow&quot;:&quot;moo&quot;, &quot;dog&quot;:&quot;woof&quot;, &quot;cat&quot;:&quot;meow&quot;]
+
+animalNoiseMap[&quot;dog&quot;]?.uppercaseString // .Some(&quot;WOOF&quot;)
+animalNoiseMap[&quot;fox&quot;]?.uppercaseString // .None
+</code></pre>
+<p>The <code>?</code> operator is great for chaining together instance methods, but once again as programmers we work with more than just instance methods. Want to count the number of vowels in the animal sounds above?</p>
+<pre><code data-lang="Swift">let numberVowelsFox: Int?
+if let noise = animalNoiseMap[&quot;fox&quot;] {
+    numberVowelsFox = count(filter(noise, isVowel))
+}
+else {
+    numberVowelsFox = nil
+}
+</code></pre>
+<p>Yikes. That if-let is a lot of work. We could eliminate the else if we wanted to use <code>var</code> insted of <code>let</code>, but then we’d lose some safety. If you understand <code>map</code> you can clean up your code significantly:</p>
+<p><code>map(animalNoiseMap["fox"]) { count(filter($0, isVowel)) }</code></p>
+<p>But not everyone groks functors.</p>
+<p>Luckily, <a rel="external" href="https://github.com/jarsen/Pipes">Pipes</a> makes dealing with optionals in your pipelines easy. In fact, you don’t need to anything—just write the same code you would have written without <code>Optional</code>.</p>
+<pre><code data-lang="Swift">animalNoiseMap[&quot;fox&quot;]
+|&gt; filter(isVowel)
+|&gt; count // whole expression evaluates to Int?
+</code></pre>
+<p>I might be biased, but that’s pretty wizard.</p>
+<h3 id="result-pipelines">Result Pipelines</h3>
+<p>But the forward pipe operator doesn’t stop there, folks! Enjoy using <code>Result</code>? Just like <code>Optional</code>s, <a rel="external" href="https://github.com/jarsen/Pipes">Pipes</a> supports <code>Result</code>. (specifically <a rel="external" href="https://github.com/antitypical/Result">antitypical/Result</a>) Don’t care about <code>Result</code>? That’s ok, you don’t have to link it in for <a rel="external" href="https://github.com/jarsen/Pipes">Pipes</a> to work.</p>
+<pre><code data-lang="Swift">func escapeInput(string: String) -&gt; String { ... }
+
+func readFile(fileName: String) -&gt; Result&lt;String&gt; { ... }
+
+func processText(string: String) -&gt; String { ... }
+
+let processedText = inputFileName
+                    |&gt; escapeInput
+                    |&gt; readFile
+                    |&gt; processText
+</code></pre>
+<p>Once again, you don’t even have to think about <code>Result</code>s as you chain these functions together—if result shows up along the way, the whole epxression will evaluate to a result. And if something fails along the way, it will short circuit and you’ll get your <code>.Failure</code> with the appropriate error message. Neato.</p>
+<h3 id="keep-your-pipes-clean">Keep Your Pipes Clean</h3>
+<p><a rel="external" href="https://github.com/jarsen/Pipes">Pipes</a> lends itself very well to functional programming ideas. Ideally, keep all the functions and methods in the data processing pipeline pure—i.e., without side effects. Pipes has a bunch of pure implementations and helper functions for <code>Array</code> and <code>Dictionary</code> so you can perform pure versions of <code>append</code>, <code>extend</code>, <code>remove</code> and the the likes.</p>
+<h3 id="ok-i-lied-a-little">OK. I Lied a Little.</h3>
+<p>I’m actually using some currying to add a little readability to my examples. Au naturel, Pipes expects functions that take more than one argument to provide a tuple on the right hand side where the first item is the function, and the rest are the ordered arguments.</p>
+<pre><code data-lang="Swift">// with the trick
+5 |&gt; divide(10)
+// without the trick
+5 |&gt; (divide, 10)
+</code></pre>
+<p>When you use your own functions with more than one argument you’ll need to either use a tuple on the right hand side, or create a function signature where the first argument is curried on the end of the function signature</p>
+<pre><code data-lang="Swift">func divide(numerator: Double, denominator: Double) -&gt; Double {
+    return numerator / denominator
+}
+
+// the trick
+func divide(denominator: Double)(numerator: Double) -&gt; Double {
+    return numerator / denominator
+}
+</code></pre>
+<p>Essentially currying like this turns our functions into functions that take only one argument, so they don’t need to be put inside a tuple on the right hand side.</p>
+<p>Pipes has such curried versions of many standard functions bundled in the framework for your convenience.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>The forward pipe operator is one of the operators offered by <a rel="external" href="https://github.com/jarsen/Pipes">Pipes</a>. It will help clarify data processing pipelines, and automagically deal with <code>Optional</code>s and <code>Result</code>s for you. Please feel free to ask questions, and make issues or send me pull requests!</p>
+<h3 id="resources">Resources</h3>
+<ul>
+<li><a rel="external" href="https://github.com/jarsen/Pipes">Pipes on Github</a></li>
+<li>My <a rel="external" href="http://www.slideshare.net/jarsen7/pipes-48485417">Utah Valley Cocoaheads Lighting Talk</a></li>
+</ul>
+</div>
+</article>
+</main>
+</body>
+</html>

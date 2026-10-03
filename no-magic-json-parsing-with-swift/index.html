@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>No-Magic JSON Parsing with Swift · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>No-Magic JSON Parsing with Swift</h1>
+    <time datetime="2015-05-14T00:00:00Z">2015-05-14</time>
+    
+    <span class="tags"><a href="https://jarsen.github.io/jarsen-engineer-pages/tags/swift/">#swift</a></span>
+    
+  </header>
+  <div class="prose"><p>Since the beginning, JSON parsing has been a common pain point for many Swift developers. This is largely due to difficulties in dealing with a strict type system (which JSON does not have) and optionals, as well as a lack of a consistent error handling approach.</p>
+<p>Several great JSON parsing libraries have surfaced which avoid the mess of tangled if-lets (a.k.a. the infamous “pyramid of doom”). I really like the approach taken by thoughtbot in their <a rel="external" href="https://robots.thoughtbot.com/efficient-json-in-swift-with-functional-concepts-and-generics">JSON</a> <a rel="external" href="https://robots.thoughtbot.com/real-world-json-parsing-with-swift">parsing</a> articles, which ultimately led to their <a rel="external" href="https://github.com/thoughtbot/Argo">Argo</a> library on github (although I don’t like everything about Argo).</p>
+<p>However, most solutions tend to rely on a lot of magic: the magic of applicatives, functors, and monads; the magic of unfamiliar custom operators; the magic of a complex nested enum structure; the magic of multiple external dependencies.</p>
+<p>Now that swift 2.0 has brought error handling to us, we can implement much less magical JSON parsing. Here is an example of what your JSON parsing code might look like with just a thin error-throwing layer over <code>[String:AnyObject]</code>.</p>
+<h2 id="let-s-get-started">Let’s Get Started</h2>
+<pre><code>enum JSONError : ErrorType {
+    case NoValueForKey(String)
+    case TypeMismatch
+}
+
+class JSONObject {
+    private let dictionary: [String:AnyObject]
+
+    init(dictionary: [String:AnyObject]) {
+        self.dictionary = dictionary
+    }
+
+    func valueForKey&lt;A&gt;(key: String, type: A.Type) throws -&gt; A {
+        if let value = self[key] {
+            if let _ = value as? NSNull {
+                throw JSONError.NoValueForKey(key)
+            }
+            if let value = value as? A {
+                return value
+            }
+            throw JSONError.TypeMismatch
+        }
+        throw JSONError.NoValueForKey(key)
+    }
+
+    func stringForKey(key: String) throws -&gt; String {
+        return try valueForKey(key, type: String.self)
+    }
+
+    func intForKey(key: String) throws -&gt; Int {
+        return try valueForKey(key, type: Int.self)
+    }
+
+    func doubleForKey(key: String) throws -&gt; Double {
+        return try valueForKey(key, type: Double.self)
+    }
+
+    func arrayForKey&lt;A&gt;(key: String, type: A.Type) throws -&gt; [A] {
+        return try valueForKey(key, type: [A].self)
+    }
+
+    func objectForKey(key: String) throws -&gt; JSONObject {
+        let dict = try valueForKey(key, type: [String:AnyObject].self)
+        return JSONObject(dictionary: dict)
+    }
+}
+</code></pre>
+<p>Here we’ve added a bunch of functions that let us get basic things like <code>String</code>, <code>Int</code>, and <code>Double</code> out of our <code>[String:AnyObject]</code> Pandora’s Box. If we either find a nil or NSNull value, we know the key is bad. And if we find an unexpected type hidden behind the <code>AnyObject</code> we throw a <code>TypeMismatch</code> error.</p>
+<p>How does this look in practice? Let’s try it on a simple <code>Person</code> model.</p>
+<pre><code>struct Person {
+    var name: String
+    var age: Int
+    var height: Double
+
+    static func fromJSON(json: JSONObject) throws -&gt; Person {
+        let name = try json.stringForKey(&quot;name&quot;)
+        let age = try json.intForKey(&quot;age&quot;)
+        let height = try json.doubleForKey(&quot;height&quot;)
+        return Person(name: name, age: age, height: height)
+    }
+}
+
+do {
+    let jsonObject: JSONObject = [&quot;name&quot;: &quot;Bob&quot;, &quot;age&quot;: 26, &quot;height&quot;: 5.75]
+    let person = try Person.fromJSON(jsonObject)
+}
+catch let JSONError.NoValueForKey(key) {
+    print(&quot;Didn&#39;t find value for key: \(key)&quot;)
+}
+catch {
+    print(&quot;Wrong type&quot;)
+}
+</code></pre>
+<p>Not bad! <em>No pyramid of doom, no external dependencies, you didn’t have to learn a single new operator, and no worrying about the scary words like functor or monad!</em></p>
+<h2 id="optional-json-keys">Optional JSON Keys</h2>
+<p>Of course, we also want to be able to handle optional values in some cases.</p>
+<pre><code>extension JSONObject {
+    private func optionalForKey&lt;A&gt;(key: String, type: A.Type) throws -&gt; A? {
+        do {
+            let value = try valueForKey(key, type: type)
+            return value
+        }
+        catch JSONError.NoValueForKey {
+            return nil
+        }
+        catch {
+            throw JSONError.TypeMismatch
+        }
+    }
+
+    func stringOptionalForKey(key: String) throws -&gt; String? {
+        return try optionalForKey(key, type: String.self)
+    }
+
+    func intOptionalForKey(key: String) throws -&gt; Int? {
+        return try optionalForKey(key, type: Int.self)
+    }
+
+    func doubleOptionalForKey(key: String) throws -&gt; Double? {
+        return try optionalForKey(key, type: Double.self)
+    }
+
+    func arrayOptionalForKey&lt;A&gt;(key: String, type: A.Type) throws -&gt; [A]? {
+        return try optionalForKey(key, type: [A].self)
+    }
+
+    func objectOptionalForKey(key: String) throws -&gt; JSONObject? {
+        let dict = try optionalForKey(key, type: [String:AnyObject].self)
+        return dict.map(JSONObject.init)
+    }
+}
+</code></pre>
+<p>Awesome. Now we have some pretty basic JSON handling in place, but honestly it’s probably most of what you will ever need.</p>
+<h2 id="key-paths">Key Paths</h2>
+<p>There’s one more thing that might be nice though: handling key paths. So, let’s rewrite our <code>valueForKey</code>.</p>
+<pre><code>func valueForKey&lt;A&gt;(key: String, type: A.Type) throws -&gt; A {
+    let pathComponents = key.componentsSeparatedByString(&quot;.&quot;)
+
+    var accumulator: Any = dictionary
+
+    for component in pathComponents {
+        if let dict = accumulator as? [String:AnyObject] {
+            if let value = dict[component] {
+                accumulator = value
+                continue
+            }
+        }
+        throw JSONError.NoValueForKey(key)
+    }
+
+    if let value = accumulator as? A {
+        return value
+    }
+    else {
+        throw JSONError.TypeMismatch
+    }
+}
+</code></pre>
+<p>Now we can do this:</p>
+<pre><code>let street = try json.stringForKey(&quot;address.street&quot;)
+</code></pre>
+<p>And, because we implemented our <code>optionalForKey</code> on top of <code>valueForKey</code>, everything else will just keep working.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>I think this JSON code is quite nice, and easy for anyone to understand without having their mind blown. Even though <a rel="external" href="https://jarsen.engineer/result-vs-throws/">I went a little caremad the other week about Result</a>, I like how this code turned out better than my old <code>Result</code> based JSON parsing: it’s easier to explain to others, and it’s much easier on the compiler, which saves you time when trying to figure out what is wrong. It is also more idiomatic.</p>
+<p>I’m sure there are some cool ways to improve this code, I’d love to hear your thoughts! Please leave a comment or give me a shout on <a rel="external" href="http://twitter.com/jarsen">twitter</a>(<a rel="external" href="http://twitter.com/jarsen">@jarsen</a>)</p>
+<p>The Swift 2.0 beta2 brings <em>extensions to generic types</em>. Generic types extensions allow us to add functionality to things like <code>Array</code> and <code>Dictionary</code>in specific cases. Unfortunately for the moment it seems that you can’t give it specific types for Key/Value, only protocol conformance. If we could specify specific types, we could extend <code>[String:AnyObject]</code> and typealias it to <code>JSONObject</code> instead of having a wrapper class.</p>
+<p>And here’s <a rel="external" href="https://gist.github.com/jarsen/2b0913111c0427642c41">the final code</a> all in one gist.</p>
+<p>Update: Be sure to check out <a rel="external" href="https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/">Part 2</a>, in which we make the code even better by relying more heavily on type inference.</p>
+</div>
+</article>
+</main>
+</body>
+</html>

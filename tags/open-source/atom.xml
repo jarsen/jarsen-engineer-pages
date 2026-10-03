@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Jason Larsen — Engineer - Open Source</title>
+    <subtitle>Thoughts about the art of software engineering and design.</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://jarsen.github.io/jarsen-engineer-pages/tags/open-source/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2017-06-06T00:00:00+00:00</updated>
+    <id>https://jarsen.github.io/jarsen-engineer-pages/tags/open-source/atom.xml</id>
+    <entry xml:lang="en">
+        <title>I Did Not Shoot the Marshal</title>
+        <published>2017-06-06T00:00:00+00:00</published>
+        <updated>2017-06-06T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/">&lt;h2 id=&quot;json-in-swift-4-and-open-source-thoughts&quot;&gt;JSON in Swift 4 and Open Source Thoughts&lt;/h2&gt;
+&lt;p&gt;Swift 4 brings a cornucopia of welcome (and a few unwelcome) updates. One of the ones I am excited about is the introduction of Codable. As the owner of a &lt;a rel=&quot;external&quot; href=&quot;https://github.com/utahiosmac/Marshal&quot;&gt;popular open source JSON mapping framework&lt;/a&gt;, I really look forward to Codable making my work obsolete. It’s the death of an era, but it is a necessary death.&lt;/p&gt;
+&lt;p&gt;Here is what mapping JSON to an object looks like using Marshal.&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;struct User: Unmarshaling {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var id: Int&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var name: String&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var email: String&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;init(object: MarshaledObject) throws {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;id = try object.value(for: “id”)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;name = try object.value(for: “name”)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;email = try object.value(for: “email”)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let users: [User] = try json.value(for: “users”)&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/8f574d75ee86c5b8b56039bfe5eb432a/raw/59d8597e539a6613e9308bfa349bb88583c642fa/unmarshaling.swift&quot;&gt;view raw&lt;/a&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/8f574d75ee86c5b8b56039bfe5eb432a#file-unmarshaling-swift&quot;&gt;unmarshaling.swift &lt;/a&gt;hosted with ❤ by &lt;a rel=&quot;external&quot; href=&quot;https://github.com/&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;And here is the simplest possible implementation of a Codable student.&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;struct Student: Codable {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var name: String&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var age: Int&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var email: String&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let student = Student(name: “Jason”, age: 99, email: “jason@example.com”)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let encoder = JSONEncoder()&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let data = try encoder.encode(student)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let decoder = JSONDecoder()&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let newStudent = try decoder.decode(Student.self, from: data)&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/ec99f0b6059571f80ea52d2feed81228/raw/97734a205e1ef934b8a36197fc8e7afb2c2b36fa/implicit_codable.swift&quot;&gt;view raw&lt;/a&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/ec99f0b6059571f80ea52d2feed81228#file-implicit_codable-swift&quot;&gt;implicit_codable.swift &lt;/a&gt;hosted with ❤ by &lt;a rel=&quot;external&quot; href=&quot;https://github.com/&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The JSON keys we’re looking for here are implicitly defined to be the same as our variable names. If we have keys that don’t match the names of our variables, say for example, the key for age was “student_age” instead of just “age”, we can explicitly provide our keys like this:&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;struct Student: Codable {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var name: String&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var age: Int&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var email: String&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;enum CodingKeys: String, CodingKey {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;case name&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;case age = “student_age”&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;case email&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/70de1dc800cbd487da6b5827e7a50654/raw/435b5bdad5508fa74216998973afe6c41ddef391/explicit_codable.swift&quot;&gt;view raw&lt;/a&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/70de1dc800cbd487da6b5827e7a50654#file-explicit_codable-swift&quot;&gt;explicit_codable.swift &lt;/a&gt;hosted with ❤ by &lt;a rel=&quot;external&quot; href=&quot;https://github.com/&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The nice thing about Codableis that we get implementations of both Encodableand Decodable for free. However, the keys can still be implicit, and I find this to be a lurking danger. Having had too many gotcha moments using Mantle long ago, I felt that it was important to have the mapping always be explicit. This is why Marshal never embraced reflection.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Explicit is better than implicit.
+- The Zen of Python
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But, you don’t have to take my word for it. The Swift blog, in it’s final section in the &lt;a rel=&quot;external&quot; href=&quot;https://developer.apple.com/swift/blog/?id=37&quot;&gt;Working with JSON in Swift&lt;/a&gt; post had this to say:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Converting between representations of the same data in order to communicate between different systems is a tedious, albeit necessary, task for writing software. Because the structure of these representations can be quite similar, it may be tempting to create a higher-level abstraction to automatically map between these different representations. For instance, a type might define a mapping between snake_case JSON keys and camelCase property names in order to automatically initialize a model from JSON using the Swift reflection APIs, such as Mirror. However, we’ve found that these kinds of abstractions tend not to offer significant benefits over conventional usage of Swift language features, and instead make it more difficult to debug problems or handle edge cases. In the example above, the initializer not only extracts and maps values from JSON, but also initializes complex data types and performs domain-specific input validation. A reflection-based approach would have to go to great lengths in order to accomplish all of these tasks. Keep this in mind when evaluating the available strategies for your own app. The cost of small amounts of duplication may be significantly less than picking the incorrect abstraction.”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Now, as far as I understand, Codable is not actually using any reflection—the compiler is actually generating those functions for you—but I think that the sentiment remains for me. I personally am going to always explicitly define my CodingKeys, even if they all match my variable names.&lt;/p&gt;
+&lt;h2 id=&quot;core-data&quot;&gt;Core Data?&lt;/h2&gt;
+&lt;p&gt;One thing I have yet to completely understand is how Codeable works with CoreData. Marshal has a protocol that allows the user to update an existing model with a dictionary and some context. It appears, according to my cursory looks that the userInfo dictionary on the decoder is where you want to pass along any context. But, I haven’t looked very deep because I don’t personally use CoreData in any of my projects.&lt;/p&gt;
+&lt;h2 id=&quot;beyond-json&quot;&gt;Beyond JSON&lt;/h2&gt;
+&lt;p&gt;One of the “cool” things about Marshal is that it wasn’t just about JSON. It could handle anything that conformed to the simple MarshaledObject protocol. This means you could use the same initialization methods to create an object from JSON as you could from a plist, CloudKit, or some other data source. Codable also supports this sort of behavior through use of different decoders. Personally, I think the Codable approach is more elegant in this regard.&lt;/p&gt;
+&lt;h2 id=&quot;open-source-thoughts&quot;&gt;Open Source Thoughts&lt;/h2&gt;
+&lt;p&gt;I really enjoyed using and working on Marshal. But wow was it a lot of work. At the time of writing this article Marshal has 477 stars. Which, is a good amount, but trivial compared to many other projects. Even with this relatively low usage, it was very burdensome to maintain between having a job, family, and hobbies/other projects. I definitely have a completely new respect for big people in the open source scene, and a strong opinion that companies that use open source should contribute to open source, whether that contribution be opening up their own code, encouraging employees to do open source work on the clock (not on their own time), or financial donations.&lt;/p&gt;
+&lt;p&gt;I’m happy that this Codable work was part of Swift’s development as an open source effort. Even though sometimes (like anything you love or work with all day) Swift drives me nuts with some of its quirks/decisions, I appreciate all the efforts of the Swift team and the community as a whole. Open source is hard. Communication is hard. Making everyone happy is hard. I’d say this is one of the hardest problems in Software Engineering. But I’m glad so many people are working together so that we can all enjoy making apps more.&lt;/p&gt;
+</content>
+        
+    </entry>
+</feed>

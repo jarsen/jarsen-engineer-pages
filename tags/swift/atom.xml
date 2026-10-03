@@ -1,0 +1,1139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Jason Larsen — Engineer - Swift</title>
+    <subtitle>Thoughts about the art of software engineering and design.</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://jarsen.github.io/jarsen-engineer-pages/tags/swift/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2017-06-06T00:00:00+00:00</updated>
+    <id>https://jarsen.github.io/jarsen-engineer-pages/tags/swift/atom.xml</id>
+    <entry xml:lang="en">
+        <title>I Did Not Shoot the Marshal</title>
+        <published>2017-06-06T00:00:00+00:00</published>
+        <updated>2017-06-06T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/">&lt;h2 id=&quot;json-in-swift-4-and-open-source-thoughts&quot;&gt;JSON in Swift 4 and Open Source Thoughts&lt;/h2&gt;
+&lt;p&gt;Swift 4 brings a cornucopia of welcome (and a few unwelcome) updates. One of the ones I am excited about is the introduction of Codable. As the owner of a &lt;a rel=&quot;external&quot; href=&quot;https://github.com/utahiosmac/Marshal&quot;&gt;popular open source JSON mapping framework&lt;/a&gt;, I really look forward to Codable making my work obsolete. It’s the death of an era, but it is a necessary death.&lt;/p&gt;
+&lt;p&gt;Here is what mapping JSON to an object looks like using Marshal.&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;struct User: Unmarshaling {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var id: Int&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var name: String&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var email: String&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;init(object: MarshaledObject) throws {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;id = try object.value(for: “id”)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;name = try object.value(for: “name”)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;email = try object.value(for: “email”)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let users: [User] = try json.value(for: “users”)&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/8f574d75ee86c5b8b56039bfe5eb432a/raw/59d8597e539a6613e9308bfa349bb88583c642fa/unmarshaling.swift&quot;&gt;view raw&lt;/a&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/8f574d75ee86c5b8b56039bfe5eb432a#file-unmarshaling-swift&quot;&gt;unmarshaling.swift &lt;/a&gt;hosted with ❤ by &lt;a rel=&quot;external&quot; href=&quot;https://github.com/&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;And here is the simplest possible implementation of a Codable student.&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;struct Student: Codable {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var name: String&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var age: Int&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var email: String&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let student = Student(name: “Jason”, age: 99, email: “jason@example.com”)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let encoder = JSONEncoder()&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let data = try encoder.encode(student)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let decoder = JSONDecoder()&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let newStudent = try decoder.decode(Student.self, from: data)&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/ec99f0b6059571f80ea52d2feed81228/raw/97734a205e1ef934b8a36197fc8e7afb2c2b36fa/implicit_codable.swift&quot;&gt;view raw&lt;/a&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/ec99f0b6059571f80ea52d2feed81228#file-implicit_codable-swift&quot;&gt;implicit_codable.swift &lt;/a&gt;hosted with ❤ by &lt;a rel=&quot;external&quot; href=&quot;https://github.com/&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The JSON keys we’re looking for here are implicitly defined to be the same as our variable names. If we have keys that don’t match the names of our variables, say for example, the key for age was “student_age” instead of just “age”, we can explicitly provide our keys like this:&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;struct Student: Codable {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var name: String&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var age: Int&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var email: String&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;enum CodingKeys: String, CodingKey {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;case name&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;case age = “student_age”&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;case email&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/70de1dc800cbd487da6b5827e7a50654/raw/435b5bdad5508fa74216998973afe6c41ddef391/explicit_codable.swift&quot;&gt;view raw&lt;/a&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/70de1dc800cbd487da6b5827e7a50654#file-explicit_codable-swift&quot;&gt;explicit_codable.swift &lt;/a&gt;hosted with ❤ by &lt;a rel=&quot;external&quot; href=&quot;https://github.com/&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The nice thing about Codableis that we get implementations of both Encodableand Decodable for free. However, the keys can still be implicit, and I find this to be a lurking danger. Having had too many gotcha moments using Mantle long ago, I felt that it was important to have the mapping always be explicit. This is why Marshal never embraced reflection.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Explicit is better than implicit.
+- The Zen of Python
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But, you don’t have to take my word for it. The Swift blog, in it’s final section in the &lt;a rel=&quot;external&quot; href=&quot;https://developer.apple.com/swift/blog/?id=37&quot;&gt;Working with JSON in Swift&lt;/a&gt; post had this to say:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Converting between representations of the same data in order to communicate between different systems is a tedious, albeit necessary, task for writing software. Because the structure of these representations can be quite similar, it may be tempting to create a higher-level abstraction to automatically map between these different representations. For instance, a type might define a mapping between snake_case JSON keys and camelCase property names in order to automatically initialize a model from JSON using the Swift reflection APIs, such as Mirror. However, we’ve found that these kinds of abstractions tend not to offer significant benefits over conventional usage of Swift language features, and instead make it more difficult to debug problems or handle edge cases. In the example above, the initializer not only extracts and maps values from JSON, but also initializes complex data types and performs domain-specific input validation. A reflection-based approach would have to go to great lengths in order to accomplish all of these tasks. Keep this in mind when evaluating the available strategies for your own app. The cost of small amounts of duplication may be significantly less than picking the incorrect abstraction.”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Now, as far as I understand, Codable is not actually using any reflection—the compiler is actually generating those functions for you—but I think that the sentiment remains for me. I personally am going to always explicitly define my CodingKeys, even if they all match my variable names.&lt;/p&gt;
+&lt;h2 id=&quot;core-data&quot;&gt;Core Data?&lt;/h2&gt;
+&lt;p&gt;One thing I have yet to completely understand is how Codeable works with CoreData. Marshal has a protocol that allows the user to update an existing model with a dictionary and some context. It appears, according to my cursory looks that the userInfo dictionary on the decoder is where you want to pass along any context. But, I haven’t looked very deep because I don’t personally use CoreData in any of my projects.&lt;/p&gt;
+&lt;h2 id=&quot;beyond-json&quot;&gt;Beyond JSON&lt;/h2&gt;
+&lt;p&gt;One of the “cool” things about Marshal is that it wasn’t just about JSON. It could handle anything that conformed to the simple MarshaledObject protocol. This means you could use the same initialization methods to create an object from JSON as you could from a plist, CloudKit, or some other data source. Codable also supports this sort of behavior through use of different decoders. Personally, I think the Codable approach is more elegant in this regard.&lt;/p&gt;
+&lt;h2 id=&quot;open-source-thoughts&quot;&gt;Open Source Thoughts&lt;/h2&gt;
+&lt;p&gt;I really enjoyed using and working on Marshal. But wow was it a lot of work. At the time of writing this article Marshal has 477 stars. Which, is a good amount, but trivial compared to many other projects. Even with this relatively low usage, it was very burdensome to maintain between having a job, family, and hobbies/other projects. I definitely have a completely new respect for big people in the open source scene, and a strong opinion that companies that use open source should contribute to open source, whether that contribution be opening up their own code, encouraging employees to do open source work on the clock (not on their own time), or financial donations.&lt;/p&gt;
+&lt;p&gt;I’m happy that this Codable work was part of Swift’s development as an open source effort. Even though sometimes (like anything you love or work with all day) Swift drives me nuts with some of its quirks/decisions, I appreciate all the efforts of the Swift team and the community as a whole. Open source is hard. Communication is hard. Making everyone happy is hard. I’d say this is one of the hardest problems in Software Engineering. But I’m glad so many people are working together so that we can all enjoy making apps more.&lt;/p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Optimistic Networking with Reactor</title>
+        <published>2016-09-08T00:00:00+00:00</published>
+        <updated>2016-09-08T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/optimistic-networking-with-reactor/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/optimistic-networking-with-reactor/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/optimistic-networking-with-reactor/">&lt;h2 id=&quot;a-love-story&quot;&gt;A Love Story&lt;/h2&gt;
+&lt;p&gt;Last time we talked about some pretty cool stuff we can do to build a more reactive iOS application using the &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Reactor&quot;&gt;Reactor&lt;/a&gt; architecture. Today we’ll investigate how we can keep in sync with data from the network and &lt;em&gt;make our app faster with the power of optimism!&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Let’s look at the Reactor architecture diagram for a quick refresher:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;┌──────────────────┐                                 ┌──────────────────┐
+│                  │                                 │                  │
+│                  │         ┌───────────┐           │                  │
+│                  │◀────────┤   Event   ├───────────┤                  │
+│                  │         └───────────┘           │                  │
+│                  │                                 │                  │
+│                  │                                 │                  │
+│     Reactor      │                                 │    Subscriber    │
+│                  │                                 │                  │
+│                  │         ┌───────────┐           │                  │
+│    ┌───────┐     ├─────────┤  update   ├──────────▶│                  │
+│    │ State │     │         └───────────┘           │                  │
+│    └───────┘     │                                 │                  │
+│                  │                                 │                  │
+└──────────────────┘                                 └──────────────────┘
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/356832f3d4410eeac76b118c52fb2310/raw/a201b5e4e2276df3738c8228c6d0ed78c43808da/reactor_diagram.md&quot;&gt;view raw&lt;/a&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/356832f3d4410eeac76b118c52fb2310#file-reactor_diagram-md&quot;&gt;reactor_diagram.md &lt;/a&gt;hosted with ❤ by &lt;a rel=&quot;external&quot; href=&quot;https://github.com/&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;We send events to make the Reactor update our application state. The reactor handles events, updates the state, and then notifies all the subscribers. But what about asynchronous events?&lt;/p&gt;
+&lt;h2 id=&quot;commands&quot;&gt;Commands&lt;/h2&gt;
+&lt;p&gt;Performing async events is likely going to be a common occurrence in your app. Reactor offers the Command API to help establish a consistent and safe way to perform asynchronous events&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;struct FetchPlayers: Command {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var session = URLSession.shared&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;func execute(state: State, reactor: Reactor) {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;session.dataTask(with: fetchPlayerURL) { data, response, error in&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;if error {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;reactor.fire(event: DisplayError(message: “Error fetching players”))&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;else {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var players: [Player] = // handle json…&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;reactor.fire(event: Update(value: players))&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}.resume()&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;// Caller uses:&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;reactor.fire(command: FetchPlayers())&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/aff991b011ec33314f34e6e66a9d437a/raw/ceea450a365bc1e6e1ad62f12aac8852a303d6ef/Command.swift&quot;&gt;view raw&lt;/a&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/aff991b011ec33314f34e6e66a9d437a#file-command-swift&quot;&gt;Command.swift &lt;/a&gt;hosted with ❤ by &lt;a rel=&quot;external&quot; href=&quot;https://github.com/&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Hopefully the code inside execute looks similar to your usual networking functions. The difference here is we’ve wrapped it inside of a function which receives its own copy of the application state and reference to the Reactor. We don’t end up needing the state for anything here, but we use the Reactor reference to dispatch events upon network task completion.&lt;/p&gt;
+&lt;h2 id=&quot;instant-optimistic-network-results&quot;&gt;Instant, Optimistic Network Results&lt;/h2&gt;
+&lt;p&gt;Say we’re performing a different type of network request, perhaps adding a new player. Do we really want to wait for a response from the server before we can update our UI? Can you imagine liking a post on Facebook and waiting for the request to travel all the way to the Facebook and back to confirm our like was successfully recorded before seeing the thumb turn blue? &lt;em&gt;Ain’t nobody got time for that!&lt;/em&gt; We want our app to feel fast and responsive!&lt;/p&gt;
+&lt;p&gt;What if we just assume the network request is successful and immediately update the UI? Then we can update with the real response later. Or, in the case of an error, we can reset to the original state. Let’s call this “optimistic networking.”&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;struct AddPlayer: Command {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var session = URLSession.shared&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var player: Player&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;func execute(state: State, reactor: Reactor) {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let originalPlayers = state.players&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;let task = session.dataTask(with: player.putRequest()) { data, response, error in&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;if error {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;// 3. whoops. switch back and display error&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;reactor.fire(event: Update(value: originalPlayers))&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;reactor.fire(event: DisplayError(message: “Error adding \player.name)”))&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;else {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;// handle json and …&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;// 2. update with the real values from the server, hopefully the same&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;reactor.fire(event: Update(value: players))&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;// 1. optimistically assume success and immediately update UI&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;var optimisticPlayers = originalPlayers&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;optimisticPlayers.append(player)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;reactor.fire(event: Update(value: optimisticPlayers))&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;task.resume()&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;// Caller uses:&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;reactor.fire(command: AddPlayer(player: player))&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/8cabf133e6aa2311322a8c82922f9223/raw/49acd6b88390c5c9a4fbb03170b233f18adb6398/OptimisticCommand.swift&quot;&gt;view raw&lt;/a&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/8cabf133e6aa2311322a8c82922f9223#file-optimisticcommand-swift&quot;&gt;OptimisticCommand.swift &lt;/a&gt;hosted with ❤ by &lt;a rel=&quot;external&quot; href=&quot;https://github.com/&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This code is similar to our FetchPlayers command, but we have added properties to our struct—this allows us to set up necessary data for our async Command. We also are firing events in a few more places:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;We optimistically add the new player to our state, and fire an event telling the reactor to update its current list of players with our optimistic list.&lt;/li&gt;
+&lt;li&gt;Upon a successful request, we parse the response and update (for a second time) with the result the server returns. If the data is the same (if our optimism was correct) then we should see no difference.&lt;/li&gt;
+&lt;li&gt;If our request came back with an error, then we reset the list back to where it was when we started, and display an error message to the user.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;If you are using Reactor and doing any sort of of asynchronous operations then you want to use Commands!&lt;/p&gt;
+&lt;p&gt;Commands will help you handle async tasks in a consistent manner while leveraging the power of Reactor to keep your UI always in sync. And with almost no work at all, you can have the power of optimism to make your app feel faster.&lt;/p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>React Native, Native</title>
+        <published>2016-08-29T00:00:00+00:00</published>
+        <updated>2016-08-29T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/react-native-native/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/react-native-native/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/react-native-native/">&lt;h2 id=&quot;making-your-swift-app-more-react-nativey&quot;&gt;Making your Swift app more React Nativey&lt;/h2&gt;
+&lt;h2 id=&quot;confessions&quot;&gt;Confessions&lt;/h2&gt;
+&lt;p&gt;I’m going to let you in on a dirty little secret. Sometimes I think longingly about React Native.&lt;/p&gt;
+&lt;p&gt;I know, I know. Feels so wrong. But some of it feels so right. *Reactive, declarative UI code? Hot reloading? Updates that can bypass the app store?*And even though Javascript isn’t as sweet in a lot of ways as Swift, it’s getting pretty good (new async/wait and gradual type checking with &lt;a rel=&quot;external&quot; href=&quot;https://flowtype.org/&quot;&gt;Flow&lt;/a&gt;). I keep trying it out from time to time, wanting it to be amazing and save me from all the things that drive me nuts in iOS development. &lt;a rel=&quot;external&quot; href=&quot;http://artsy.github.io/blog/2016/08/15/React-Native-at-Artsy/&quot;&gt;Of course it’s not without its share of cons&lt;/a&gt;, but certain features are awful fun and productive—and who doesn’t want to have fun and be productive?&lt;/p&gt;
+&lt;p&gt;For those of us who decide React Native is not the way, what if we could get some of the features while still writing Swift? Today we’ll explore how we can have a reactive, declarative UI code and &lt;em&gt;hot reload app data&lt;/em&gt; so we can save tons of testing time. Also, maybe we can do something to bypass the app store for updates even just a little?&lt;/p&gt;
+&lt;h2 id=&quot;reactive-declarative-ui&quot;&gt;Reactive, Declarative UI&lt;/h2&gt;
+&lt;p&gt;React Native lets us write UI code that feels more like a description of what the UI should be, separated from the logic that configures and transforms all the data. We don’t have the fancy virtual DOM React does, but we can work around that.&lt;/p&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Reactor&quot;&gt;Reactor&lt;/a&gt; is a small Swift library I wrote inspired by Elm, Redux, and the work on the excellent &lt;a rel=&quot;external&quot; href=&quot;https://github.com/ReSwift/ReSwift&quot;&gt;ReSwift&lt;/a&gt; by Benjamin Encz and others. See the documentation for a more in depth understanding of Reactor, but the basic model we’re working with is this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;┌──────────────────┐                                 ┌──────────────────┐
+│                  │                                 │                  │
+│                  │         ┌───────────┐           │                  │
+│                  │◀────────┤   Event   ├───────────┤                  │
+│                  │         └───────────┘           │                  │
+│                  │                                 │                  │
+│                  │                                 │                  │
+│     Reactor      │                                 │    Subscriber    │
+│                  │                                 │                  │
+│                  │         ┌───────────┐           │                  │
+│    ┌───────┐     ├─────────┤  update   ├──────────▶│                  │
+│    │ State │     │         └───────────┘           │                  │
+│    └───────┘     │                                 │                  │
+│                  │                                 │                  │
+└──────────────────┘                                 └──────────────────┘
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/356832f3d4410eeac76b118c52fb2310/raw/a201b5e4e2276df3738c8228c6d0ed78c43808da/reactor_diagram.md&quot;&gt;view raw&lt;/a&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/356832f3d4410eeac76b118c52fb2310#file-reactor_diagram-md&quot;&gt;reactor_diagram.md &lt;/a&gt;hosted with ❤ by &lt;a rel=&quot;external&quot; href=&quot;https://github.com/&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;In a nutshell, we have one state object with all of the application data nested inside of it. Each of our view controllers has an update function that knows how to take the state object and update its view. The view controllers subscribe to the Reactor, which notifies them whenever the state changes.&lt;/p&gt;
+&lt;p&gt;An example of this update function might look like:&lt;/p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;func update(with state: State) {&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;guard let user = state.user else { return }&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;firstNameLabel.text = user.firstName&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;lastNameLabel.text = user.lastName&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;ageLabel.text = String(user.age)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;}&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/241de4df94dd4f110583b54f33294834/raw/f19fef495227edf9d162e8a977a78d1d64dcf620/UpdateExample.swift&quot;&gt;view raw&lt;/a&gt;&lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/241de4df94dd4f110583b54f33294834#file-updateexample-swift&quot;&gt;UpdateExample.swift &lt;/a&gt;hosted with ❤ by &lt;a rel=&quot;external&quot; href=&quot;https://github.com/&quot;&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;All UI updates go in this function. This gives us one easy place to declare exactly how our UI reflects the app data. It will always stay up to date, reacting to the any state updates.&lt;/p&gt;
+&lt;p&gt;If this hasn’t all settled in yet, don’t worry. Going in depth here is beyond the scope of this article. Read the &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Reactor&quot;&gt;documentation&lt;/a&gt; and ping me on twitter with questions. And if you don’t like Reactor, ReSwift is terrific and the pattern is simple enough you can easily roll your own. The point is, if we store our application data in one data structure, we can have simple reactive, declarative UI code in Swift without React Native or a mind bending FRP library that may scare co-workers away (but make you sound super smart at dinner parties).&lt;/p&gt;
+&lt;h2 id=&quot;hot-reloading&quot;&gt;Hot Reloading&lt;/h2&gt;
+&lt;p&gt;We cannot, due to Swift limitations, hot reload recompiled code. Bummer.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;But&lt;/em&gt;, we did just talk about representing our application data as a struct. What if, hypothetically, we could serialize/deserialize our entire state into some format—say… JSON—save it to the file system, and then watch that file for updates? Then, hypothetically, we could edit that JSON file in our favorite text editor and our app would automatically update using our Reactor architecture.&lt;/p&gt;
+&lt;p&gt;Hypothetically. &lt;em&gt;Right&lt;/em&gt;?&lt;/p&gt;
+&lt;p&gt;Enter the amazing &lt;a rel=&quot;external&quot; href=&quot;https://github.com/krzysztofzablocki/KZFileWatchers&quot;&gt;KZFileWatchers&lt;/a&gt; by &lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/merowing&quot;&gt;Krzysztof Zabłocki&lt;/a&gt;. Observe:&lt;/p&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://jasonlarsen.me/2016/08/29/Check%20out%20the%20example%20project&quot;&gt;Check out the example project&lt;/a&gt; to see how it’s done. But it’s pretty much exactly like you might imagine: our state is designed to serialize/deserialize using &lt;a rel=&quot;external&quot; href=&quot;http://github.com/utahiosmac/Marshal&quot;&gt;Marshal&lt;/a&gt;, and then we use the hook it all together with our architecture and the file watcher.&lt;/p&gt;
+&lt;p&gt;I think there’s a lot of potential here: recreate buggy states users report, testing UI without having to recompile, easy inspection of your apps current state… all kinds of fun stuff.&lt;/p&gt;
+&lt;h2 id=&quot;bypassing-the-app-store&quot;&gt;Bypassing the App Store&lt;/h2&gt;
+&lt;p&gt;We’re quickly approaching the end of the known iOS universe.&lt;/p&gt;
+&lt;p&gt;Javascript, due to its interpreted nature, not only can hot reload code, but can hot reload code that has been received over the network. This leads to a whole realm of possibilities for A/B Testing, bypassing the app store for some updates, and security vulnerabilities. :P&lt;/p&gt;
+&lt;p&gt;As we’ve dicussed before, we can’t hot reload Swift code. We do know we can hot reload application data, however. So, what if we represented more of our UI as application data? Maybe we could write a few reusable components, and the data itself would tell us which UI component it wants to use. &lt;a rel=&quot;external&quot; href=&quot;https://atscaleconference.com/videos/backend-driven-native-uis/&quot;&gt;This is something that Spotify is doing&lt;/a&gt;, as demonstrated by &lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/johnsundell&quot;&gt;John Sundell&lt;/a&gt;. Watch that video. Cool, cool stuff.&lt;/p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;React Native takes some heat from the iOS community; probably a lot is undeserved from developers who haven’t tried it, but like all tools it comes with its own pros and cons.&lt;/p&gt;
+&lt;p&gt;Maybe those cons outweight the pros for you in your project. That doesn’t mean we shouldn’t covet the pros or try to figure out how we can apply the ideas amazing software developers in other areas to our own domain&lt;/p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Refactoring: Replace Enum with Polymorphism</title>
+        <published>2016-08-08T00:00:00+00:00</published>
+        <updated>2016-08-08T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/">&lt;p&gt;Enums in Swift are great—love me some sweet, sweet enums. However, as with all great things, one can go too far.&lt;/p&gt;
+&lt;p&gt;Let’s look at the following contrived example:&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;swift&quot;&gt;enum Animal {
+
+    enum Size {
+        case small
+        case medium
+        case large
+    }
+
+    case dog
+    case cat
+    case cow
+
+    var noise: String {
+        switch self {
+        case .dog:
+            return &amp;quot;woof&amp;quot;
+        case .cat:
+            return &amp;quot;meow&amp;quot;
+        case .cow:
+            return &amp;quot;moo&amp;quot;
+        }
+    }
+
+    var size: Size {
+        switch self {
+        case .dog:
+            return .medium
+        case .cat:
+            return .small
+        case .cow:
+            return .large
+        }
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I’ve seen a lot of enums like this. Well, not animals maybe. But you know what I mean.&lt;/p&gt;
+&lt;p&gt;Let’s do a mental exercise: how do you add a fox to your list of animals? Pretty straightforward: add a new case, the compiler will tell you your cases are no longer exhaustive and you fill out those cases… and done.&lt;/p&gt;
+&lt;p&gt;Unless you’re switching on it somewhere else in your code. Then you have to update those too.&lt;/p&gt;
+&lt;p&gt;And if you have lots of vars/funcs… That’s a lot of work to add a case to to each.&lt;/p&gt;
+&lt;p&gt;And now that you look at it, there’s a lot of duplicate code involved to setup the switches and define all the cases.&lt;/p&gt;
+&lt;p&gt;And can you imagine what will happen if you have to throw logic and associated types into the mix?&lt;/p&gt;
+&lt;p&gt;This could get unwieldy quickly.&lt;/p&gt;
+&lt;h2 id=&quot;let-s-rewind&quot;&gt;Let’s Rewind&lt;/h2&gt;
+&lt;p&gt;Why are we using an enum in the first place? Is it just because I want a way to group lots of the same type together that have the same properties?&lt;/p&gt;
+&lt;p&gt;There is a way to do this that has existed since the dawn of time: &lt;em&gt;protocols&lt;/em&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;swift&quot;&gt;enum AnimalSize {
+    case small
+    case medium
+    case large
+}
+
+protocol Animal {
+    var noise: String { get }
+    var size: AnimalSize { get }
+}
+
+struct Dog: Animal {
+    var noise = &amp;quot;woof&amp;quot;
+    var size = AnimalSize.medium
+}
+
+struct Cat: Animal {
+    var noise = &amp;quot;meow&amp;quot;
+    var size = AnimalSize.small
+}
+
+struct Cow: Animal {
+    var noise = &amp;quot;moo&amp;quot;
+    var size = AnimalSize.large
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This ancient refactoring technique is known as &lt;a rel=&quot;external&quot; href=&quot;https://sourcemaking.com/refactoring/replace-conditional-with-polymorphism&quot;&gt;Replace Conditional with Polymorphism&lt;/a&gt;, and it can make your code cleaner, if you will let it in your heart. But I’ll call it Protocol Oriented Programming so we can get people to use it and increase traffic to this article.&lt;/p&gt;
+&lt;p&gt;As you can see:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;We remove lots of duplicate switch code.&lt;/li&gt;
+&lt;li&gt;Adding a new case is as simple as adding a new type — no need to refactor other methods. This is the Open/Closed Principle.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;swift&quot;&gt;struct Fox: Animal {
+    var noise = &amp;quot;wa-pa-pa-pa-pa-pa-pow&amp;quot;
+    var size = AnimalSize.medium
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;when-should-you-use-enums&quot;&gt;When Should You Use Enums?&lt;/h2&gt;
+&lt;p&gt;As I said before, enums are great. You just need to use them appropriately. They are great for scenarios where you specifically do not want flexibility, or awesome things like ADTs.&lt;/p&gt;
+&lt;p&gt;Notice that when we refactored we kept an AnimalSize enum lingering around; we only ever want those 3 types, so that’s a good use case for an enum.&lt;/p&gt;
+&lt;p&gt;So, ask yourself first:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Do I know all cases and want to make sure every possibility is accounted for—but never more?”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;If so, you very well might want to use an enum!&lt;/p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Enums are an awesome, essential part of Swift, but it seems that this new shininess can sometimes lead to using enums where they aren’t the best fit.&lt;/p&gt;
+&lt;p&gt;Let us go forth and use enums greatly, but also not forget the lessons of the past.&lt;/p&gt;
+&lt;h2 id=&quot;further-reading&quot;&gt;Further Reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;external&quot; href=&quot;http://www.jessesquires.com/enums-as-configs/&quot;&gt;Enums as configuration: the anti-pattern&lt;/a&gt; by &lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/jesse_squires&quot;&gt;Jesse Squires&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Protocol-Oriented JSON in Swift</title>
+        <published>2015-10-15T00:00:00+00:00</published>
+        <updated>2015-10-15T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/protocol-oriented-json-in-swift/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/protocol-oriented-json-in-swift/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/protocol-oriented-json-in-swift/">&lt;p&gt;Previously we &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/&quot;&gt;explored&lt;/a&gt; how to use Swift’s amazing type system to simplify our JSON code. We came up with a solution that was concise, without building a complicated tree of JSON enums, using crazy operators, or getting deep into reflection. And we did it all in 100-some-odd lines of code.&lt;/p&gt;
+&lt;p&gt;Today we’re going to use &lt;em&gt;protocol-oriented programming&lt;/em&gt; to take it even further.&lt;/p&gt;
+&lt;p&gt;Last time we created our own class, &lt;code&gt;JSONObject&lt;/code&gt;, to encapsulate a JSON dictionary and to hold our &lt;code&gt;valueForKey&lt;/code&gt; family of helpers. This encapsulation had several benefits, however, it also came with the baggage of having to constantly wrap our basic &lt;code&gt;[String:AnyObject]&lt;/code&gt; JSON dictionaries. This can become especially tedious when we have nested JSON objects we want to extract.&lt;/p&gt;
+&lt;p&gt;This time let’s use the power of protocols in Swift to extend &lt;code&gt;Dictionary&lt;/code&gt;. Of course, we don’t want to extend all instances of &lt;code&gt;Dictionary&lt;/code&gt;, just the instances that look like &lt;code&gt;[String:AnyObject]&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;json-keys&quot;&gt;JSON Keys&lt;/h2&gt;
+&lt;p&gt;Although Swift allows us to restrict extensions on generic types, it only allows us to restrict the types based on protocols. Thus, we need a protocol to describe our &lt;code&gt;Key&lt;/code&gt; type.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public protocol JSONKeyType: Hashable {
+    var stringValue: String { get }
+}
+
+extension String: JSONKeyType {
+    public var stringValue: String {
+        return self
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We’ll never make anything other than &lt;code&gt;String&lt;/code&gt; conform to &lt;code&gt;JSONKeyType&lt;/code&gt;. It’s a little bit of a work around, but it will allow us do this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;extension Dictionary where Key: JSONKeyType {
+    // functions available only on instances where Key is a String
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;json-values&quot;&gt;JSON Values&lt;/h2&gt;
+&lt;p&gt;We defined a protocol for our key type, so let’s define a protocol for our value type.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public protocol JSONValueType {
+    typealias _JSONValue = Self
+
+    static func JSONValue(object: Any) throws -&amp;gt; _JSONValue
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In order for a type to conform to &lt;code&gt;JSONValueType&lt;/code&gt;, it must implement a function that constructs itself given an &lt;code&gt;Any&lt;/code&gt;, or throw an error if it can’t. The &lt;code&gt;typealias&lt;/code&gt; is there to help the compiler out with some of the things we’ll do later.&lt;/p&gt;
+&lt;p&gt;Many of the types we’ll be dealing with are directly bridgeable from their &lt;code&gt;Any&lt;/code&gt; counterpart. We can extend the &lt;code&gt;JSONValueType&lt;/code&gt; protocol to provide a default implementation for these cases, then simply add conformance to said types.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;extension JSONValueType {
+    public static func JSONValue(object: Any) throws -&amp;gt; _JSONValue {
+        guard let objectValue = object as? _JSONValue else {
+            throw JSONError.TypeMismatch(expected: JSONValue.self,
+                                         actual: object.dynamicType)
+        }
+        return objectValue
+    }
+}
+
+extension String: JSONValueType {}
+extension Int: JSONValueType {}
+extension UInt: JSONValueType {}
+extension Float: JSONValueType {}
+extension Double: JSONValueType {}
+extension Bool: JSONValueType {}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et voila!&lt;/p&gt;
+&lt;p&gt;If there are other types we wish to extract from our JSON, we can add conformance to &lt;code&gt;JSONValueType&lt;/code&gt; for them as well.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;extension NSURL: JSONValueType {
+    public static func JSONValue(object: Any) throws -&amp;gt; NSURL {
+        guard let urlString = object as? String,
+              objectValue = NSURL(string: urlString) else {
+            throw JSONError.TypeMismatch(expected: self,
+                                         actual: object.dynamicType)
+        }
+        return objectValue
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This extension allows us to extract &lt;code&gt;NSURL&lt;/code&gt;s when the &lt;code&gt;Any&lt;/code&gt; is a valid URL string. We can write similar extension for &lt;code&gt;NSDate&lt;/code&gt;, and even &lt;code&gt;Array&lt;/code&gt; and &lt;code&gt;Dictionary&lt;/code&gt;. (You can find implementations for the last two in the &lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/0f0919d3f43b2a2268e6&quot;&gt;gist&lt;/a&gt;. I have not included an &lt;code&gt;NSDate&lt;/code&gt; implementation because of the plethora of date-time representations, but writing your own for your specific should be straightforward.)&lt;/p&gt;
+&lt;h2 id=&quot;extending-dictionary&quot;&gt;Extending Dictionary&lt;/h2&gt;
+&lt;p&gt;Now to the heart of the matter: actually extending &lt;code&gt;Dictionary&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;extension Dictionary where Key: JSONKeyType {
+    private func anyForKey(key: Key) throws -&amp;gt; Any {
+        let pathComponents = key.stringValue.characters
+                                .split(&amp;quot;.&amp;quot;).map(String.init)
+        var accumulator: Any = self
+
+        for component in pathComponents {
+            if let componentData = accumulator as? [Key: Value],
+                   value = componentData[component as! Key] {
+                accumulator = value
+                continue
+            }
+
+            throw JSONError.KeyNotFound(key: key)
+        }
+
+        return accumulator
+    }
+
+    public func JSONValueForKey&amp;lt;A: JSONValueType&amp;gt;(key: Key) throws -&amp;gt; A {
+        let any = try anyForKey(key)
+        guard let result = try A.JSONValue(any) as? A else {
+            throw JSONError.TypeMismatchWithKey(key: key,
+                                                expected: A.self,
+                                                actual: any.dynamicType)
+        }
+
+        if let _ = result as? NSNull {
+            throw JSONError.NullValue(key: key)
+        }
+
+        return result
+    }
+
+    public func JSONValueForKey&amp;lt;A: JSONValueType&amp;gt;(key: Key) throws -&amp;gt; [A] {
+        let any = try anyForKey(key)
+        return try Array&amp;lt;A&amp;gt;.JSONValue(any)
+    }
+
+    public func JSONValueForKey&amp;lt;A: JSONValueType&amp;gt;(key: Key) throws -&amp;gt; A? {
+        do {
+            return try self.JSONValueForKey(key) as A
+        }
+        catch JSONError.KeyNotFound {
+            return nil
+        }
+        catch JSONError.NullValue {
+            return nil
+        }
+        catch {
+            throw error
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This should look mostly familiar if you followed along with &lt;a rel=&quot;external&quot; href=&quot;https://jasonlarsen.me/2015/06/23/no-magic-json-parsing-with-swift-part-2&quot;&gt;Part 2&lt;/a&gt;. What’s new is us restricting &lt;code&gt;A&lt;/code&gt; to conform to &lt;code&gt;JSONValueType&lt;/code&gt;. Now it is impossible for us to try and extract a value from our JSON and shove it into a non-JSONValueType conforming box. For example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;// the old way let this compile
+let firstName: UILabel = json.valueForKey(&amp;quot;first_name&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With our code in Part 2, this code would compile, even though we would likely figure it out down the road when we tried to use &lt;code&gt;firstName&lt;/code&gt;. The fact that &lt;code&gt;A&lt;/code&gt; must be a &lt;code&gt;JSONValueType&lt;/code&gt; gives us a little bit more safety here.&lt;/p&gt;
+&lt;p&gt;Some more changes that have been made are to consolidate the public API to just one function signature: &lt;code&gt;JSONValueForKey&lt;/code&gt;. The compiler will figure out which version of the function to call based off of the type it is being assigned to—be it a plain ol’ &lt;code&gt;A&lt;/code&gt;, optional &lt;code&gt;A?&lt;/code&gt;, or even an array of &lt;code&gt;[A]&lt;/code&gt;! (The latter requires &lt;code&gt;Array&lt;/code&gt; to conform to &lt;code&gt;JSONValueType&lt;/code&gt;. You can find this in the &lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/0f0919d3f43b2a2268e6&quot;&gt;gist&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Finally, use the power of &lt;code&gt;typealias&lt;/code&gt; to make it more clear what we’re talking about when dealing with our JSON dictionaries.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;public typealias JSONObject = [String: AnyObject]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And now your JSON code can look like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var json: JSONObject = [&amp;quot;url&amp;quot;: &amp;quot;http://apple.com&amp;quot;, &amp;quot;foo&amp;quot;: (2 as NSNumber), &amp;quot;str&amp;quot;: &amp;quot;Hello, World!&amp;quot;, &amp;quot;array&amp;quot;: [1,2,3,4,7], &amp;quot;object&amp;quot;: [&amp;quot;foo&amp;quot;: (3 as NSNumber), &amp;quot;str&amp;quot;: &amp;quot;Hello, World!&amp;quot;], &amp;quot;bool&amp;quot;: (true as NSNumber)]
+do {
+    var str: String = try json.JSONValueForKey(&amp;quot;str&amp;quot;)
+    var foo2: Int = try json.JSONValueForKey(&amp;quot;foo&amp;quot;)
+    var foo3: Int? = try json.JSONValueForKey(&amp;quot;foo&amp;quot;)
+    var foo4: Int? = try json.JSONValueForKey(&amp;quot;bar&amp;quot;)
+    var arr: [Int] = try json.JSONValueForKey(&amp;quot;array&amp;quot;)
+    var obj: JSONObject? = try json.JSONValueForKey(&amp;quot;object&amp;quot;)
+    let innerfoo: Int = try obj!.JSONValueForKey(&amp;quot;foo&amp;quot;)
+    let innerfoo2: Int = try json.JSONValueForKey(&amp;quot;object.foo&amp;quot;)
+    let bool: Bool = try json.JSONValueForKey(&amp;quot;bool&amp;quot;)
+    let url: NSURL = try json.JSONValueForKey(&amp;quot;url&amp;quot;)
+}
+catch {
+    // ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can find the full code in this &lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/0f0919d3f43b2a2268e6&quot;&gt;gist&lt;/a&gt;, and most likely in a more permanent Github repo home soon.&lt;/p&gt;
+&lt;p&gt;Please share this if you like it and leave me feedback below in the comments or on the twitters &lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/jarsen&quot;&gt;@jarsen&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;I hope this makes Crusty proud.&lt;/p&gt;
+&lt;p&gt;A special thanks to a bunch of local Utah iOS developers who have been working on this and giving lots of great ideas, especially: Bart Whiteley, Brian Mullen, BJ Homer, Derrick Hathaway, Dave DeLong, Mark Schultz and Tim Shadel.&lt;/p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>No-Magic JSON Parsing with Swift Part II</title>
+        <published>2015-06-15T00:00:00+00:00</published>
+        <updated>2015-06-15T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift-part-ii/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift-part-ii/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift-part-ii/">&lt;p&gt;Last time we talked about how we could &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/no-magic-json-parsing-with-swift/&quot;&gt;simplify our JSON parsing&lt;/a&gt; with Swift 2 error handling and get rid of all the magic. Today we’re going to use the power of type inference to take our old &lt;code&gt;JSONObject&lt;/code&gt; struct from having 12 methods (or more, if you want to add methods for values like CGFloat, etc.) to only 4!&lt;/p&gt;
+&lt;p&gt;Let’s look at our &lt;code&gt;valueForKey&lt;/code&gt; function.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;func valueForKey&amp;lt;A&amp;gt;(key: String, type: A.Type) throws -&amp;gt; A {
+    let pathComponents = key.componentsSeparatedByString(&amp;quot;.&amp;quot;)
+
+    var accumulator: Any = dictionary
+
+    for component in pathComponents {
+        if let dict = accumulator as? [String:AnyObject] {
+            if let value = dict[component] {
+                accumulator = value
+                continue
+            }
+        }
+        throw JSONError.NoValueForKey(key)
+    }
+
+    if let value = accumulator as? A {
+        return value
+    }
+    else {
+        throw JSONError.TypeMismatch
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With this function we tell our struct what type we are looking to get out and and what key. But the Swift compiler is smart. Real smart. Given just the minimum amount of information, it can &lt;em&gt;infer&lt;/em&gt; what types we’re talking about.&lt;/p&gt;
+&lt;p&gt;It turns out we can actually remove the &lt;code&gt;type&lt;/code&gt; argument completely, and as long as we give the compiler a little help at the function’s callsite by specifying the type that the return value will be assigned to, it can infer &lt;code&gt;A&lt;/code&gt; for us.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;func valueForKey&amp;lt;A&amp;gt;(key: String) throws -&amp;gt; A {
+    let pathComponents = key.componentsSeparatedByString(&amp;quot;.&amp;quot;)
+
+    var accumulator: Any = dictionary
+
+    for component in pathComponents {
+        if let dict = accumulator as? [String:AnyObject] {
+            if let value = dict[component] {
+                accumulator = value
+                continue
+            }
+        }
+        throw JSONError.NoValueForKey(key)
+    }
+
+    if let value = accumulator as? A {
+        return value
+    }
+    else {
+        throw JSONError.TypeMismatch
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And we can use it like so:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let street: String = try json.valueForKey(&amp;quot;address.street&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Et voila.&lt;/p&gt;
+&lt;p&gt;This means that we can remove all of our &lt;code&gt;intForKey&lt;/code&gt;, &lt;code&gt;stringForKey&lt;/code&gt;, etc. And, if we revamp our &lt;code&gt;optionalForKey&lt;/code&gt; in the same way by also removing the &lt;code&gt;type&lt;/code&gt;argument, we can do the same for all our calls to &lt;code&gt;optionalForKey&lt;/code&gt;. The only functions I didn’t remove in my implementation were &lt;code&gt;objectForKey&lt;/code&gt; and &lt;code&gt;optionalObjectForKey&lt;/code&gt; because since the values there are really &lt;code&gt;[String:AnyObject]&lt;/code&gt; you can’t get a &lt;code&gt;JSONObject&lt;/code&gt; out without the initializer.&lt;/p&gt;
+&lt;p&gt;Here’s what our updated &lt;code&gt;Person&lt;/code&gt; model might look like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;struct Person {
+    var name: String
+    var age: Int
+    var height: Double
+    var street: String?
+
+    static func fromJSON(json: JSONObject) throws -&amp;gt; Person {
+        let name: String = try json.valueForKey(&amp;quot;name&amp;quot;)
+        let age: Int = try json.valueForKey(&amp;quot;age&amp;quot;)
+        let height: Double = try json.valueForKey(&amp;quot;height&amp;quot;)
+        let street: String = try json.valueForKey(&amp;quot;address.street&amp;quot;)
+        return Person(name: name, age: age, height: height, street: street)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, having to specify the type in two places is a little much, don’t you think? Surely we can do better. Since the items we’re assigning them to already have types, why not use those?&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;struct Person {
+    var name = &amp;quot;&amp;quot;
+    var age = 0
+    var height = 0.0
+    var street = String?.None
+
+    static func fromJSON(json: JSONObject) throws -&amp;gt; Person {
+        var person = Person()
+        person.name = try json.valueForKey(&amp;quot;name&amp;quot;)
+        person.age = try json.valueForKey(&amp;quot;age&amp;quot;)
+        person.height = try json.valueForKey(&amp;quot;height&amp;quot;)
+        person.street = try json.optionalForKey(&amp;quot;address.street&amp;quot;)
+        return person
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So, to do that we had to assign default values… which is a little weird as well. What does it mean to have a “default height”? This also is a little unsafe because now the API allows for &lt;code&gt;Person&lt;/code&gt;s to be created without any arguments.&lt;/p&gt;
+&lt;p&gt;Let’s try again, but let’s forget about &lt;code&gt;fromJSON&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;struct Person {
+    var name: String
+    var age: Int
+    var height: Double
+    var street: String?
+
+    init(json: JSONObject) throws {
+        try name = json.valueForKey(&amp;quot;name&amp;quot;)
+        try age = json.valueForKey(&amp;quot;age&amp;quot;)
+        try height = json.valueForKey(&amp;quot;height&amp;quot;)
+        try street = json.optionalForKey(&amp;quot;address.street&amp;quot;)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We got rid of &lt;code&gt;fromJSON&lt;/code&gt; in favor of &lt;code&gt;init&lt;/code&gt;. This gives us the opportunity to set all the values before the object is initialized—the only trick is that our initializer now throws.&lt;/p&gt;
+&lt;p&gt;I like that. I hope you do too.&lt;/p&gt;
+&lt;p&gt;As always, comments are welcome—either down below or on &lt;a rel=&quot;external&quot; href=&quot;http://twitter.com/jarsen&quot;&gt;twitter&lt;/a&gt; (&lt;a rel=&quot;external&quot; href=&quot;http://twitter.com/jarsen&quot;&gt;@jarsen&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;You can get the &lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/b27de2ed9e84b84086ae&quot;&gt;full code here&lt;/a&gt;&lt;/p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Result vs. Throws</title>
+        <published>2015-06-14T00:00:00+00:00</published>
+        <updated>2015-06-14T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/result-vs-throws/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/result-vs-throws/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/result-vs-throws/">&lt;p&gt;Swift 2.0 is causing a lot of well deserved excitement. Chris and the folks over at apple have been doing an &lt;em&gt;amazing&lt;/em&gt; job. I have been loving Swift the past year and am really excited about all the new features—and, of course, the open source announcement.&lt;/p&gt;
+&lt;p&gt;When the &lt;code&gt;do&lt;/code&gt;/&lt;code&gt;catch&lt;/code&gt; model for error handling was announced, there was a bit of frustration that &lt;code&gt;Result&lt;/code&gt; was not the adopted model. Since then, several developers have come out with &lt;a rel=&quot;external&quot; href=&quot;http://www.sunsetlakesoftware.com/2015/06/12/swift-2-error-handling-practice&quot;&gt;articles&lt;/a&gt; detailing what they &lt;a rel=&quot;external&quot; href=&quot;http://owensd.io/2015/06/12/swift-throws-get-it.html&quot;&gt;like better&lt;/a&gt; about it that have got &lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/clattner_llvm/status/610154161552756736&quot;&gt;quite a bit of attention&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;While I am excited about the prospect of standardized error handling, I still am not convinced that throwing errors is a better approach than &lt;code&gt;Result&lt;/code&gt;. I have a lot of mixed feelings. I’m sure there will be errors and counter-points I have yet to consider, in which case please leave a comment at the bottom or ping me on twitter (&lt;a rel=&quot;external&quot; href=&quot;http://twitter.com/jarsen&quot;&gt;@jarsen&lt;/a&gt;), but here are my thoughts so far.&lt;/p&gt;
+&lt;h2 id=&quot;what-is-result&quot;&gt;What is Result?&lt;/h2&gt;
+&lt;p&gt;In case you aren’t familiar, &lt;code&gt;Result&lt;/code&gt; is an enum very similar to &lt;code&gt;Optional&lt;/code&gt;: both have cases that hold generic values, but where we have &lt;code&gt;Optional.None&lt;/code&gt; to represent &lt;code&gt;nil&lt;/code&gt; values, we have instead &lt;code&gt;Result.Failure&lt;/code&gt; with an associated &lt;code&gt;ErrorType&lt;/code&gt;. Basically, think of &lt;code&gt;Result&lt;/code&gt; as &lt;code&gt;Optional&lt;/code&gt; with that can carry an error instead of being nil.&lt;/p&gt;
+&lt;h2 id=&quot;deal-with-it&quot;&gt;Deal With It&lt;/h2&gt;
+&lt;p&gt;One of the purported advantages of &lt;code&gt;do&lt;/code&gt;/&lt;code&gt;catch&lt;/code&gt; error handling is that it forces the programmer to handle errors.&lt;/p&gt;
+&lt;p&gt;But &lt;code&gt;Result&lt;/code&gt; enforces error handling as well. Since &lt;code&gt;Result&lt;/code&gt; is an &lt;code&gt;enum&lt;/code&gt;, in order to get at your potentially successful value you must deconstruct it using pattern matching. If you do so using a switch statement, the switch statement will require you do be exhaustive in your case handling, meaning that you must necessarily handle the &lt;code&gt;Failure&lt;/code&gt; case.&lt;/p&gt;
+&lt;p&gt;Now, the astute observer may say, “But Jason, in Swift 2.0 I can deconstruct enums with the new &lt;code&gt;if-case&lt;/code&gt; statements, and thus can avoid handling failures.”&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;if case let .Success(value) = result {
+    doSomething(value)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;“Or, you might run something and never handle the result at all. Throwing an error forces you to write a catch”&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;let _ = someResultFunction() // ignore result entirely
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Both these arguments have good points. Although in the latter case, the only reason someone would do this is to run a function that performs side effects, in which case I would argue that the number of functions performing side effects and returning &lt;em&gt;synchronous&lt;/em&gt; errors where you don’t care about the successful value of the operation is pretty small. If you have a lot of these, I think you’re using &lt;code&gt;Result&lt;/code&gt;wrong.&lt;/p&gt;
+&lt;p&gt;And finally, look what I can do:&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;try! functionThatThrows() // forces execution without a catch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Both approaches can ignore errors. Sure, &lt;code&gt;try!&lt;/code&gt; will make your program crash if something throws, and you might not think that counts as ignoring errors, but I can see the lazy programmer putting this in because it works in dev every time, or because it rarely executes, or because for some reason &lt;code&gt;functionThatThrows()&lt;/code&gt; only throws a fraction of the time. It’s an open invitation to shoot yourself in the foot. It is a more dangerous way to ignore errors, but it ignores them nonetheless.&lt;/p&gt;
+&lt;p&gt;Finally, the cynic in me says many will end up writing empty &lt;code&gt;catch&lt;/code&gt; statements, or else simply:&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;do {
+    try stuff()
+}
+catch {
+    print(&amp;quot;Error while doing stuff&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I don’t know if this really qualifies as “handling” anything.&lt;/p&gt;
+&lt;p&gt;And in many cases not doing anything with an error might be the right thing to do.&lt;/p&gt;
+&lt;p&gt;Ultimately I don’t think that making it impossible to ignore errors is the goal here; I think the goal should be to make it difficult to ignore errors.&lt;/p&gt;
+&lt;h2 id=&quot;exhaustive&quot;&gt;Exhaustive&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Handling errors appropriately is just as important as not ignoring errors; ignorance about their types is just ignoring them in a different way.&lt;/strong&gt; It is important to know what types of errors you deal with, and for the compiler to help you handle them exhaustively.&lt;/p&gt;
+&lt;p&gt;I mentioned that the &lt;code&gt;switch&lt;/code&gt; statement would require you to be exhaustive in your error handling. In contrast, &lt;code&gt;throws&lt;/code&gt; doesn’t know anything about the error types at all. “Exhaustive” in Swift’s &lt;code&gt;try&lt;/code&gt;/&lt;code&gt;catch&lt;/code&gt; world simply means: no matter what, you must always have a catch-all statement because you have no idea what &lt;code&gt;ErrorType&lt;/code&gt;s to expect from a function contract.&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;enum Fail : ErrorType {
+    case Normal
+    case Epic
+}
+
+func foo() throws {
+    // some code here, may throw any `Fail` case
+}
+
+do {
+    try foo()
+}
+catch Fail.Normal {
+    print(&amp;quot;Normal fail&amp;quot;)
+}
+catch Fail.Epic {
+    print(&amp;quot;Epic fail!&amp;quot;)
+}
+catch {
+    print(&amp;quot;this statement will NEVER be executed&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Compare this to the same code using &lt;code&gt;Result&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;switch someResult {
+case let .Success(value):
+    print(value)
+case .Failure(.Normal):
+    print(&amp;quot;Normal fail&amp;quot;)
+case .Failure(.Epic):
+    print(&amp;quot;Epic fail!&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I’m unsure if Swift will gain the ability to &lt;code&gt;throw&lt;/code&gt; specific error types in the future. Several people I have talked to think it’s a for-sure enhancement. Others think lack of types is actually a feature, claiming that specifying error types makes the API &lt;em&gt;fragile&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;If that’s the case, why even have pattern matching in &lt;code&gt;catch&lt;/code&gt; statements? If your API could at any minute change what it throws, why bother handling specific errors at all?&lt;/p&gt;
+&lt;h2 id=&quot;contracts&quot;&gt;Contracts&lt;/h2&gt;
+&lt;p&gt;For practice, I started writing a little JSON parsing library using throwing instead of results. It was really frustrating to deal with Cocoa APIs because they don’t detail what errors might be thrown—I was left writing generic catch-all cases.&lt;/p&gt;
+&lt;p&gt;I believe error types belong in the function contract. &lt;code&gt;Result&lt;/code&gt; forces the API to communicate to its caller what in can expect in both the successful case, and in the case of failure.&lt;/p&gt;
+&lt;p&gt;**Failing to communicate about the error path in the function contract implies that for some reason the “happy path” is more important.**How can you expect to build robust error handling with a lackadaisical approach to error handling contracts?&lt;/p&gt;
+&lt;h2 id=&quot;hijacking-control-flow&quot;&gt;Hijacking Control Flow&lt;/h2&gt;
+&lt;p&gt;Consider the following code:&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;do {
+    try thing1()
+    try thing2()
+}
+catch {
+    print(error)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If &lt;code&gt;thing1()&lt;/code&gt; fails, &lt;code&gt;thing2()&lt;/code&gt; will never be executed. In many cases that might be the desired behavior. However, what if you actually want to do something different in the case that both fail, or in the case that only one fails? Using &lt;code&gt;throws&lt;/code&gt; makes this difficult to impossible, as&lt;code&gt;throws&lt;/code&gt; will hijack your code flow and immediately terminate the &lt;code&gt;do&lt;/code&gt; block.&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;let result1 = thing1()
+let result2 = thing2()
+
+switch (result1, result2) {
+case (.Success, .Success):
+    print(&amp;quot;Everything is awesome!&amp;quot;)
+case (.Failure, .Failure):
+    print(&amp;quot;Everything is not awesome&amp;quot;)
+default:
+    print(&amp;quot;Everything is half awesome&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Since &lt;code&gt;Result&lt;/code&gt; does not hijack your control flow, you are able to handle errors in a more robust manner. This also makes &lt;code&gt;Result&lt;/code&gt; a great candidate for asynchronous code.&lt;/p&gt;
+&lt;h2 id=&quot;async-error-handling&quot;&gt;Async Error Handling&lt;/h2&gt;
+&lt;p&gt;One of the main arguments I’ve seen against &lt;code&gt;throws&lt;/code&gt; is that is has no way of handling asynchronous errors. Async error handling is a big deal—most of my error handling code revolves around async networking errors. That said, I actually think that this point has been a little over-exaggerated by those contending for &lt;code&gt;Result&lt;/code&gt;—async errors are just handled with a different pattern altogether. However, I still believe &lt;code&gt;Result&lt;/code&gt; is better than said solution. Take a look at this async networking function.&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;func fetchJSON(endpoint: String, completionHandler: (JSONDictionary?, ErrorType?) -&amp;gt; Void) {
+    //...
+}
+
+fetchJSON(&amp;quot;/api/v3/users&amp;quot;) { json, error in
+    if let error = error {
+        switch error {
+        case ErrorType.Type1:
+            // type 1
+        case ErrorType.Type2:
+            // type 2
+        }
+        return
+    }
+
+    guard let json = json else {
+        return
+    }
+
+    // handle JSON
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This simple function takes an API endpoint, goes and does the networking and JSON parsing, and then returns the result or an error to the user. This code is not horrible. However, it does mean the developer needs to understand the conventions being used: namely that you need to check if the error is nil first.&lt;/p&gt;
+&lt;p&gt;Notice I said it “returns the result or an error.” Gee, that sounds an awful like a &lt;code&gt;Result&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;func fetchJSON(endpoint: String, completionHandler: Result&amp;lt;JSONDictionary, ErrorType&amp;gt; -&amp;gt; Void) {
+    //...
+}
+
+fetchJSON(&amp;quot;/api/v3/users&amp;quot;) { result in
+    switch result {
+    case let .Success(json):
+        // handle JSON
+    case let .Failure(.Type1):
+        // handle error type 1
+    case let .Failure(.Type2):
+        // handle error type 2
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I think the equivalent code using &lt;code&gt;Result&lt;/code&gt; is much better: I have a single switch that handles &lt;em&gt;all&lt;/em&gt; cases.&lt;/p&gt;
+&lt;h2 id=&quot;no-asserts&quot;&gt;No Asserts&lt;/h2&gt;
+&lt;p&gt;Currently there are no functions available in the &lt;code&gt;XCTAssert&lt;/code&gt; family for asserting whether or not a function or closure throw an error.&lt;/p&gt;
+&lt;p&gt;Please join me in filing a &lt;a rel=&quot;external&quot; href=&quot;http://bugreport.apple.com/&quot;&gt;radar&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Here’s how you might write one in the meantime:&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;func XCTAssertThrows&amp;lt;A&amp;gt;(file: String = __FILE__, line: Int = __LINE__, test: () throws -&amp;gt; A) {
+    do {
+        try test()
+        XCTFail(&amp;quot;Whoops&amp;quot;, file: file, line: UInt(line))
+    }
+    catch {
+
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;throws-is-simpler&quot;&gt;throws is “simpler”&lt;/h2&gt;
+&lt;p&gt;A lot of people seem to think that &lt;code&gt;throws&lt;/code&gt; is easier. I’m not sure if I agree, but even so I find it irrelevant. What does “simpler” mean? Does it mean more familiar for those who have never touched Haskell or Rust or the likes?&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Result&lt;/code&gt; is no less simple than &lt;code&gt;Optional&lt;/code&gt;, which in his great wisdom Papa Swift found fit to force upon everyone. It may be foreign at first, but if it’s a better way of doing things: learn it. Learning “hard” things can make you a better programmer, and can make your software better.&lt;/p&gt;
+&lt;p&gt;Finally, the new error handling introduces 5 keywords: &lt;code&gt;throws&lt;/code&gt;, &lt;code&gt;rethrows&lt;/code&gt;, &lt;code&gt;do&lt;/code&gt;, &lt;code&gt;try&lt;/code&gt;, and &lt;code&gt;catch&lt;/code&gt;. I don’t know that I would say the introduction of 5 new keywords is “simple”.&lt;/p&gt;
+&lt;h2 id=&quot;result-errortype&quot;&gt;Result&amp;lt;(), ErrorType&amp;gt;&lt;/h2&gt;
+&lt;p&gt;One gripe with &lt;code&gt;Result&lt;/code&gt; I see is that sometimes people end up having to type something as &lt;code&gt;Result&amp;lt;(), ErrorType&amp;gt;&lt;/code&gt; because all they really want is a pure Failure. I agree, it can feel a little weird. However, it’s not that hard, it’s rare, and you really only do it when you’re going to &lt;code&gt;map&lt;/code&gt; it to something else later.&lt;/p&gt;
+&lt;p&gt;If you find yourself doing this often, I would reexamine your code. Are you really using &lt;code&gt;Result&lt;/code&gt; in the correct places? If all you’re doing is returning whether an operation fails or not, and you don’t care what the error is, return a &lt;code&gt;Bool&lt;/code&gt; instead, or perhaps an &lt;code&gt;ErrorType?&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;advanced-operators&quot;&gt;Advanced Operators&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Result&lt;/code&gt; brings with it a lot of powerful functional programming ideas and higher order functions. Talking about &lt;code&gt;apply&lt;/code&gt;, &lt;code&gt;map&lt;/code&gt;, and &lt;code&gt;flatMap&lt;/code&gt; is really beyond the scope of this post (plus I don’t want to say the words: Applicative, Functor, or Monad so you keep reading). Perhaps this is where some of the fear of complexity comes from. But they’re really not complex—just new ways of thinking.&lt;/p&gt;
+&lt;p&gt;Such higher order functions enable powerful abstractions like JSON parsing a la &lt;a rel=&quot;external&quot; href=&quot;http://github.com/thoughtbot/argo&quot;&gt;Argo&lt;/a&gt;, or my &lt;a rel=&quot;external&quot; href=&quot;http://github.com/jarsen/pipes&quot;&gt;Pipes&lt;/a&gt; library I &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/blog/blob/master/2015/05/23/swift-data-pipelines&quot;&gt;blogged about the other week&lt;/a&gt;. The forward pipe operator makes working with &lt;code&gt;Result&lt;/code&gt; awesome. &lt;strong&gt;The forward pipe operator allows you to compose a data pipeline completely agnostic towards optionals or results.&lt;/strong&gt; And it reads so nice:&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;let processedText = inputFileName
+                    |&amp;gt; escapeInput
+                    |&amp;gt; readFile
+                    |&amp;gt; processText
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But I’m biased there. :)&lt;/p&gt;
+&lt;h2 id=&quot;but-standards&quot;&gt;But, Standards…&lt;/h2&gt;
+&lt;p&gt;All this said, I think standards are important. And to me, that’s one of the biggest selling points &lt;code&gt;throws&lt;/code&gt; has. The Swift team has spoken, the Cocoa APIs have been rewritten, and let’s face it: they’re not going back.&lt;/p&gt;
+&lt;p&gt;Fortunately, using functions like &lt;a rel=&quot;external&quot; href=&quot;http://github.com/antitypical/Result&quot;&gt;antitypical/Result&lt;/a&gt;’s &lt;code&gt;materialize&lt;/code&gt; and &lt;code&gt;dematerialize&lt;/code&gt; (once a few compiler bugs are worked out) it is possible to switch between thrown errors and and results. So, if you too like &lt;code&gt;Result&lt;/code&gt;, then you’re not up the river with no paddle when working with other APIs.&lt;/p&gt;
+&lt;p&gt;That said, there are lots of advantages to sticking close to the herd. That is worth some weight in your judgements.&lt;/p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;I’m new to this, just like everyone else; I’m still playing with it, and seeing how it feels. Sometimes I find myself liking it, others I find myself frustrated. These are just my impressions after a week—I’m sure I have plenty of errors and there are better ways that I missed. Again, comments below or on &lt;a rel=&quot;external&quot; href=&quot;http://twitter.com/jarsen&quot;&gt;twitter&lt;/a&gt; are appreciated.&lt;/p&gt;
+&lt;p&gt;Papa Swift and everyone working on the Swift team are doing a &lt;em&gt;tremendous&lt;/em&gt; job. Just because I don’t happen to like the new error handling model as much as I like &lt;code&gt;Result&lt;/code&gt; yet doesn’t mean they made the wrong decision: there are lots of factors to consider, and I guarantee you they thought about it long and hard. I also hope that some more error handling features are on the horizon, like some sort of &lt;code&gt;await&lt;/code&gt; for handling async errors.&lt;/p&gt;
+&lt;p&gt;I have yet to shake my greater love for &lt;code&gt;Result&lt;/code&gt;. As such, I think I will be sticking to it for most of my failable code. That said, I’m still playing with &lt;code&gt;throws&lt;/code&gt; and only time will tell.&lt;/p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Swift Data Pipelines</title>
+        <published>2015-05-23T00:00:00+00:00</published>
+        <updated>2015-05-23T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/swift-data-pipelines/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/swift-data-pipelines/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/swift-data-pipelines/">&lt;p&gt;The forward pipe operator is an infix operator taken from languages like F# and Elixir. I’ve been working on a &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Pipes&quot;&gt;Swift implementation&lt;/a&gt; that will help clean up data processing pipelines.&lt;/p&gt;
+&lt;p&gt;In order to understand the motivation for the forward pipe operator, let’s first look at some regular looking code.&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;let students = Database.allStudents()
+let grades = Grades.forStudents(students)
+let curvedGrades = curve(grades, average: 0.6)
+let finalGrades = prepareGrades(curvedGrades)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This code is simple and has clear variable naming. However, even with clear variable names, it may still be difficult for a reader to immediately realize that each variable declaration’s real purpose is only to hold a value to be used in the next line. These temporary variables introduce noise that may obfuscate the simple flow of data. So why all the temporary variables? Well, the alternative is this:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;prepareGrades(curve(Grades.forStudents(Database.allStudents()), average: 0.6))&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Clearly, the temporary variables are the lesser evil.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;.&lt;/code&gt; operator allows us to chain class and instance methods together in a clean an consistent manner, but it does not help when we want to chain together method calls between distinct entities or stand-alone functions.&lt;/p&gt;
+&lt;h3 id=&quot;meet-the-forward-pipe-operator&quot;&gt;Meet the Forward Pipe Operator&lt;/h3&gt;
+&lt;p&gt;The forward pipe simply takes the left hand side of the expression and applies it as the first argument of the function on the right.&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;increment(1) // becomes
+1 |&amp;gt; increment
+
+divide(5, 10) // becomes
+5 |&amp;gt; divide(10)
+
+map(1...100, increment) // becomes
+1...100 |&amp;gt; map(increment)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That’s nothing special in and of itself—all it has done is provide a new way to call methods and functions. But look at how it lets us rewrite our original example:&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;let finalGrades = Database.allStudents()
+                  |&amp;gt; Grades.forStudents
+                  |&amp;gt; curve(average: 0.6)
+                  |&amp;gt; prepareGrades
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is much cleaner. The forward pipe expresses the series of function calls as a clear data pipeline; it reads like a sequential list of operations to be performed.&lt;/p&gt;
+&lt;p&gt;It does’t matter if you’re chaining instance methods, class methods, or functions—the forward pipe chains them all together.&lt;/p&gt;
+&lt;h3 id=&quot;optional-pipelines&quot;&gt;Optional Pipelines&lt;/h3&gt;
+&lt;p&gt;We’ve seen that the forward pipe can clean up our data pipelines, but one of the stumbling blocks in Swift is learning to deal with one of it’s best features: optionals.&lt;/p&gt;
+&lt;p&gt;Optionals show up almost everywhere in your swift code. Want to use a &lt;code&gt;Dictionary&lt;/code&gt;? You’re going to have to deal with optionals.&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;let animalNoiseMap = [&amp;quot;cow&amp;quot;:&amp;quot;moo&amp;quot;, &amp;quot;dog&amp;quot;:&amp;quot;woof&amp;quot;, &amp;quot;cat&amp;quot;:&amp;quot;meow&amp;quot;]
+
+animalNoiseMap[&amp;quot;dog&amp;quot;]?.uppercaseString // .Some(&amp;quot;WOOF&amp;quot;)
+animalNoiseMap[&amp;quot;fox&amp;quot;]?.uppercaseString // .None
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;?&lt;/code&gt; operator is great for chaining together instance methods, but once again as programmers we work with more than just instance methods. Want to count the number of vowels in the animal sounds above?&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;let numberVowelsFox: Int?
+if let noise = animalNoiseMap[&amp;quot;fox&amp;quot;] {
+    numberVowelsFox = count(filter(noise, isVowel))
+}
+else {
+    numberVowelsFox = nil
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Yikes. That if-let is a lot of work. We could eliminate the else if we wanted to use &lt;code&gt;var&lt;/code&gt; insted of &lt;code&gt;let&lt;/code&gt;, but then we’d lose some safety. If you understand &lt;code&gt;map&lt;/code&gt; you can clean up your code significantly:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;map(animalNoiseMap[&quot;fox&quot;]) { count(filter($0, isVowel)) }&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;But not everyone groks functors.&lt;/p&gt;
+&lt;p&gt;Luckily, &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Pipes&quot;&gt;Pipes&lt;/a&gt; makes dealing with optionals in your pipelines easy. In fact, you don’t need to anything—just write the same code you would have written without &lt;code&gt;Optional&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;animalNoiseMap[&amp;quot;fox&amp;quot;]
+|&amp;gt; filter(isVowel)
+|&amp;gt; count // whole expression evaluates to Int?
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I might be biased, but that’s pretty wizard.&lt;/p&gt;
+&lt;h3 id=&quot;result-pipelines&quot;&gt;Result Pipelines&lt;/h3&gt;
+&lt;p&gt;But the forward pipe operator doesn’t stop there, folks! Enjoy using &lt;code&gt;Result&lt;/code&gt;? Just like &lt;code&gt;Optional&lt;/code&gt;s, &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Pipes&quot;&gt;Pipes&lt;/a&gt; supports &lt;code&gt;Result&lt;/code&gt;. (specifically &lt;a rel=&quot;external&quot; href=&quot;https://github.com/antitypical/Result&quot;&gt;antitypical/Result&lt;/a&gt;) Don’t care about &lt;code&gt;Result&lt;/code&gt;? That’s ok, you don’t have to link it in for &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Pipes&quot;&gt;Pipes&lt;/a&gt; to work.&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;func escapeInput(string: String) -&amp;gt; String { ... }
+
+func readFile(fileName: String) -&amp;gt; Result&amp;lt;String&amp;gt; { ... }
+
+func processText(string: String) -&amp;gt; String { ... }
+
+let processedText = inputFileName
+                    |&amp;gt; escapeInput
+                    |&amp;gt; readFile
+                    |&amp;gt; processText
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once again, you don’t even have to think about &lt;code&gt;Result&lt;/code&gt;s as you chain these functions together—if result shows up along the way, the whole epxression will evaluate to a result. And if something fails along the way, it will short circuit and you’ll get your &lt;code&gt;.Failure&lt;/code&gt; with the appropriate error message. Neato.&lt;/p&gt;
+&lt;h3 id=&quot;keep-your-pipes-clean&quot;&gt;Keep Your Pipes Clean&lt;/h3&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Pipes&quot;&gt;Pipes&lt;/a&gt; lends itself very well to functional programming ideas. Ideally, keep all the functions and methods in the data processing pipeline pure—i.e., without side effects. Pipes has a bunch of pure implementations and helper functions for &lt;code&gt;Array&lt;/code&gt; and &lt;code&gt;Dictionary&lt;/code&gt; so you can perform pure versions of &lt;code&gt;append&lt;/code&gt;, &lt;code&gt;extend&lt;/code&gt;, &lt;code&gt;remove&lt;/code&gt; and the the likes.&lt;/p&gt;
+&lt;h3 id=&quot;ok-i-lied-a-little&quot;&gt;OK. I Lied a Little.&lt;/h3&gt;
+&lt;p&gt;I’m actually using some currying to add a little readability to my examples. Au naturel, Pipes expects functions that take more than one argument to provide a tuple on the right hand side where the first item is the function, and the rest are the ordered arguments.&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;// with the trick
+5 |&amp;gt; divide(10)
+// without the trick
+5 |&amp;gt; (divide, 10)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When you use your own functions with more than one argument you’ll need to either use a tuple on the right hand side, or create a function signature where the first argument is curried on the end of the function signature&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;func divide(numerator: Double, denominator: Double) -&amp;gt; Double {
+    return numerator / denominator
+}
+
+// the trick
+func divide(denominator: Double)(numerator: Double) -&amp;gt; Double {
+    return numerator / denominator
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Essentially currying like this turns our functions into functions that take only one argument, so they don’t need to be put inside a tuple on the right hand side.&lt;/p&gt;
+&lt;p&gt;Pipes has such curried versions of many standard functions bundled in the framework for your convenience.&lt;/p&gt;
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;The forward pipe operator is one of the operators offered by &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Pipes&quot;&gt;Pipes&lt;/a&gt;. It will help clarify data processing pipelines, and automagically deal with &lt;code&gt;Optional&lt;/code&gt;s and &lt;code&gt;Result&lt;/code&gt;s for you. Please feel free to ask questions, and make issues or send me pull requests!&lt;/p&gt;
+&lt;h3 id=&quot;resources&quot;&gt;Resources&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Pipes&quot;&gt;Pipes on Github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;My &lt;a rel=&quot;external&quot; href=&quot;http://www.slideshare.net/jarsen7/pipes-48485417&quot;&gt;Utah Valley Cocoaheads Lighting Talk&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>No-Magic JSON Parsing with Swift</title>
+        <published>2015-05-14T00:00:00+00:00</published>
+        <updated>2015-05-14T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift/">&lt;p&gt;Since the beginning, JSON parsing has been a common pain point for many Swift developers. This is largely due to difficulties in dealing with a strict type system (which JSON does not have) and optionals, as well as a lack of a consistent error handling approach.&lt;/p&gt;
+&lt;p&gt;Several great JSON parsing libraries have surfaced which avoid the mess of tangled if-lets (a.k.a. the infamous “pyramid of doom”). I really like the approach taken by thoughtbot in their &lt;a rel=&quot;external&quot; href=&quot;https://robots.thoughtbot.com/efficient-json-in-swift-with-functional-concepts-and-generics&quot;&gt;JSON&lt;/a&gt; &lt;a rel=&quot;external&quot; href=&quot;https://robots.thoughtbot.com/real-world-json-parsing-with-swift&quot;&gt;parsing&lt;/a&gt; articles, which ultimately led to their &lt;a rel=&quot;external&quot; href=&quot;https://github.com/thoughtbot/Argo&quot;&gt;Argo&lt;/a&gt; library on github (although I don’t like everything about Argo).&lt;/p&gt;
+&lt;p&gt;However, most solutions tend to rely on a lot of magic: the magic of applicatives, functors, and monads; the magic of unfamiliar custom operators; the magic of a complex nested enum structure; the magic of multiple external dependencies.&lt;/p&gt;
+&lt;p&gt;Now that swift 2.0 has brought error handling to us, we can implement much less magical JSON parsing. Here is an example of what your JSON parsing code might look like with just a thin error-throwing layer over &lt;code&gt;[String:AnyObject]&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;let-s-get-started&quot;&gt;Let’s Get Started&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;enum JSONError : ErrorType {
+    case NoValueForKey(String)
+    case TypeMismatch
+}
+
+class JSONObject {
+    private let dictionary: [String:AnyObject]
+
+    init(dictionary: [String:AnyObject]) {
+        self.dictionary = dictionary
+    }
+
+    func valueForKey&amp;lt;A&amp;gt;(key: String, type: A.Type) throws -&amp;gt; A {
+        if let value = self[key] {
+            if let _ = value as? NSNull {
+                throw JSONError.NoValueForKey(key)
+            }
+            if let value = value as? A {
+                return value
+            }
+            throw JSONError.TypeMismatch
+        }
+        throw JSONError.NoValueForKey(key)
+    }
+
+    func stringForKey(key: String) throws -&amp;gt; String {
+        return try valueForKey(key, type: String.self)
+    }
+
+    func intForKey(key: String) throws -&amp;gt; Int {
+        return try valueForKey(key, type: Int.self)
+    }
+
+    func doubleForKey(key: String) throws -&amp;gt; Double {
+        return try valueForKey(key, type: Double.self)
+    }
+
+    func arrayForKey&amp;lt;A&amp;gt;(key: String, type: A.Type) throws -&amp;gt; [A] {
+        return try valueForKey(key, type: [A].self)
+    }
+
+    func objectForKey(key: String) throws -&amp;gt; JSONObject {
+        let dict = try valueForKey(key, type: [String:AnyObject].self)
+        return JSONObject(dictionary: dict)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here we’ve added a bunch of functions that let us get basic things like &lt;code&gt;String&lt;/code&gt;, &lt;code&gt;Int&lt;/code&gt;, and &lt;code&gt;Double&lt;/code&gt; out of our &lt;code&gt;[String:AnyObject]&lt;/code&gt; Pandora’s Box. If we either find a nil or NSNull value, we know the key is bad. And if we find an unexpected type hidden behind the &lt;code&gt;AnyObject&lt;/code&gt; we throw a &lt;code&gt;TypeMismatch&lt;/code&gt; error.&lt;/p&gt;
+&lt;p&gt;How does this look in practice? Let’s try it on a simple &lt;code&gt;Person&lt;/code&gt; model.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;struct Person {
+    var name: String
+    var age: Int
+    var height: Double
+
+    static func fromJSON(json: JSONObject) throws -&amp;gt; Person {
+        let name = try json.stringForKey(&amp;quot;name&amp;quot;)
+        let age = try json.intForKey(&amp;quot;age&amp;quot;)
+        let height = try json.doubleForKey(&amp;quot;height&amp;quot;)
+        return Person(name: name, age: age, height: height)
+    }
+}
+
+do {
+    let jsonObject: JSONObject = [&amp;quot;name&amp;quot;: &amp;quot;Bob&amp;quot;, &amp;quot;age&amp;quot;: 26, &amp;quot;height&amp;quot;: 5.75]
+    let person = try Person.fromJSON(jsonObject)
+}
+catch let JSONError.NoValueForKey(key) {
+    print(&amp;quot;Didn&amp;#39;t find value for key: \(key)&amp;quot;)
+}
+catch {
+    print(&amp;quot;Wrong type&amp;quot;)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Not bad! &lt;em&gt;No pyramid of doom, no external dependencies, you didn’t have to learn a single new operator, and no worrying about the scary words like functor or monad!&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&quot;optional-json-keys&quot;&gt;Optional JSON Keys&lt;/h2&gt;
+&lt;p&gt;Of course, we also want to be able to handle optional values in some cases.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;extension JSONObject {
+    private func optionalForKey&amp;lt;A&amp;gt;(key: String, type: A.Type) throws -&amp;gt; A? {
+        do {
+            let value = try valueForKey(key, type: type)
+            return value
+        }
+        catch JSONError.NoValueForKey {
+            return nil
+        }
+        catch {
+            throw JSONError.TypeMismatch
+        }
+    }
+
+    func stringOptionalForKey(key: String) throws -&amp;gt; String? {
+        return try optionalForKey(key, type: String.self)
+    }
+
+    func intOptionalForKey(key: String) throws -&amp;gt; Int? {
+        return try optionalForKey(key, type: Int.self)
+    }
+
+    func doubleOptionalForKey(key: String) throws -&amp;gt; Double? {
+        return try optionalForKey(key, type: Double.self)
+    }
+
+    func arrayOptionalForKey&amp;lt;A&amp;gt;(key: String, type: A.Type) throws -&amp;gt; [A]? {
+        return try optionalForKey(key, type: [A].self)
+    }
+
+    func objectOptionalForKey(key: String) throws -&amp;gt; JSONObject? {
+        let dict = try optionalForKey(key, type: [String:AnyObject].self)
+        return dict.map(JSONObject.init)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Awesome. Now we have some pretty basic JSON handling in place, but honestly it’s probably most of what you will ever need.&lt;/p&gt;
+&lt;h2 id=&quot;key-paths&quot;&gt;Key Paths&lt;/h2&gt;
+&lt;p&gt;There’s one more thing that might be nice though: handling key paths. So, let’s rewrite our &lt;code&gt;valueForKey&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;func valueForKey&amp;lt;A&amp;gt;(key: String, type: A.Type) throws -&amp;gt; A {
+    let pathComponents = key.componentsSeparatedByString(&amp;quot;.&amp;quot;)
+
+    var accumulator: Any = dictionary
+
+    for component in pathComponents {
+        if let dict = accumulator as? [String:AnyObject] {
+            if let value = dict[component] {
+                accumulator = value
+                continue
+            }
+        }
+        throw JSONError.NoValueForKey(key)
+    }
+
+    if let value = accumulator as? A {
+        return value
+    }
+    else {
+        throw JSONError.TypeMismatch
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we can do this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let street = try json.stringForKey(&amp;quot;address.street&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And, because we implemented our &lt;code&gt;optionalForKey&lt;/code&gt; on top of &lt;code&gt;valueForKey&lt;/code&gt;, everything else will just keep working.&lt;/p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;I think this JSON code is quite nice, and easy for anyone to understand without having their mind blown. Even though &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/result-vs-throws/&quot;&gt;I went a little caremad the other week about Result&lt;/a&gt;, I like how this code turned out better than my old &lt;code&gt;Result&lt;/code&gt; based JSON parsing: it’s easier to explain to others, and it’s much easier on the compiler, which saves you time when trying to figure out what is wrong. It is also more idiomatic.&lt;/p&gt;
+&lt;p&gt;I’m sure there are some cool ways to improve this code, I’d love to hear your thoughts! Please leave a comment or give me a shout on &lt;a rel=&quot;external&quot; href=&quot;http://twitter.com/jarsen&quot;&gt;twitter&lt;/a&gt;(&lt;a rel=&quot;external&quot; href=&quot;http://twitter.com/jarsen&quot;&gt;@jarsen&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;The Swift 2.0 beta2 brings &lt;em&gt;extensions to generic types&lt;/em&gt;. Generic types extensions allow us to add functionality to things like &lt;code&gt;Array&lt;/code&gt; and &lt;code&gt;Dictionary&lt;/code&gt;in specific cases. Unfortunately for the moment it seems that you can’t give it specific types for Key/Value, only protocol conformance. If we could specify specific types, we could extend &lt;code&gt;[String:AnyObject]&lt;/code&gt; and typealias it to &lt;code&gt;JSONObject&lt;/code&gt; instead of having a wrapper class.&lt;/p&gt;
+&lt;p&gt;And here’s &lt;a rel=&quot;external&quot; href=&quot;https://gist.github.com/jarsen/2b0913111c0427642c41&quot;&gt;the final code&lt;/a&gt; all in one gist.&lt;/p&gt;
+&lt;p&gt;Update: Be sure to check out &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/&quot;&gt;Part 2&lt;/a&gt;, in which we make the code even better by relying more heavily on type inference.&lt;/p&gt;
+</content>
+        
+    </entry>
+</feed>

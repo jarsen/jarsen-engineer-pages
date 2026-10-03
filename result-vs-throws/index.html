@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Result vs. Throws · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>Result vs. Throws</h1>
+    <time datetime="2015-06-14T00:00:00Z">2015-06-14</time>
+    
+    <span class="tags"><a href="https://jarsen.github.io/jarsen-engineer-pages/tags/swift/">#swift</a></span>
+    
+  </header>
+  <div class="prose"><p>Swift 2.0 is causing a lot of well deserved excitement. Chris and the folks over at apple have been doing an <em>amazing</em> job. I have been loving Swift the past year and am really excited about all the new features—and, of course, the open source announcement.</p>
+<p>When the <code>do</code>/<code>catch</code> model for error handling was announced, there was a bit of frustration that <code>Result</code> was not the adopted model. Since then, several developers have come out with <a rel="external" href="http://www.sunsetlakesoftware.com/2015/06/12/swift-2-error-handling-practice">articles</a> detailing what they <a rel="external" href="http://owensd.io/2015/06/12/swift-throws-get-it.html">like better</a> about it that have got <a rel="external" href="https://twitter.com/clattner_llvm/status/610154161552756736">quite a bit of attention</a>.</p>
+<p>While I am excited about the prospect of standardized error handling, I still am not convinced that throwing errors is a better approach than <code>Result</code>. I have a lot of mixed feelings. I’m sure there will be errors and counter-points I have yet to consider, in which case please leave a comment at the bottom or ping me on twitter (<a rel="external" href="http://twitter.com/jarsen">@jarsen</a>), but here are my thoughts so far.</p>
+<h2 id="what-is-result">What is Result?</h2>
+<p>In case you aren’t familiar, <code>Result</code> is an enum very similar to <code>Optional</code>: both have cases that hold generic values, but where we have <code>Optional.None</code> to represent <code>nil</code> values, we have instead <code>Result.Failure</code> with an associated <code>ErrorType</code>. Basically, think of <code>Result</code> as <code>Optional</code> with that can carry an error instead of being nil.</p>
+<h2 id="deal-with-it">Deal With It</h2>
+<p>One of the purported advantages of <code>do</code>/<code>catch</code> error handling is that it forces the programmer to handle errors.</p>
+<p>But <code>Result</code> enforces error handling as well. Since <code>Result</code> is an <code>enum</code>, in order to get at your potentially successful value you must deconstruct it using pattern matching. If you do so using a switch statement, the switch statement will require you do be exhaustive in your case handling, meaning that you must necessarily handle the <code>Failure</code> case.</p>
+<p>Now, the astute observer may say, “But Jason, in Swift 2.0 I can deconstruct enums with the new <code>if-case</code> statements, and thus can avoid handling failures.”</p>
+<pre><code data-lang="Swift">if case let .Success(value) = result {
+    doSomething(value)
+}
+</code></pre>
+<p>“Or, you might run something and never handle the result at all. Throwing an error forces you to write a catch”</p>
+<pre><code data-lang="Swift">let _ = someResultFunction() // ignore result entirely
+</code></pre>
+<p>Both these arguments have good points. Although in the latter case, the only reason someone would do this is to run a function that performs side effects, in which case I would argue that the number of functions performing side effects and returning <em>synchronous</em> errors where you don’t care about the successful value of the operation is pretty small. If you have a lot of these, I think you’re using <code>Result</code>wrong.</p>
+<p>And finally, look what I can do:</p>
+<pre><code data-lang="Swift">try! functionThatThrows() // forces execution without a catch
+</code></pre>
+<p>Both approaches can ignore errors. Sure, <code>try!</code> will make your program crash if something throws, and you might not think that counts as ignoring errors, but I can see the lazy programmer putting this in because it works in dev every time, or because it rarely executes, or because for some reason <code>functionThatThrows()</code> only throws a fraction of the time. It’s an open invitation to shoot yourself in the foot. It is a more dangerous way to ignore errors, but it ignores them nonetheless.</p>
+<p>Finally, the cynic in me says many will end up writing empty <code>catch</code> statements, or else simply:</p>
+<pre><code data-lang="Swift">do {
+    try stuff()
+}
+catch {
+    print(&quot;Error while doing stuff&quot;)
+}
+</code></pre>
+<p>I don’t know if this really qualifies as “handling” anything.</p>
+<p>And in many cases not doing anything with an error might be the right thing to do.</p>
+<p>Ultimately I don’t think that making it impossible to ignore errors is the goal here; I think the goal should be to make it difficult to ignore errors.</p>
+<h2 id="exhaustive">Exhaustive</h2>
+<p><strong>Handling errors appropriately is just as important as not ignoring errors; ignorance about their types is just ignoring them in a different way.</strong> It is important to know what types of errors you deal with, and for the compiler to help you handle them exhaustively.</p>
+<p>I mentioned that the <code>switch</code> statement would require you to be exhaustive in your error handling. In contrast, <code>throws</code> doesn’t know anything about the error types at all. “Exhaustive” in Swift’s <code>try</code>/<code>catch</code> world simply means: no matter what, you must always have a catch-all statement because you have no idea what <code>ErrorType</code>s to expect from a function contract.</p>
+<pre><code data-lang="Swift">enum Fail : ErrorType {
+    case Normal
+    case Epic
+}
+
+func foo() throws {
+    // some code here, may throw any `Fail` case
+}
+
+do {
+    try foo()
+}
+catch Fail.Normal {
+    print(&quot;Normal fail&quot;)
+}
+catch Fail.Epic {
+    print(&quot;Epic fail!&quot;)
+}
+catch {
+    print(&quot;this statement will NEVER be executed&quot;)
+}
+</code></pre>
+<p>Compare this to the same code using <code>Result</code>:</p>
+<pre><code data-lang="Swift">switch someResult {
+case let .Success(value):
+    print(value)
+case .Failure(.Normal):
+    print(&quot;Normal fail&quot;)
+case .Failure(.Epic):
+    print(&quot;Epic fail!&quot;)
+}
+</code></pre>
+<p>I’m unsure if Swift will gain the ability to <code>throw</code> specific error types in the future. Several people I have talked to think it’s a for-sure enhancement. Others think lack of types is actually a feature, claiming that specifying error types makes the API <em>fragile</em>.</p>
+<p>If that’s the case, why even have pattern matching in <code>catch</code> statements? If your API could at any minute change what it throws, why bother handling specific errors at all?</p>
+<h2 id="contracts">Contracts</h2>
+<p>For practice, I started writing a little JSON parsing library using throwing instead of results. It was really frustrating to deal with Cocoa APIs because they don’t detail what errors might be thrown—I was left writing generic catch-all cases.</p>
+<p>I believe error types belong in the function contract. <code>Result</code> forces the API to communicate to its caller what in can expect in both the successful case, and in the case of failure.</p>
+<p>**Failing to communicate about the error path in the function contract implies that for some reason the “happy path” is more important.**How can you expect to build robust error handling with a lackadaisical approach to error handling contracts?</p>
+<h2 id="hijacking-control-flow">Hijacking Control Flow</h2>
+<p>Consider the following code:</p>
+<pre><code data-lang="Swift">do {
+    try thing1()
+    try thing2()
+}
+catch {
+    print(error)
+}
+</code></pre>
+<p>If <code>thing1()</code> fails, <code>thing2()</code> will never be executed. In many cases that might be the desired behavior. However, what if you actually want to do something different in the case that both fail, or in the case that only one fails? Using <code>throws</code> makes this difficult to impossible, as<code>throws</code> will hijack your code flow and immediately terminate the <code>do</code> block.</p>
+<pre><code data-lang="Swift">let result1 = thing1()
+let result2 = thing2()
+
+switch (result1, result2) {
+case (.Success, .Success):
+    print(&quot;Everything is awesome!&quot;)
+case (.Failure, .Failure):
+    print(&quot;Everything is not awesome&quot;)
+default:
+    print(&quot;Everything is half awesome&quot;)
+}
+</code></pre>
+<p>Since <code>Result</code> does not hijack your control flow, you are able to handle errors in a more robust manner. This also makes <code>Result</code> a great candidate for asynchronous code.</p>
+<h2 id="async-error-handling">Async Error Handling</h2>
+<p>One of the main arguments I’ve seen against <code>throws</code> is that is has no way of handling asynchronous errors. Async error handling is a big deal—most of my error handling code revolves around async networking errors. That said, I actually think that this point has been a little over-exaggerated by those contending for <code>Result</code>—async errors are just handled with a different pattern altogether. However, I still believe <code>Result</code> is better than said solution. Take a look at this async networking function.</p>
+<pre><code data-lang="Swift">func fetchJSON(endpoint: String, completionHandler: (JSONDictionary?, ErrorType?) -&gt; Void) {
+    //...
+}
+
+fetchJSON(&quot;/api/v3/users&quot;) { json, error in
+    if let error = error {
+        switch error {
+        case ErrorType.Type1:
+            // type 1
+        case ErrorType.Type2:
+            // type 2
+        }
+        return
+    }
+
+    guard let json = json else {
+        return
+    }
+
+    // handle JSON
+}
+</code></pre>
+<p>This simple function takes an API endpoint, goes and does the networking and JSON parsing, and then returns the result or an error to the user. This code is not horrible. However, it does mean the developer needs to understand the conventions being used: namely that you need to check if the error is nil first.</p>
+<p>Notice I said it “returns the result or an error.” Gee, that sounds an awful like a <code>Result</code>.</p>
+<pre><code data-lang="Swift">func fetchJSON(endpoint: String, completionHandler: Result&lt;JSONDictionary, ErrorType&gt; -&gt; Void) {
+    //...
+}
+
+fetchJSON(&quot;/api/v3/users&quot;) { result in
+    switch result {
+    case let .Success(json):
+        // handle JSON
+    case let .Failure(.Type1):
+        // handle error type 1
+    case let .Failure(.Type2):
+        // handle error type 2
+    }
+}
+</code></pre>
+<p>I think the equivalent code using <code>Result</code> is much better: I have a single switch that handles <em>all</em> cases.</p>
+<h2 id="no-asserts">No Asserts</h2>
+<p>Currently there are no functions available in the <code>XCTAssert</code> family for asserting whether or not a function or closure throw an error.</p>
+<p>Please join me in filing a <a rel="external" href="http://bugreport.apple.com/">radar</a>.</p>
+<p>Here’s how you might write one in the meantime:</p>
+<pre><code data-lang="Swift">func XCTAssertThrows&lt;A&gt;(file: String = __FILE__, line: Int = __LINE__, test: () throws -&gt; A) {
+    do {
+        try test()
+        XCTFail(&quot;Whoops&quot;, file: file, line: UInt(line))
+    }
+    catch {
+
+    }
+}
+</code></pre>
+<h2 id="throws-is-simpler">throws is “simpler”</h2>
+<p>A lot of people seem to think that <code>throws</code> is easier. I’m not sure if I agree, but even so I find it irrelevant. What does “simpler” mean? Does it mean more familiar for those who have never touched Haskell or Rust or the likes?</p>
+<p><code>Result</code> is no less simple than <code>Optional</code>, which in his great wisdom Papa Swift found fit to force upon everyone. It may be foreign at first, but if it’s a better way of doing things: learn it. Learning “hard” things can make you a better programmer, and can make your software better.</p>
+<p>Finally, the new error handling introduces 5 keywords: <code>throws</code>, <code>rethrows</code>, <code>do</code>, <code>try</code>, and <code>catch</code>. I don’t know that I would say the introduction of 5 new keywords is “simple”.</p>
+<h2 id="result-errortype">Result&lt;(), ErrorType&gt;</h2>
+<p>One gripe with <code>Result</code> I see is that sometimes people end up having to type something as <code>Result&lt;(), ErrorType&gt;</code> because all they really want is a pure Failure. I agree, it can feel a little weird. However, it’s not that hard, it’s rare, and you really only do it when you’re going to <code>map</code> it to something else later.</p>
+<p>If you find yourself doing this often, I would reexamine your code. Are you really using <code>Result</code> in the correct places? If all you’re doing is returning whether an operation fails or not, and you don’t care what the error is, return a <code>Bool</code> instead, or perhaps an <code>ErrorType?</code>.</p>
+<h2 id="advanced-operators">Advanced Operators</h2>
+<p><code>Result</code> brings with it a lot of powerful functional programming ideas and higher order functions. Talking about <code>apply</code>, <code>map</code>, and <code>flatMap</code> is really beyond the scope of this post (plus I don’t want to say the words: Applicative, Functor, or Monad so you keep reading). Perhaps this is where some of the fear of complexity comes from. But they’re really not complex—just new ways of thinking.</p>
+<p>Such higher order functions enable powerful abstractions like JSON parsing a la <a rel="external" href="http://github.com/thoughtbot/argo">Argo</a>, or my <a rel="external" href="http://github.com/jarsen/pipes">Pipes</a> library I <a rel="external" href="https://github.com/jarsen/blog/blob/master/2015/05/23/swift-data-pipelines">blogged about the other week</a>. The forward pipe operator makes working with <code>Result</code> awesome. <strong>The forward pipe operator allows you to compose a data pipeline completely agnostic towards optionals or results.</strong> And it reads so nice:</p>
+<pre><code data-lang="Swift">let processedText = inputFileName
+                    |&gt; escapeInput
+                    |&gt; readFile
+                    |&gt; processText
+</code></pre>
+<p>But I’m biased there. :)</p>
+<h2 id="but-standards">But, Standards…</h2>
+<p>All this said, I think standards are important. And to me, that’s one of the biggest selling points <code>throws</code> has. The Swift team has spoken, the Cocoa APIs have been rewritten, and let’s face it: they’re not going back.</p>
+<p>Fortunately, using functions like <a rel="external" href="http://github.com/antitypical/Result">antitypical/Result</a>’s <code>materialize</code> and <code>dematerialize</code> (once a few compiler bugs are worked out) it is possible to switch between thrown errors and and results. So, if you too like <code>Result</code>, then you’re not up the river with no paddle when working with other APIs.</p>
+<p>That said, there are lots of advantages to sticking close to the herd. That is worth some weight in your judgements.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>I’m new to this, just like everyone else; I’m still playing with it, and seeing how it feels. Sometimes I find myself liking it, others I find myself frustrated. These are just my impressions after a week—I’m sure I have plenty of errors and there are better ways that I missed. Again, comments below or on <a rel="external" href="http://twitter.com/jarsen">twitter</a> are appreciated.</p>
+<p>Papa Swift and everyone working on the Swift team are doing a <em>tremendous</em> job. Just because I don’t happen to like the new error handling model as much as I like <code>Result</code> yet doesn’t mean they made the wrong decision: there are lots of factors to consider, and I guarantee you they thought about it long and hard. I also hope that some more error handling features are on the horizon, like some sort of <code>await</code> for handling async errors.</p>
+<p>I have yet to shake my greater love for <code>Result</code>. As such, I think I will be sticking to it for most of my failable code. That said, I’m still playing with <code>throws</code> and only time will tell.</p>
+</div>
+</article>
+</main>
+</body>
+</html>

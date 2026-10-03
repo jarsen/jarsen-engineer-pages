@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>antifrAGILE: Continuous Delivery · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>antifrAGILE: Continuous Delivery</h1>
+    <time datetime="2021-01-25T00:00:00Z">2021-01-25</time>
+    
+    <span class="tags"><a href="https://jarsen.github.io/jarsen-engineer-pages/tags/agile/">#agile</a> <a href="https://jarsen.github.io/jarsen-engineer-pages/tags/devops/">#devops</a> <a href="https://jarsen.github.io/jarsen-engineer-pages/tags/philosophy/">#philosophy</a></span>
+    
+  </header>
+  <div class="prose"><blockquote>
+<p>Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.<br />
+<br />
+— First Principle of the <a rel="external" href="https://agilemanifesto.org/principles.html">Agile Manifesto</a></p>
+</blockquote>
+<p>Breaking up work into small chunks and <a rel="external" href="https://jarsen.engineer/antifragile-continuous-integration">continuously integrating</a> them back together is an energizing way to work. The smaller batches help make changes with reduced risk and enable agility. To fully enable our tight feedback loops, we need the ability to deliver software on a dime.</p>
+<p>Continuous Delivery (CD) is a practice focused on developing business processes and software architectures that enable teams to deliver software frequently, rapidly, and sustainably. CD makes deployment quotidian; deployment becomes second nature, and happens so often we stop paying attention. The boring and uneventful nature of deployment then enables us to focus on problems core to our business.</p>
+<hr />
+<h2 id="deploy-vs-release">Deploy vs Release</h2>
+<p>In order to talk about delivery effectively, we need to decouple two crucial ideas: deployment and release. Sometimes these words are used interchangeably, but we should apply rigor to them—the distinction is vital.</p>
+<ul>
+<li>Deploy: new code/infrastructure is pushed to production.</li>
+<li>Release: new code/infrastructure is made accessible to users.</li>
+</ul>
+<p>We can deploy without releasing. We can only release what is deployed.</p>
+<p>This distinction is important because deployment should become a behind-the-scenes engineering implementation detail—much in the same way users don’t care if you use git or mercurial. Users care about what they can use. We can deploy things that can’t be used.</p>
+<p>The act of releasing new things to use is a business decision. Releasing a new feature is done when Product is satisfied. Perhaps a release is timed as part of some event for marketing purposes. Every business will have their own strategies around the release process, the key is for the product development cycle to be aligned with this strategy, without becoming blocked by it.</p>
+<hr />
+<h2 id="two-ways-to-release">Two Ways to Release</h2>
+<p>There are two broad ways to release to users. The first is to deploy new functionality that is enabled. The second method is to toggle on functionality that you deployed in a disabled state.</p>
+<h3 id="releasing-via-deployments">Releasing via Deployments</h3>
+<p>Dead code is safe to deploy—deploying dead code cannot release new behavior, because it is, by definition, unreachable. You can write as much dead code as you’d like, call it from the safety of tests, and deploy as much dead code as you like to production.</p>
+<p>To release dead code, call it. As soon as a path opens up so that the code can be executed and that change is deployed to production—the once dead code is now released to users.</p>
+<p>One example is the <a rel="external" href="https://martinfowler.com/bliki/KeystoneInterface.html">Keystone Interface</a> approach. Keep deploying dead “backend” (whatever that means to you) code, and then a final deploy releases the “frontend” code that calls the backend code. Once the “frontend” code is deployed to production, the backend code becomes accessible through the frontend code and is thus released.</p>
+<p>Not all “backend” code has a corresponding “frontend.” One example might be a message queue and background workers. In these cases, the code may be dead until a change is deployed that allows the workers to begin running in production. Similarly, infrastructure such as a new database can be safely deployed as long as it is not being used.</p>
+<p>Releasing via deployment marries together the behaviors of deploying and releasing. However, we must be careful not to let the ideas of deployment and release become synonymous. Releasing via deployment is only one of the delivery tools at our disposal. It is simple, but inflexible. If our “frontend” component is large, doing this in a CI fashion will be next to impossible—we do not want to block deploys because one area of the code is not ready to be deployed. Not blocking deploys is at the heart of CD.</p>
+<h3 id="releasing-via-feature-flags">Releasing via Feature Flags</h3>
+<p>Another way to make code inaccessible to the user is by the <a rel="external" href="https://www.youtube.com/watch?v=V3Mt8n3pC5c">cunning use of flags</a>. By using a feature flag system (please do not use this system for account configuration), code can be made effectively dead. Toggling feature flags dynamically enables/disables functionality in production.</p>
+<p>Robust feature flag systems will allow you to even release to small subsets of users, allowing you to test in production and perform gradual, monitored, roll outs of new features. Although often complex, you can take similar approaches to roll out new infrastructure, perhaps writing to two databases until you flip a toggle to switch the source of truth.</p>
+<p>There is no such thing as a free lunch, so again we face tradeoffs. We must now manage a new tool (the feature flag system), and we must exercise eternal vigilance to clean up released feature flags. Unkept feature flags become a rat king of entangled artifacts, obfuscating the codebase, adding exponential complexity of possible configurations, and giving ourselves the ability to accidentally ‘unrelease’ in the future if someone flips a toggle they shouldn’t have.</p>
+<hr />
+<h2 id="continuous-delivery">Continuous Delivery</h2>
+<p>We knowing the difference between deploy and release, and understanding methods to release. However, we are left with the elephant in the room: how can we make sure that the code is always ready to deploy?</p>
+<p>The goal of CD is to make sure that the code is always in a deployable state. To this end, CD espouses <a rel="external" href="https://continuousdelivery.com/principles/">5 principles</a>:</p>
+<ol>
+<li>Build quality in</li>
+<li>Work in small batches</li>
+<li>Computers perform repetitive tasks, people solve problems</li>
+<li>Relentlessly pursue continuous improvement</li>
+<li>Everyone is responsible</li>
+</ol>
+<hr />
+<h2 id="build-quality-in">Build Quality In</h2>
+<blockquote>
+<p>“Cease dependence on mass inspection to achieve quality. Improve the process and build quality into the product in the first place.” — W. Edwards Deming</p>
+</blockquote>
+<p>It’s trite, pithy, and potentially problematic, but the best way to not deploy bugs is to not write bugs.</p>
+<p>“Don’t write bugs” is an oft spurned pipe dream. Perhaps for good reason—it can be interpreted in way that creates an unsafe work environment. Allowing ourselves to be human and accept mistakes is key to a healthy team. But also, <em>what if we could improve just one thing so we could introduce fewer bugs?</em> If we kept improving just one thing continuously, could we approach “no bugs?” There may be some sort of asymptote as we approach 0, but the closer we get to 0, the safer the product—and our teams.</p>
+<p>We can approach the asymptote of 0 bugs by building quality into our software from the start. The start of what? The start of everything. This concept is referred to in many circles (like QA and Security) as <em>shifting left</em>. I like to call it smooshing. We want to continuously look at our software development cycle and ask “how can we smoosh this together?” Smooshing together processes traditionally modeled as separate activities by methodologies like Waterfall is at the heart of Agile and Extreme Programming.</p>
+<p>What does this mean for your team? I don’t know. Ask them! Start the conversation on your team. This may mean realizing, “Oh, we didn’t even pull in QA or think about security in our feature planning.” Even further left: “We didn’t pull in QA or think about security before we prioritized this effort.” Smooshing may mean your team practices more pairing/mobbing (pair programming and pairing between other roles). It almost certainly will involve reshaping your delivery pipeline to include sufficient automated tests and security checks before allowing deployment to production.</p>
+<p>There is so much to think about around building quality in. There are books full of inspiration (and books full of traps). All I can say is: start the conversation with your team, and never stop it.</p>
+<hr />
+<h2 id="work-in-small-batches">Work in Small Batches</h2>
+<p>We’ve talked about the benefits of small batches as we’ve discussed <a rel="external" href="https://jarsen.engineer/antifragile-continuous-integration">Continuous Integration</a>. One of the intangible benefits of CI is the way it starts to change how your brain thinks about problems—trying to break a problem down into small, individually deployable components.</p>
+<p>CI tackles how engineers focus on breaking down the implementation of the solution. We should seek small batches throughout all areas of our cross-functional software development cycle.</p>
+<p>Often I feel a tendency to resist small batches in favor of larger batches. Perhaps this is because many of us were taught (indoctrinated?) about the marvels of the Industrial Revolution in school (itself modeled after the Industrial Revolution in many ways). American education evangelizes the genius of Henry Ford and his army of specialized assembly line workers. We learn about economies of scale and the efficiencies they enable, horizontal and vertical integration, etc. The lesson often is that efficiency involves large batches of work and siloed, specialized roles. This is true, if you are trying to maximize for output. We do not want to maximize for output.</p>
+<p>In the latter part of the last century, Toyota began crushing American auto manufacturing. Many of their philosophies led to the craze of Lean Manufacturing. The methods move away from large batches towards a more made-to-order model. Large batches can incur waste of their own, and Lean Manufacturing is about cutting out waste. Toyota believed that the increased overhead of smaller batches was outweighed by the benefits and flexibility (agility) of a reduction in inventory. If you think about it, excess inventory in certain regards is a liability. It many ways it becomes negative optionality—my only option really is to try and sell it. If I develop a new product, I need get rid of my old inventory? If I need to make improvements, and I have a bunch of excess, that becomes expensive. This means lots of attempts at prediction so I don’t end up with too much or too little inventory.</p>
+<p>I’m obviously not a lean manufacturing/six-sigma expert (I read some wikipedia articles), but one of the holy grails is something called single-piece flow. Single-piece means that work is moved through the system without any in-between Work-In-Progress states. This concept of single-piece flow is also called one-piece flow, or <em>continuous flow</em>. The ideal is for the work to move through the system without ever getting blocked. This includes quality assurance gates.</p>
+<p>Toyota instituted bizarre-seeming processes that fly in the face of our learned intuitions. One such example is the Andon Cord. The Andon cord is a physical cord that any employee is required to pull when they encounter a problem in the line. If a line manager cannot resolve the problem within a certain time frame (like a minute), the entire assembly line stops. Everyone then swarms on the problem until it solved.</p>
+<p>This sort of intense friction seems wasteful. The philosophy behind it is that the alternative—not immediately eliminating known problems from our process—is far more wasteful. You can see how tightly this blends into the first principle: Build quality in. All the principles are highly interconnected. The pain of stopping the world to fix a problem in the process is worth it if it can lead us closer to the world of continuous flow.</p>
+<blockquote>
+<p>“If it hurts, do it more often.”<br />
+<br />
+— Martin Fowler, <a rel="external" href="https://www.martinfowler.com/bliki/FrequencyReducesDifficulty.html">Frequency Reduces Difficulty</a></p>
+</blockquote>
+<p>CD looks to optimize for the continuous flow of small batches of work from inception to deployment. We want to remove any human bottlenecks that are not problem-solving—anywhere work-in-progress can queue up.</p>
+<hr />
+<h2 id="computers-perform-repetitive-tasks-people-solve-problems">Computers perform repetitive tasks, people solve problems</h2>
+<p>Every time someone has to run a full end-to-end manual regression test you should collapse in tears. When a ‘feature team’ washes its hands and passes work off to an ops team to deploy, somewhere a fairy dies. ✨💀</p>
+<blockquote>
+<p>“If you are doing manual regression testing in 2013, all the computers are getting together and laughing at you. It’s 2013, we should not be doing this stuff manually anymore.”<br />
+<br />
+— Jez Humble, in his 2013 <a rel="external" href="https://www.youtube.com/watch?v=ZLBhVEo1OG4">talk</a> (still one of the best)</p>
+</blockquote>
+<p>The real leverage of the Industrial Revolution was automation from machines—not humans. The real leverage of our current information age is automation by computers (computers are a very adaptable machine). Whenever we try to leverage humans like machines we burn them out. It’s inhumane, and it’s bad business. In the software industry we should hire humans and build teams for their creative problem solving potential.</p>
+<p>QA folks are incredible problem solvers, and widely known for their ability to push limits and discover new problems. We should push automated testing on our teams to free QA to do the types of testing only humans can do. Exploratory testing and representing user needs/pains are two uniquely human super powers.</p>
+<p>Ops teams are not FedEx for bits. Ops engineers are talented engineers who more likely than not love infrastructure. They should be equipped to be solving organizational infrastructure needs, not managing deployments.</p>
+<p>There are many examples in your org where humans could be freed by computers to accomplish creative, meaningful tasks. What are they?</p>
+<hr />
+<h2 id="relentlessly-pursue-continuous-improvement">Relentlessly pursue continuous improvement</h2>
+<p>Continuous Delivery is not a checkbox on your list of things that “high-performing” software organizations do. Continuous Delivery is not an end; it is an infinite loop.</p>
+<blockquote>
+<p>“Continuous Delivery is a people, not a place.” — DevOps Heimdall</p>
+</blockquote>
+<p>There is no checklist of “do these things and now you are practicing CD.” CD is as an honest, ongoing conversation. The team should always be asking, “Where are we now? What’s our next step?” In this way, CD is a process that is able to respond to change: changes in the team, changes in tooling, changes in delivery needs. The infinite loop of CD is a feedback loop.</p>
+<p>Although we may map out our team processes in terms of simple diagrams (if we’re lucky), the real system is a complex, living thing. Systems thinking is hard.</p>
+<p>My lower back gets really tired when I deadlift. I used to think the reason was as simple as: I’m lifting poorly, or my back is weak. My coach helped me understand it may be both or neither of these things. It could be that my hamstrings are weak and I compensate with my back—another part of the system of the posterior chain. As my technique has improved we’ve slowly been leaning towards the weak-link hamstrings theory. It’s surprising, because my intuition was that if my hamstrings were weak, my hamstrings would have been sore.</p>
+<p>Our teams are complex living systems. We need to spend time observing as a team, and evolving together. We may feel pains in areas where it may be difficult to identify the root problem. “Fixing” a problem always puts us on a new plane with new problems to solve. If we are not continuously improving, we are continuously degrading thanks to entropy.</p>
+<p>Continuous Improvement is a key differentiating factor in a competitive business environment. Toyota practiced the Toyota Kata and did not worry too much about people stealing their process/plans—by the time someone would be able to copy it, Toyota had already learned and improved. They would always be ahead.</p>
+<p>CD is not a checklist of practices you can just read a book about or copy from someone else. Every team has to evolve to suit their own people and needs. You can delegate and copy many some things in life. You can not delegate your personal fitness or copy a world-class athlete’s workouts and expect results. Similarly, you have to build your own CD muscles through experience and team communication over time. There is no shortcut.</p>
+<hr />
+<h2 id="everyone-is-responsible">Everyone is responsible</h2>
+<p>Sure, perhaps some sort of an Engineering or Product Manager may ultimately be held accountable for business outcomes. An IC may be held accountable for individual efforts. But ultimately, the team is a team. The team must swim or sink together.</p>
+<p>“Failure” to deliver represents a learning opportunity for the whole team. What processes do we need to change next as part of our continuous improvement efforts to remove some risk of failure in the future?</p>
+<p>Everyone is responsible for the teams outcomes. Everyone should be invested, and empowered by a sense of team ownership.</p>
+<p>QA/Testers are not responsible for quality. Everyone is responsible for building quality in. Quality is a business decision—the business decides what level of defects are acceptable based on our customers and priorities.</p>
+<p>Everyone is responsible for UX. Although in current parlance, Designers are often ‘UX Designers,’ User Experience is broad and encompasses the entire experience of a user using the product. Load times that are too slow are bad UX. Bugs that result in data loss or confusion are bad UX.</p>
+<p>Everyone is responsible for the product. Engineers are not mere ticket-takers that turn caffeine into code. Engineers should ask product questions, champion for the user, good UX, and build quality in rather than throwing “dev-done” code over the wall to QA.</p>
+<p>Everyone is responsible for the code. Cross-functional as teams are, we need to understand that the code and infrastructure running in production are our product. Non-engineers should be invested in understanding “engineering” concerns and not feeling comfortable to just glaze over when things get technical. They should ask engineers challenging questions. Engineers should learn the language of the business and the product and <a rel="external" href="https://www.martinfowler.com/bliki/UbiquitousLanguage.html">use these words</a> in their communications and in the code base.</p>
+<hr />
+<p>Continuous Delivery is about optimizing for the flow of work through our teams. The goal is not to optimize the productivity of each individual, it is to drive outcomes that will profit the business. CD is putting ourselves in a position where we can adapt quickly to deliver outcomes, rather than hamstring ourselves with an inventory of mere outputs. In order to drive outcomes, the whole team needs to focus on the principles of CD to create quick, healthy feedback loops.</p>
+<p>One way to make the feedback loops even quicker is to automatically deploy at the end of your deployment pipeline. This process is known as Continuous Deployment (often also abbreviated as CD and conflated with Continuous Delivery). Continuous Deployment is worthy of its own future article, but for now let it suffice to say: Continuous Delivery means <em>we can deploy every commit</em>, Continuous Deployment means <em>we do deploy every commit automatically</em>. You cannot have Continuous Deployment without Continuous Delivery.</p>
+<p>All of this starts with conversations, and must involve conversations forever. Modern software development is a team sport. There are no lone wolf code heroes in software development at meaningful scale. The most important thing your team can do is learn to talk.</p>
+</div>
+</article>
+</main>
+</body>
+</html>

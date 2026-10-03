@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Jason Larsen — Engineer - DevOps</title>
+    <subtitle>Thoughts about the art of software engineering and design.</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://jarsen.github.io/jarsen-engineer-pages/tags/devops/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2021-01-25T00:00:00+00:00</updated>
+    <id>https://jarsen.github.io/jarsen-engineer-pages/tags/devops/atom.xml</id>
+    <entry xml:lang="en">
+        <title>antifrAGILE: Continuous Delivery</title>
+        <published>2021-01-25T00:00:00+00:00</published>
+        <updated>2021-01-25T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-delivery/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-delivery/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-delivery/">&lt;blockquote&gt;
+&lt;p&gt;Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.&lt;br /&gt;
+&lt;br /&gt;
+— First Principle of the &lt;a rel=&quot;external&quot; href=&quot;https://agilemanifesto.org/principles.html&quot;&gt;Agile Manifesto&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Breaking up work into small chunks and &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/antifragile-continuous-integration&quot;&gt;continuously integrating&lt;/a&gt; them back together is an energizing way to work. The smaller batches help make changes with reduced risk and enable agility. To fully enable our tight feedback loops, we need the ability to deliver software on a dime.&lt;/p&gt;
+&lt;p&gt;Continuous Delivery (CD) is a practice focused on developing business processes and software architectures that enable teams to deliver software frequently, rapidly, and sustainably. CD makes deployment quotidian; deployment becomes second nature, and happens so often we stop paying attention. The boring and uneventful nature of deployment then enables us to focus on problems core to our business.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;deploy-vs-release&quot;&gt;Deploy vs Release&lt;/h2&gt;
+&lt;p&gt;In order to talk about delivery effectively, we need to decouple two crucial ideas: deployment and release. Sometimes these words are used interchangeably, but we should apply rigor to them—the distinction is vital.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Deploy: new code/infrastructure is pushed to production.&lt;/li&gt;
+&lt;li&gt;Release: new code/infrastructure is made accessible to users.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We can deploy without releasing. We can only release what is deployed.&lt;/p&gt;
+&lt;p&gt;This distinction is important because deployment should become a behind-the-scenes engineering implementation detail—much in the same way users don’t care if you use git or mercurial. Users care about what they can use. We can deploy things that can’t be used.&lt;/p&gt;
+&lt;p&gt;The act of releasing new things to use is a business decision. Releasing a new feature is done when Product is satisfied. Perhaps a release is timed as part of some event for marketing purposes. Every business will have their own strategies around the release process, the key is for the product development cycle to be aligned with this strategy, without becoming blocked by it.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;two-ways-to-release&quot;&gt;Two Ways to Release&lt;/h2&gt;
+&lt;p&gt;There are two broad ways to release to users. The first is to deploy new functionality that is enabled. The second method is to toggle on functionality that you deployed in a disabled state.&lt;/p&gt;
+&lt;h3 id=&quot;releasing-via-deployments&quot;&gt;Releasing via Deployments&lt;/h3&gt;
+&lt;p&gt;Dead code is safe to deploy—deploying dead code cannot release new behavior, because it is, by definition, unreachable. You can write as much dead code as you’d like, call it from the safety of tests, and deploy as much dead code as you like to production.&lt;/p&gt;
+&lt;p&gt;To release dead code, call it. As soon as a path opens up so that the code can be executed and that change is deployed to production—the once dead code is now released to users.&lt;/p&gt;
+&lt;p&gt;One example is the &lt;a rel=&quot;external&quot; href=&quot;https://martinfowler.com/bliki/KeystoneInterface.html&quot;&gt;Keystone Interface&lt;/a&gt; approach. Keep deploying dead “backend” (whatever that means to you) code, and then a final deploy releases the “frontend” code that calls the backend code. Once the “frontend” code is deployed to production, the backend code becomes accessible through the frontend code and is thus released.&lt;/p&gt;
+&lt;p&gt;Not all “backend” code has a corresponding “frontend.” One example might be a message queue and background workers. In these cases, the code may be dead until a change is deployed that allows the workers to begin running in production. Similarly, infrastructure such as a new database can be safely deployed as long as it is not being used.&lt;/p&gt;
+&lt;p&gt;Releasing via deployment marries together the behaviors of deploying and releasing. However, we must be careful not to let the ideas of deployment and release become synonymous. Releasing via deployment is only one of the delivery tools at our disposal. It is simple, but inflexible. If our “frontend” component is large, doing this in a CI fashion will be next to impossible—we do not want to block deploys because one area of the code is not ready to be deployed. Not blocking deploys is at the heart of CD.&lt;/p&gt;
+&lt;h3 id=&quot;releasing-via-feature-flags&quot;&gt;Releasing via Feature Flags&lt;/h3&gt;
+&lt;p&gt;Another way to make code inaccessible to the user is by the &lt;a rel=&quot;external&quot; href=&quot;https://www.youtube.com/watch?v=V3Mt8n3pC5c&quot;&gt;cunning use of flags&lt;/a&gt;. By using a feature flag system (please do not use this system for account configuration), code can be made effectively dead. Toggling feature flags dynamically enables/disables functionality in production.&lt;/p&gt;
+&lt;p&gt;Robust feature flag systems will allow you to even release to small subsets of users, allowing you to test in production and perform gradual, monitored, roll outs of new features. Although often complex, you can take similar approaches to roll out new infrastructure, perhaps writing to two databases until you flip a toggle to switch the source of truth.&lt;/p&gt;
+&lt;p&gt;There is no such thing as a free lunch, so again we face tradeoffs. We must now manage a new tool (the feature flag system), and we must exercise eternal vigilance to clean up released feature flags. Unkept feature flags become a rat king of entangled artifacts, obfuscating the codebase, adding exponential complexity of possible configurations, and giving ourselves the ability to accidentally ‘unrelease’ in the future if someone flips a toggle they shouldn’t have.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;continuous-delivery&quot;&gt;Continuous Delivery&lt;/h2&gt;
+&lt;p&gt;We knowing the difference between deploy and release, and understanding methods to release. However, we are left with the elephant in the room: how can we make sure that the code is always ready to deploy?&lt;/p&gt;
+&lt;p&gt;The goal of CD is to make sure that the code is always in a deployable state. To this end, CD espouses &lt;a rel=&quot;external&quot; href=&quot;https://continuousdelivery.com/principles/&quot;&gt;5 principles&lt;/a&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Build quality in&lt;/li&gt;
+&lt;li&gt;Work in small batches&lt;/li&gt;
+&lt;li&gt;Computers perform repetitive tasks, people solve problems&lt;/li&gt;
+&lt;li&gt;Relentlessly pursue continuous improvement&lt;/li&gt;
+&lt;li&gt;Everyone is responsible&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;build-quality-in&quot;&gt;Build Quality In&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Cease dependence on mass inspection to achieve quality. Improve the process and build quality into the product in the first place.” — W. Edwards Deming&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It’s trite, pithy, and potentially problematic, but the best way to not deploy bugs is to not write bugs.&lt;/p&gt;
+&lt;p&gt;“Don’t write bugs” is an oft spurned pipe dream. Perhaps for good reason—it can be interpreted in way that creates an unsafe work environment. Allowing ourselves to be human and accept mistakes is key to a healthy team. But also, &lt;em&gt;what if we could improve just one thing so we could introduce fewer bugs?&lt;/em&gt; If we kept improving just one thing continuously, could we approach “no bugs?” There may be some sort of asymptote as we approach 0, but the closer we get to 0, the safer the product—and our teams.&lt;/p&gt;
+&lt;p&gt;We can approach the asymptote of 0 bugs by building quality into our software from the start. The start of what? The start of everything. This concept is referred to in many circles (like QA and Security) as &lt;em&gt;shifting left&lt;/em&gt;. I like to call it smooshing. We want to continuously look at our software development cycle and ask “how can we smoosh this together?” Smooshing together processes traditionally modeled as separate activities by methodologies like Waterfall is at the heart of Agile and Extreme Programming.&lt;/p&gt;
+&lt;p&gt;What does this mean for your team? I don’t know. Ask them! Start the conversation on your team. This may mean realizing, “Oh, we didn’t even pull in QA or think about security in our feature planning.” Even further left: “We didn’t pull in QA or think about security before we prioritized this effort.” Smooshing may mean your team practices more pairing/mobbing (pair programming and pairing between other roles). It almost certainly will involve reshaping your delivery pipeline to include sufficient automated tests and security checks before allowing deployment to production.&lt;/p&gt;
+&lt;p&gt;There is so much to think about around building quality in. There are books full of inspiration (and books full of traps). All I can say is: start the conversation with your team, and never stop it.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;work-in-small-batches&quot;&gt;Work in Small Batches&lt;/h2&gt;
+&lt;p&gt;We’ve talked about the benefits of small batches as we’ve discussed &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/antifragile-continuous-integration&quot;&gt;Continuous Integration&lt;/a&gt;. One of the intangible benefits of CI is the way it starts to change how your brain thinks about problems—trying to break a problem down into small, individually deployable components.&lt;/p&gt;
+&lt;p&gt;CI tackles how engineers focus on breaking down the implementation of the solution. We should seek small batches throughout all areas of our cross-functional software development cycle.&lt;/p&gt;
+&lt;p&gt;Often I feel a tendency to resist small batches in favor of larger batches. Perhaps this is because many of us were taught (indoctrinated?) about the marvels of the Industrial Revolution in school (itself modeled after the Industrial Revolution in many ways). American education evangelizes the genius of Henry Ford and his army of specialized assembly line workers. We learn about economies of scale and the efficiencies they enable, horizontal and vertical integration, etc. The lesson often is that efficiency involves large batches of work and siloed, specialized roles. This is true, if you are trying to maximize for output. We do not want to maximize for output.&lt;/p&gt;
+&lt;p&gt;In the latter part of the last century, Toyota began crushing American auto manufacturing. Many of their philosophies led to the craze of Lean Manufacturing. The methods move away from large batches towards a more made-to-order model. Large batches can incur waste of their own, and Lean Manufacturing is about cutting out waste. Toyota believed that the increased overhead of smaller batches was outweighed by the benefits and flexibility (agility) of a reduction in inventory. If you think about it, excess inventory in certain regards is a liability. It many ways it becomes negative optionality—my only option really is to try and sell it. If I develop a new product, I need get rid of my old inventory? If I need to make improvements, and I have a bunch of excess, that becomes expensive. This means lots of attempts at prediction so I don’t end up with too much or too little inventory.&lt;/p&gt;
+&lt;p&gt;I’m obviously not a lean manufacturing/six-sigma expert (I read some wikipedia articles), but one of the holy grails is something called single-piece flow. Single-piece means that work is moved through the system without any in-between Work-In-Progress states. This concept of single-piece flow is also called one-piece flow, or &lt;em&gt;continuous flow&lt;/em&gt;. The ideal is for the work to move through the system without ever getting blocked. This includes quality assurance gates.&lt;/p&gt;
+&lt;p&gt;Toyota instituted bizarre-seeming processes that fly in the face of our learned intuitions. One such example is the Andon Cord. The Andon cord is a physical cord that any employee is required to pull when they encounter a problem in the line. If a line manager cannot resolve the problem within a certain time frame (like a minute), the entire assembly line stops. Everyone then swarms on the problem until it solved.&lt;/p&gt;
+&lt;p&gt;This sort of intense friction seems wasteful. The philosophy behind it is that the alternative—not immediately eliminating known problems from our process—is far more wasteful. You can see how tightly this blends into the first principle: Build quality in. All the principles are highly interconnected. The pain of stopping the world to fix a problem in the process is worth it if it can lead us closer to the world of continuous flow.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“If it hurts, do it more often.”&lt;br /&gt;
+&lt;br /&gt;
+— Martin Fowler, &lt;a rel=&quot;external&quot; href=&quot;https://www.martinfowler.com/bliki/FrequencyReducesDifficulty.html&quot;&gt;Frequency Reduces Difficulty&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;CD looks to optimize for the continuous flow of small batches of work from inception to deployment. We want to remove any human bottlenecks that are not problem-solving—anywhere work-in-progress can queue up.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;computers-perform-repetitive-tasks-people-solve-problems&quot;&gt;Computers perform repetitive tasks, people solve problems&lt;/h2&gt;
+&lt;p&gt;Every time someone has to run a full end-to-end manual regression test you should collapse in tears. When a ‘feature team’ washes its hands and passes work off to an ops team to deploy, somewhere a fairy dies. ✨💀&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“If you are doing manual regression testing in 2013, all the computers are getting together and laughing at you. It’s 2013, we should not be doing this stuff manually anymore.”&lt;br /&gt;
+&lt;br /&gt;
+— Jez Humble, in his 2013 &lt;a rel=&quot;external&quot; href=&quot;https://www.youtube.com/watch?v=ZLBhVEo1OG4&quot;&gt;talk&lt;/a&gt; (still one of the best)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The real leverage of the Industrial Revolution was automation from machines—not humans. The real leverage of our current information age is automation by computers (computers are a very adaptable machine). Whenever we try to leverage humans like machines we burn them out. It’s inhumane, and it’s bad business. In the software industry we should hire humans and build teams for their creative problem solving potential.&lt;/p&gt;
+&lt;p&gt;QA folks are incredible problem solvers, and widely known for their ability to push limits and discover new problems. We should push automated testing on our teams to free QA to do the types of testing only humans can do. Exploratory testing and representing user needs/pains are two uniquely human super powers.&lt;/p&gt;
+&lt;p&gt;Ops teams are not FedEx for bits. Ops engineers are talented engineers who more likely than not love infrastructure. They should be equipped to be solving organizational infrastructure needs, not managing deployments.&lt;/p&gt;
+&lt;p&gt;There are many examples in your org where humans could be freed by computers to accomplish creative, meaningful tasks. What are they?&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;relentlessly-pursue-continuous-improvement&quot;&gt;Relentlessly pursue continuous improvement&lt;/h2&gt;
+&lt;p&gt;Continuous Delivery is not a checkbox on your list of things that “high-performing” software organizations do. Continuous Delivery is not an end; it is an infinite loop.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Continuous Delivery is a people, not a place.” — DevOps Heimdall&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;There is no checklist of “do these things and now you are practicing CD.” CD is as an honest, ongoing conversation. The team should always be asking, “Where are we now? What’s our next step?” In this way, CD is a process that is able to respond to change: changes in the team, changes in tooling, changes in delivery needs. The infinite loop of CD is a feedback loop.&lt;/p&gt;
+&lt;p&gt;Although we may map out our team processes in terms of simple diagrams (if we’re lucky), the real system is a complex, living thing. Systems thinking is hard.&lt;/p&gt;
+&lt;p&gt;My lower back gets really tired when I deadlift. I used to think the reason was as simple as: I’m lifting poorly, or my back is weak. My coach helped me understand it may be both or neither of these things. It could be that my hamstrings are weak and I compensate with my back—another part of the system of the posterior chain. As my technique has improved we’ve slowly been leaning towards the weak-link hamstrings theory. It’s surprising, because my intuition was that if my hamstrings were weak, my hamstrings would have been sore.&lt;/p&gt;
+&lt;p&gt;Our teams are complex living systems. We need to spend time observing as a team, and evolving together. We may feel pains in areas where it may be difficult to identify the root problem. “Fixing” a problem always puts us on a new plane with new problems to solve. If we are not continuously improving, we are continuously degrading thanks to entropy.&lt;/p&gt;
+&lt;p&gt;Continuous Improvement is a key differentiating factor in a competitive business environment. Toyota practiced the Toyota Kata and did not worry too much about people stealing their process/plans—by the time someone would be able to copy it, Toyota had already learned and improved. They would always be ahead.&lt;/p&gt;
+&lt;p&gt;CD is not a checklist of practices you can just read a book about or copy from someone else. Every team has to evolve to suit their own people and needs. You can delegate and copy many some things in life. You can not delegate your personal fitness or copy a world-class athlete’s workouts and expect results. Similarly, you have to build your own CD muscles through experience and team communication over time. There is no shortcut.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;everyone-is-responsible&quot;&gt;Everyone is responsible&lt;/h2&gt;
+&lt;p&gt;Sure, perhaps some sort of an Engineering or Product Manager may ultimately be held accountable for business outcomes. An IC may be held accountable for individual efforts. But ultimately, the team is a team. The team must swim or sink together.&lt;/p&gt;
+&lt;p&gt;“Failure” to deliver represents a learning opportunity for the whole team. What processes do we need to change next as part of our continuous improvement efforts to remove some risk of failure in the future?&lt;/p&gt;
+&lt;p&gt;Everyone is responsible for the teams outcomes. Everyone should be invested, and empowered by a sense of team ownership.&lt;/p&gt;
+&lt;p&gt;QA/Testers are not responsible for quality. Everyone is responsible for building quality in. Quality is a business decision—the business decides what level of defects are acceptable based on our customers and priorities.&lt;/p&gt;
+&lt;p&gt;Everyone is responsible for UX. Although in current parlance, Designers are often ‘UX Designers,’ User Experience is broad and encompasses the entire experience of a user using the product. Load times that are too slow are bad UX. Bugs that result in data loss or confusion are bad UX.&lt;/p&gt;
+&lt;p&gt;Everyone is responsible for the product. Engineers are not mere ticket-takers that turn caffeine into code. Engineers should ask product questions, champion for the user, good UX, and build quality in rather than throwing “dev-done” code over the wall to QA.&lt;/p&gt;
+&lt;p&gt;Everyone is responsible for the code. Cross-functional as teams are, we need to understand that the code and infrastructure running in production are our product. Non-engineers should be invested in understanding “engineering” concerns and not feeling comfortable to just glaze over when things get technical. They should ask engineers challenging questions. Engineers should learn the language of the business and the product and &lt;a rel=&quot;external&quot; href=&quot;https://www.martinfowler.com/bliki/UbiquitousLanguage.html&quot;&gt;use these words&lt;/a&gt; in their communications and in the code base.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Continuous Delivery is about optimizing for the flow of work through our teams. The goal is not to optimize the productivity of each individual, it is to drive outcomes that will profit the business. CD is putting ourselves in a position where we can adapt quickly to deliver outcomes, rather than hamstring ourselves with an inventory of mere outputs. In order to drive outcomes, the whole team needs to focus on the principles of CD to create quick, healthy feedback loops.&lt;/p&gt;
+&lt;p&gt;One way to make the feedback loops even quicker is to automatically deploy at the end of your deployment pipeline. This process is known as Continuous Deployment (often also abbreviated as CD and conflated with Continuous Delivery). Continuous Deployment is worthy of its own future article, but for now let it suffice to say: Continuous Delivery means &lt;em&gt;we can deploy every commit&lt;/em&gt;, Continuous Deployment means &lt;em&gt;we do deploy every commit automatically&lt;/em&gt;. You cannot have Continuous Deployment without Continuous Delivery.&lt;/p&gt;
+&lt;p&gt;All of this starts with conversations, and must involve conversations forever. Modern software development is a team sport. There are no lone wolf code heroes in software development at meaningful scale. The most important thing your team can do is learn to talk.&lt;/p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>antifrAGILE: Continuous Integration</title>
+        <published>2020-12-17T00:00:00+00:00</published>
+        <updated>2020-12-17T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-integration/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-integration/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-integration/">&lt;h2 id=&quot;big-changes-are-fragile&quot;&gt;Big Changes Are Fragile&lt;/h2&gt;
+&lt;p&gt;Big changes carry more risk than small changes.&lt;/p&gt;
+&lt;p&gt;Ambitious, “big bang” style changes often fail, or generate more organizational ill-will than they do business value. There’s a reason just whispering the word refactor can send a Product Manager into a fugue state.&lt;/p&gt;
+&lt;p&gt;Merging and deploying months worth of work is much riskier than merging in a days worth; a 5 line PR is less risky than a 500 line PR.&lt;/p&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/i/web/status/1332679390212263945&quot;&gt;Referenced post on X&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Does that mean that a bad 5 line PR can’t do more damage than a 500 line one? Of course not. But the human brain is much better at handling small changes—at being able to contextualize and model one thing at a time.&lt;/p&gt;
+&lt;p&gt;We just understand small changes better. This is why software teams are incredibly intuitive and accurate when estimating in the short term, and terrible with anything more than a week or two out.&lt;/p&gt;
+&lt;p&gt;Dealing with large and/or long term changes is more fragile, because it involves more prediction. Prediction is fragile. Prediction tries to deal in the probability of a particular outcome, and can never account for Black Swan events swimming in the tails of the bell curve. Hell, it doesn’t even take Black Swans, just sustained mild volatility will break many predictive models.&lt;/p&gt;
+&lt;p&gt;Antifragility views prediction as a distraction at best, and instead focuses on building options so that no matter what, you have good choices.&lt;/p&gt;
+&lt;p&gt;By focusing on making our changes small, we become antifrAGILE, and able to change quickly.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;continuous-integration&quot;&gt;Continuous Integration&lt;/h2&gt;
+&lt;p&gt;Continuous Integration (CI) is a practice to reduce risk by making changes small and continuous.&lt;/p&gt;
+&lt;p&gt;CI is a practice first introduced by Extreme Programming. Over the past decade, the term CI has begun to be misused to refer to build servers and services that form an important part of CI. But &lt;strong&gt;CI is not something you can buy, CI is a practice you must develop.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;What does it mean to “integrate?” Integrate means integrate your work with the work of everyone else on your team. Continuous means, in this context, frequent. You must be merging everyone’s code frequently.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The Extreme Programming practice of Continuous Integration encourages all members of a development team to integrate their work daily, instead of developing features in isolation for days or weeks.” — Martin Fowler&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Jez Humble, author and influential member of the DevOps movement, likes to ask folks who believe they are doing CI three questions:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Does every developer check their work into the main branch (master, trunk, etc.) at least once a day?&lt;/li&gt;
+&lt;li&gt;Does every checkin to the main branch result in an automated build and test?&lt;/li&gt;
+&lt;li&gt;If the build fails, is it back to green within 10 minutes?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;If you cannot answer yes to all of these questions, you are not practicing Continuous Integration (even if you own a CircleCI license and you run all your integration tests on every commit to your feature branch 😢).¹&lt;/p&gt;
+&lt;h2 id=&quot;sounds-wild&quot;&gt;Sounds Wild.&lt;/h2&gt;
+&lt;p&gt;If you’re like me a year and a half ago, this revelation feels radical—wrong somehow. Merge conflicts are awful, I’d like to deal with that less, so I’ll wait longer to merge, thank you very much. Also, how can I just merge into main? What about my bugs?! Where does QA fit in? What if it’s not done?&lt;/p&gt;
+&lt;p&gt;The intuition is that merging daily will lead to smaller, but more frequent merge conflicts, resulting in the same amount of work—just perhaps distributed into more manageable amounts. The reality is that the relationship here is non-linear. Volatility, randomness, time, chaos, change—they all compound. Counterintuitively, more frequent integration will result in not only smaller merge conflicts, but also fewer merge conflicts.&lt;/p&gt;
+&lt;p&gt;One of Martin Fowler’s favorite phrases is “If it hurts, do it more often.” He gives three reasons to do it more often: First, many tasks become more difficult to do as the amount of work to do increases. Second, we need feedback. We cannot receive feedback if we are not doing the thing. Third, we need practice. Often practice will refine our process and help us really understand.&lt;/p&gt;
+&lt;h2 id=&quot;an-attempt-at-analogy&quot;&gt;An attempt at analogy.&lt;/h2&gt;
+&lt;p&gt;Imagine you need to collaborate on a presentation. The most frustrating way to do this is to set up an email chain where everyone keeps emailing new versions of the document and you need to integrate everyone else’s changes while also incorporating your own.&lt;/p&gt;
+&lt;p&gt;The simplest and most collaborative way for me to do this is use a Google Doc where I can see everyone editing in real time. I rarely have conflicts, and if I do I know before I make the changes and I am communicating with someone who recently made the conflicting change. This conflict is a conceptual conflict—a departure in ideas or direction—not an editing conflict. The live nature of the document has helped bring the conflict to the forefront where we can discuss it before moving on.&lt;/p&gt;
+&lt;p&gt;The more continuously you integrate, the more you are turning your main branch into a Google Doc.&lt;/p&gt;
+&lt;h2 id=&quot;scale&quot;&gt;Scale&lt;/h2&gt;
+&lt;p&gt;“Ok, Jason. But I work at X Big-Co. Maybe that works for small teams, but we have 1000 engineers. We can’t all be editing the same Google Doc at the same time!”&lt;/p&gt;
+&lt;p&gt;Honestly, I haven’t experienced CI at this scale. But as I understand, Google, Facebook, and many very large codebases work this way. It takes some more tooling, but also… can you imagine the massive game of car-chicken over merging pull-requests between 1000 engineers? Hopefully at this point you have developed some good boundaries if you are still developing in a monorepo.&lt;/p&gt;
+&lt;p&gt;Fast Feedback Loops&lt;/p&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/i/web/status/1338898497634848773&quot;&gt;Referenced post on X&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;(Don’t get me started on how rad darklang is philosophically. A newsletter for another time.)&lt;/p&gt;
+&lt;p&gt;One of the keys to any successful agile practice is feedback loops. How you you know when to zig if you aren’t paying attention, let alone zag?&lt;/p&gt;
+&lt;p&gt;Feature Branches receive certain types of feedback. Perhaps there was already feedback collected by UX research before implementation even began. Perhaps I got a code review at the end—or even review or a pair of eyes along the way. This is all great feedback. But one very important bit of feedback is missing: does it blend?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Until I’ve integrated my code with the work that everyone else is doing, I don’t know if my code works.&lt;/strong&gt; My code might work perfectly and pass QA on my feature branch, but I have no clue how it will interact one I merge with trunk, let alone the feature branches of my colleagues.² (Does your QA vet the merged artifact?!)&lt;/p&gt;
+&lt;p&gt;Or perhaps, like in the Google Doc analogy, there’s been an important misalignment in direction or intent of an interface or service, and we’ve spent weeks or worse pulling in different directions. Integrating early and frequently provides feedback that brings these conceptual conflicts to the surface sooner.&lt;/p&gt;
+&lt;p&gt;Finally, forcing ourselves to start to think small leads to smaller experiments. As Charity pointed out in her tweet: we shrink the lead time to get something into product to be so quick that we can go from idea, to implementation, to running in production and observing the results of our product hypothesis in no time.&lt;/p&gt;
+&lt;h2 id=&quot;continuous-integration-is-for-teams&quot;&gt;Continuous Integration Is For Teams&lt;/h2&gt;
+&lt;p&gt;It may go without saying, but Continuous Integration is probably not a very useful idea for solo development—there aren’t many things to integrate with.&lt;/p&gt;
+&lt;p&gt;But what this means it that CI is a practice specifically designed for teams.&lt;/p&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/i/web/status/1335595612159553537&quot;&gt;Referenced post on X&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;(Trunk Based Development is a key requirement for CI)&lt;/p&gt;
+&lt;p&gt;It feels pretty smooth to throw on a headset and go heads-down for a week after Monday planning meetings, surfacing here and there for a morning standup. You knock out your tickets, pat yourself on the back, and throw it over the wall for QA to test in some sort of temporary staging environment. You pick up your next story, only to be interrupted by QA when it’s approved and you’re ready to merge. Hopefully there’s no merge conflicts. Or oops, QA found a bug and now you gotta context switch back to where you were a week ago. Either way, minor inconvenience for you.&lt;/p&gt;
+&lt;p&gt;Now multiply this by the number of people on your team/in your code base. The cost is worse than that, because again with volatility, the response is non-linear. We want practices that optimize for the flow of the product, not for individual productivity. (Optimization for individual flow is one reason Cal Newport has declared the &lt;a rel=&quot;external&quot; href=&quot;https://www.newyorker.com/tech/annals-of-technology/the-rise-and-fall-of-getting-things-done&quot;&gt;fall of GTD&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;One teamwork analogy I heard growing up was about yokes and oxen. Imagine a covered Conestoga wagon being pulled by two oxen. Those oxen probably are not the same strength—it’s very likely that one could be pulling faster. But it couldn’t be pulling more without its partner. Even though the yoke slows down one of the oxen, they can pull more together.&lt;/p&gt;
+&lt;p&gt;Teams are the same way. You may be a “rock star”/ninja programmer and you can code way faster on a feature branch and if you merge first maybe you avoid conflicts. But you can’t out-code your whole team. Continuous Integration optimizes for team flow.&lt;/p&gt;
+&lt;h2 id=&quot;i-m-still-worried-about-quality&quot;&gt;I’m Still Worried About Quality&lt;/h2&gt;
+&lt;p&gt;One of the big concerns with most folks learning about the Truth of Continuous Integration is quality. This is good. This means you are a good engineer—you want to deliver quality software that your customers want to pay for.&lt;/p&gt;
+&lt;p&gt;The concern is that Continuous Integration bypasses many of the common quality assurance steps we may be used to. If we are all merging daily into trunk, how do we make sure we have something reliable to deploy?&lt;/p&gt;
+&lt;p&gt;Remember that one of the three keys of practicing CI is that every commit to the trunk triggers an automated build and test. Your automated tests should be a good signal that your existing features are working as intended.&lt;/p&gt;
+&lt;p&gt;But even with tests, there are some things that having passing tests, but are not done. They are not ready to be released! And if everyone is doing this all the time, how do we ever end up with an artifact that we can release? A code freeze??&lt;/p&gt;
+&lt;p&gt;Alas, it is 11PM the night before the Thursday morning this newsletter will go out and it is past my bedtime. This got a lot longer than I expected. I was hoping to get into the next topic to answer this question, but it will have to wait! I will give you a hint though, it starts with Continuous and ends with elivery.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;resources&quot;&gt;Resources:&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;This is a very good &lt;a rel=&quot;external&quot; href=&quot;https://www.martinfowler.com/articles/continuousIntegration.html&quot;&gt;guide&lt;/a&gt; to read about Continuous Integration. You might notice I keep referencing Martin Fowler. Sorry, but he writes a lot of good stuff.&lt;/li&gt;
+&lt;li&gt;If you want to get deep into the patterns for branching, read &lt;a rel=&quot;external&quot; href=&quot;https://martinfowler.com/articles/branching-patterns.html&quot;&gt;Patterns for Managing Source Code Branches&lt;/a&gt; by… Martin Fowler. 😅&lt;/li&gt;
+&lt;li&gt;Read XP Explained, by Kent Beck.&lt;/li&gt;
+&lt;li&gt;I wrote a little bit about CI earlier this year on my &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/ship-faster-with-this-one-weird-trick&quot;&gt;blog&lt;/a&gt;. There’s some other inspiring quotes and stuff there.&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+        
+    </entry>
+</feed>

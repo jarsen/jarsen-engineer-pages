@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>The Church of Xcode - Simple Emacs Keybindings · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>The Church of Xcode - Simple Emacs Keybindings</h1>
+    <time datetime="2015-07-22T00:00:00Z">2015-07-22</time>
+    
+    <span class="tags"><a href="https://jarsen.github.io/jarsen-engineer-pages/tags/macos/">#macos</a> <a href="https://jarsen.github.io/jarsen-engineer-pages/tags/workflow/">#workflow</a></span>
+    
+  </header>
+  <div class="prose"><p>Long has the holy war between emacs and vi been waged. I’ve used both, and I don’t really care either way. However, OS X text fields everywhere come with secret support for limited (and sometimes modified) Emacs keybindings. So, regardless of your position in the great text editor wars you might as well learn a few keybindings because <em>you can use them anywhere you see a text field</em>. Learning a few basic keybindings will empower you as an iOS/Mac developer and as an OS X user.</p>
+<h2 id="emacs-modifier-keys">Emacs Modifier Keys</h2>
+<p>Whenever you look at emacs shortcuts you’ll see something like this:</p>
+<pre><code>C-v
+M-v
+</code></pre>
+<p>A little translation is needed: C is the control key (⌃) and M is the “META” key, which in our case is the alt/option key (⌥). Since we’re not really a member of the church of emacs, from now on we’ll refer to our modifier keys using ⌃ and ⌥.</p>
+<h2 id="remapping-caps-lock">Remapping Caps Lock</h2>
+<p>The ⌃ key is not in the easiest position to stretch your fingers to, and it gets used a lot as a key modifier. So much so, you might want to consider remapping a less useful key that’s in a good position. A common choice for this is the Caps Lock key. If you’re like me you don’t do a lot of shouting when you type, and when you do you can hold down the shift key for a minute. So, it’s a prime choice.</p>
+<p>Simply go to your Keyboard preferences, hit the modifier keys button in the bottom right, and change the Caps Lock dropdown to “⌃ Control”.</p>
+<p>Remapping your keyboard is really easy, and your friends will think you’re hardcore.</p>
+<h2 id="cursor-movement">Cursor Movement</h2>
+<p>The point of keybindings is to keep your fingers on the keyboard where they belong; you want to avoid as much as possible moving your hand to mouse. Even using the arrow keys requires you to move your fingers away from their home row, and should be avoided where possible.</p>
+<p>⌃F | Move Cursor <strong>F</strong>orward |<br />
+⌃B | Move Cursor <strong>B</strong>ackward |<br />
+⌃P | Move Cursor U<strong>p</strong> |<br />
+⌃N | Move Cursor Dow<strong>n</strong> |<br />
+⌃E | Move to <strong>E</strong>nd of Line (also ⌘→) |<br />
+⌃A | Move to Beginning of Line … (<strong>A</strong> is the first letter of the alphabet?) (also ⌘←)</p>
+<p>If you hold down shift with any of these, you will move the selection as you move your cursor.</p>
+<p><strong>You can also use ⌃P and ⌃N to move the selection in your autocomplete results up and down!</strong></p>
+<p>Nobody likes to move the cursor one character at a time when you have a long ways to go. In Emacs, if you use the meta key instead of control, you can move forward and back by entire words. If you try to do this in Mac ⌥F and ⌥B instead insert the fancy characters ƒ and ∫, respectively. This is a little tricky because Mac also allows users to use the ⌥ key to insert special characters.</p>
+<p>We can add our own keybindings to override this behavior in Xcode by adding out own Key Bindings in Xcode preferences (which I do suggest), but part of our goal here is to learn key bindings that work across the system. These key bindings are available system wide, although in modified form—you must hold down both the control and meta modifier keys.</p>
+<p>⌥⌃F | Move Cursor <strong>F</strong>orward a word (also ⌥→) |<br />
+⌥⌃B | Move Cursor <strong>B</strong>ackward a word (also ⌥←) |</p>
+<p>Once again, holding shift while using either of these will move your selection. (Although it requires holding down 3 modifier keys! You’ll get lots of finger dexterity).</p>
+<h2 id="text-deletion">Text Deletion</h2>
+<p>Sometimes you want to delete text. These keybindings will help you delete efficiently.</p>
+<ul>
+<li>Deleting by <em>word</em> deletes whole words delimited by whitespace or other non-word characters.</li>
+<li>Deleting by <em>subword</em> will delete individual words in camelCasedWords (camel, Cased, and Words are each in subwords)</li>
+</ul>
+<p>⌃⌫ | Backward delete a subword |<br />
+⌃⌦ | Forward delete a subword |<br />
+⌥⌫ | Backward delete a word |<br />
+⌥⌦ | Forward delete a word |<br />
+⌃k | Delete to end of line (<strong>k</strong>ill) (also ⌘⌦) |<br />
+⌘⌫ | Delete to beginning of line (this is not really an Emacs binding, but a must-know nonetheless) |</p>
+<p>(⌫ is the backspace key, and ⌦ is the Delete key)</p>
+<h2 id="exercise">Exercise</h2>
+<p>You can look over these shortcuts till the cows come home, but unless you practice them you will never realize their utility.</p>
+<p>One exercise I like to do is to <em>try not to use the arrow keys at all</em>. Now, sometimes I find using the arrow keys to be more efficient (like moving forward/back by word or in the cases of ⌘↑ and ⌘↓ to move to the top and bottom of the file), but forcing myself to not use them helps me practice my other keybindings and I realize which operations I can actually do more quickly without the arrow keys.</p>
+<hr />
+<h2 id="conclusion">Conclusion</h2>
+<p>Emacs of course has many, many more keybindings. With Xcode’s Key Binding preferences you can try to imitate more of them, but these are just some standard OS-wide key bindings that will help you text edit more efficiently.</p>
+</div>
+</article>
+</main>
+</body>
+</html>

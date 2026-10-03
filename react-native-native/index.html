@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>React Native, Native · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>React Native, Native</h1>
+    <time datetime="2016-08-29T00:00:00Z">2016-08-29</time>
+    
+    <span class="tags"><a href="https://jarsen.github.io/jarsen-engineer-pages/tags/swift/">#swift</a></span>
+    
+  </header>
+  <div class="prose"><h2 id="making-your-swift-app-more-react-nativey">Making your Swift app more React Nativey</h2>
+<h2 id="confessions">Confessions</h2>
+<p>I’m going to let you in on a dirty little secret. Sometimes I think longingly about React Native.</p>
+<p>I know, I know. Feels so wrong. But some of it feels so right. *Reactive, declarative UI code? Hot reloading? Updates that can bypass the app store?*And even though Javascript isn’t as sweet in a lot of ways as Swift, it’s getting pretty good (new async/wait and gradual type checking with <a rel="external" href="https://flowtype.org/">Flow</a>). I keep trying it out from time to time, wanting it to be amazing and save me from all the things that drive me nuts in iOS development. <a rel="external" href="http://artsy.github.io/blog/2016/08/15/React-Native-at-Artsy/">Of course it’s not without its share of cons</a>, but certain features are awful fun and productive—and who doesn’t want to have fun and be productive?</p>
+<p>For those of us who decide React Native is not the way, what if we could get some of the features while still writing Swift? Today we’ll explore how we can have a reactive, declarative UI code and <em>hot reload app data</em> so we can save tons of testing time. Also, maybe we can do something to bypass the app store for updates even just a little?</p>
+<h2 id="reactive-declarative-ui">Reactive, Declarative UI</h2>
+<p>React Native lets us write UI code that feels more like a description of what the UI should be, separated from the logic that configures and transforms all the data. We don’t have the fancy virtual DOM React does, but we can work around that.</p>
+<p><a rel="external" href="https://github.com/jarsen/Reactor">Reactor</a> is a small Swift library I wrote inspired by Elm, Redux, and the work on the excellent <a rel="external" href="https://github.com/ReSwift/ReSwift">ReSwift</a> by Benjamin Encz and others. See the documentation for a more in depth understanding of Reactor, but the basic model we’re working with is this:</p>
+<pre><code>┌──────────────────┐                                 ┌──────────────────┐
+│                  │                                 │                  │
+│                  │         ┌───────────┐           │                  │
+│                  │◀────────┤   Event   ├───────────┤                  │
+│                  │         └───────────┘           │                  │
+│                  │                                 │                  │
+│                  │                                 │                  │
+│     Reactor      │                                 │    Subscriber    │
+│                  │                                 │                  │
+│                  │         ┌───────────┐           │                  │
+│    ┌───────┐     ├─────────┤  update   ├──────────▶│                  │
+│    │ State │     │         └───────────┘           │                  │
+│    └───────┘     │                                 │                  │
+│                  │                                 │                  │
+└──────────────────┘                                 └──────────────────┘
+</code></pre>
+<p><a rel="external" href="https://gist.github.com/jarsen/356832f3d4410eeac76b118c52fb2310/raw/a201b5e4e2276df3738c8228c6d0ed78c43808da/reactor_diagram.md">view raw</a><a rel="external" href="https://gist.github.com/jarsen/356832f3d4410eeac76b118c52fb2310#file-reactor_diagram-md">reactor_diagram.md </a>hosted with ❤ by <a rel="external" href="https://github.com/">GitHub</a></p>
+<p>In a nutshell, we have one state object with all of the application data nested inside of it. Each of our view controllers has an update function that knows how to take the state object and update its view. The view controllers subscribe to the Reactor, which notifies them whenever the state changes.</p>
+<p>An example of this update function might look like:</p>
+<table><thead><tr><th></th></tr></thead><tbody>
+<tr><td>func update(with state: State) {</td></tr>
+<tr><td>guard let user = state.user else { return }</td></tr>
+<tr><td>firstNameLabel.text = user.firstName</td></tr>
+<tr><td>lastNameLabel.text = user.lastName</td></tr>
+<tr><td>ageLabel.text = String(user.age)</td></tr>
+<tr><td>}</td></tr>
+</tbody></table>
+<p><a rel="external" href="https://gist.github.com/jarsen/241de4df94dd4f110583b54f33294834/raw/f19fef495227edf9d162e8a977a78d1d64dcf620/UpdateExample.swift">view raw</a><a rel="external" href="https://gist.github.com/jarsen/241de4df94dd4f110583b54f33294834#file-updateexample-swift">UpdateExample.swift </a>hosted with ❤ by <a rel="external" href="https://github.com/">GitHub</a></p>
+<p>All UI updates go in this function. This gives us one easy place to declare exactly how our UI reflects the app data. It will always stay up to date, reacting to the any state updates.</p>
+<p>If this hasn’t all settled in yet, don’t worry. Going in depth here is beyond the scope of this article. Read the <a rel="external" href="https://github.com/jarsen/Reactor">documentation</a> and ping me on twitter with questions. And if you don’t like Reactor, ReSwift is terrific and the pattern is simple enough you can easily roll your own. The point is, if we store our application data in one data structure, we can have simple reactive, declarative UI code in Swift without React Native or a mind bending FRP library that may scare co-workers away (but make you sound super smart at dinner parties).</p>
+<h2 id="hot-reloading">Hot Reloading</h2>
+<p>We cannot, due to Swift limitations, hot reload recompiled code. Bummer.</p>
+<p><em>But</em>, we did just talk about representing our application data as a struct. What if, hypothetically, we could serialize/deserialize our entire state into some format—say… JSON—save it to the file system, and then watch that file for updates? Then, hypothetically, we could edit that JSON file in our favorite text editor and our app would automatically update using our Reactor architecture.</p>
+<p>Hypothetically. <em>Right</em>?</p>
+<p>Enter the amazing <a rel="external" href="https://github.com/krzysztofzablocki/KZFileWatchers">KZFileWatchers</a> by <a rel="external" href="https://twitter.com/merowing">Krzysztof Zabłocki</a>. Observe:</p>
+<p><a rel="external" href="https://jasonlarsen.me/2016/08/29/Check%20out%20the%20example%20project">Check out the example project</a> to see how it’s done. But it’s pretty much exactly like you might imagine: our state is designed to serialize/deserialize using <a rel="external" href="http://github.com/utahiosmac/Marshal">Marshal</a>, and then we use the hook it all together with our architecture and the file watcher.</p>
+<p>I think there’s a lot of potential here: recreate buggy states users report, testing UI without having to recompile, easy inspection of your apps current state… all kinds of fun stuff.</p>
+<h2 id="bypassing-the-app-store">Bypassing the App Store</h2>
+<p>We’re quickly approaching the end of the known iOS universe.</p>
+<p>Javascript, due to its interpreted nature, not only can hot reload code, but can hot reload code that has been received over the network. This leads to a whole realm of possibilities for A/B Testing, bypassing the app store for some updates, and security vulnerabilities. :P</p>
+<p>As we’ve dicussed before, we can’t hot reload Swift code. We do know we can hot reload application data, however. So, what if we represented more of our UI as application data? Maybe we could write a few reusable components, and the data itself would tell us which UI component it wants to use. <a rel="external" href="https://atscaleconference.com/videos/backend-driven-native-uis/">This is something that Spotify is doing</a>, as demonstrated by <a rel="external" href="https://twitter.com/johnsundell">John Sundell</a>. Watch that video. Cool, cool stuff.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>React Native takes some heat from the iOS community; probably a lot is undeserved from developers who haven’t tried it, but like all tools it comes with its own pros and cons.</p>
+<p>Maybe those cons outweight the pros for you in your project. That doesn’t mean we shouldn’t covet the pros or try to figure out how we can apply the ideas amazing software developers in other areas to our own domain</p>
+</div>
+</article>
+</main>
+</body>
+</html>

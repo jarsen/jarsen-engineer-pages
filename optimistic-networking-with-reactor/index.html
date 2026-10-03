@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Optimistic Networking with Reactor · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>Optimistic Networking with Reactor</h1>
+    <time datetime="2016-09-08T00:00:00Z">2016-09-08</time>
+    
+    <span class="tags"><a href="https://jarsen.github.io/jarsen-engineer-pages/tags/swift/">#swift</a></span>
+    
+  </header>
+  <div class="prose"><h2 id="a-love-story">A Love Story</h2>
+<p>Last time we talked about some pretty cool stuff we can do to build a more reactive iOS application using the <a rel="external" href="https://github.com/jarsen/Reactor">Reactor</a> architecture. Today we’ll investigate how we can keep in sync with data from the network and <em>make our app faster with the power of optimism!</em></p>
+<p>Let’s look at the Reactor architecture diagram for a quick refresher:</p>
+<pre><code>┌──────────────────┐                                 ┌──────────────────┐
+│                  │                                 │                  │
+│                  │         ┌───────────┐           │                  │
+│                  │◀────────┤   Event   ├───────────┤                  │
+│                  │         └───────────┘           │                  │
+│                  │                                 │                  │
+│                  │                                 │                  │
+│     Reactor      │                                 │    Subscriber    │
+│                  │                                 │                  │
+│                  │         ┌───────────┐           │                  │
+│    ┌───────┐     ├─────────┤  update   ├──────────▶│                  │
+│    │ State │     │         └───────────┘           │                  │
+│    └───────┘     │                                 │                  │
+│                  │                                 │                  │
+└──────────────────┘                                 └──────────────────┘
+</code></pre>
+<p><a rel="external" href="https://gist.github.com/jarsen/356832f3d4410eeac76b118c52fb2310/raw/a201b5e4e2276df3738c8228c6d0ed78c43808da/reactor_diagram.md">view raw</a><a rel="external" href="https://gist.github.com/jarsen/356832f3d4410eeac76b118c52fb2310#file-reactor_diagram-md">reactor_diagram.md </a>hosted with ❤ by <a rel="external" href="https://github.com/">GitHub</a></p>
+<p>We send events to make the Reactor update our application state. The reactor handles events, updates the state, and then notifies all the subscribers. But what about asynchronous events?</p>
+<h2 id="commands">Commands</h2>
+<p>Performing async events is likely going to be a common occurrence in your app. Reactor offers the Command API to help establish a consistent and safe way to perform asynchronous events</p>
+<table><thead><tr><th></th></tr></thead><tbody>
+<tr><td>struct FetchPlayers: Command {</td></tr>
+<tr><td>var session = URLSession.shared</td></tr>
+<tr><td></td></tr>
+<tr><td>func execute(state: State, reactor: Reactor) {</td></tr>
+<tr><td>session.dataTask(with: fetchPlayerURL) { data, response, error in</td></tr>
+<tr><td>if error {</td></tr>
+<tr><td>reactor.fire(event: DisplayError(message: “Error fetching players”))</td></tr>
+<tr><td>}</td></tr>
+<tr><td>else {</td></tr>
+<tr><td>var players: [Player] = // handle json…</td></tr>
+<tr><td>reactor.fire(event: Update(value: players))</td></tr>
+<tr><td>}</td></tr>
+<tr><td>}.resume()</td></tr>
+<tr><td>}</td></tr>
+<tr><td>}</td></tr>
+<tr><td></td></tr>
+<tr><td>// Caller uses:</td></tr>
+<tr><td>reactor.fire(command: FetchPlayers())</td></tr>
+</tbody></table>
+<p><a rel="external" href="https://gist.github.com/jarsen/aff991b011ec33314f34e6e66a9d437a/raw/ceea450a365bc1e6e1ad62f12aac8852a303d6ef/Command.swift">view raw</a><a rel="external" href="https://gist.github.com/jarsen/aff991b011ec33314f34e6e66a9d437a#file-command-swift">Command.swift </a>hosted with ❤ by <a rel="external" href="https://github.com/">GitHub</a></p>
+<p>Hopefully the code inside execute looks similar to your usual networking functions. The difference here is we’ve wrapped it inside of a function which receives its own copy of the application state and reference to the Reactor. We don’t end up needing the state for anything here, but we use the Reactor reference to dispatch events upon network task completion.</p>
+<h2 id="instant-optimistic-network-results">Instant, Optimistic Network Results</h2>
+<p>Say we’re performing a different type of network request, perhaps adding a new player. Do we really want to wait for a response from the server before we can update our UI? Can you imagine liking a post on Facebook and waiting for the request to travel all the way to the Facebook and back to confirm our like was successfully recorded before seeing the thumb turn blue? <em>Ain’t nobody got time for that!</em> We want our app to feel fast and responsive!</p>
+<p>What if we just assume the network request is successful and immediately update the UI? Then we can update with the real response later. Or, in the case of an error, we can reset to the original state. Let’s call this “optimistic networking.”</p>
+<table><thead><tr><th></th></tr></thead><tbody>
+<tr><td>struct AddPlayer: Command {</td></tr>
+<tr><td>var session = URLSession.shared</td></tr>
+<tr><td>var player: Player</td></tr>
+<tr><td></td></tr>
+<tr><td>func execute(state: State, reactor: Reactor) {</td></tr>
+<tr><td>let originalPlayers = state.players</td></tr>
+<tr><td></td></tr>
+<tr><td>let task = session.dataTask(with: player.putRequest()) { data, response, error in</td></tr>
+<tr><td>if error {</td></tr>
+<tr><td>// 3. whoops. switch back and display error</td></tr>
+<tr><td>reactor.fire(event: Update(value: originalPlayers))</td></tr>
+<tr><td>reactor.fire(event: DisplayError(message: “Error adding \player.name)”))</td></tr>
+<tr><td>}</td></tr>
+<tr><td>else {</td></tr>
+<tr><td>// handle json and …</td></tr>
+<tr><td>// 2. update with the real values from the server, hopefully the same</td></tr>
+<tr><td>reactor.fire(event: Update(value: players))</td></tr>
+<tr><td>}</td></tr>
+<tr><td>}</td></tr>
+<tr><td></td></tr>
+<tr><td>// 1. optimistically assume success and immediately update UI</td></tr>
+<tr><td>var optimisticPlayers = originalPlayers</td></tr>
+<tr><td>optimisticPlayers.append(player)</td></tr>
+<tr><td>reactor.fire(event: Update(value: optimisticPlayers))</td></tr>
+<tr><td></td></tr>
+<tr><td>task.resume()</td></tr>
+<tr><td>}</td></tr>
+<tr><td>}</td></tr>
+<tr><td></td></tr>
+<tr><td>// Caller uses:</td></tr>
+<tr><td>reactor.fire(command: AddPlayer(player: player))</td></tr>
+</tbody></table>
+<p><a rel="external" href="https://gist.github.com/jarsen/8cabf133e6aa2311322a8c82922f9223/raw/49acd6b88390c5c9a4fbb03170b233f18adb6398/OptimisticCommand.swift">view raw</a><a rel="external" href="https://gist.github.com/jarsen/8cabf133e6aa2311322a8c82922f9223#file-optimisticcommand-swift">OptimisticCommand.swift </a>hosted with ❤ by <a rel="external" href="https://github.com/">GitHub</a></p>
+<p>This code is similar to our FetchPlayers command, but we have added properties to our struct—this allows us to set up necessary data for our async Command. We also are firing events in a few more places:</p>
+<ol>
+<li>We optimistically add the new player to our state, and fire an event telling the reactor to update its current list of players with our optimistic list.</li>
+<li>Upon a successful request, we parse the response and update (for a second time) with the result the server returns. If the data is the same (if our optimism was correct) then we should see no difference.</li>
+<li>If our request came back with an error, then we reset the list back to where it was when we started, and display an error message to the user.</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>If you are using Reactor and doing any sort of of asynchronous operations then you want to use Commands!</p>
+<p>Commands will help you handle async tasks in a consistent manner while leveraging the power of Reactor to keep your UI always in sync. And with almost no work at all, you can have the power of optimism to make your app feel faster.</p>
+</div>
+</article>
+</main>
+</body>
+</html>

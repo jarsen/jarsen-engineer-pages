@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Protocol-Oriented JSON in Swift · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>Protocol-Oriented JSON in Swift</h1>
+    <time datetime="2015-10-15T00:00:00Z">2015-10-15</time>
+    
+    <span class="tags"><a href="https://jarsen.github.io/jarsen-engineer-pages/tags/swift/">#swift</a></span>
+    
+  </header>
+  <div class="prose"><p>Previously we <a rel="external" href="https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/">explored</a> how to use Swift’s amazing type system to simplify our JSON code. We came up with a solution that was concise, without building a complicated tree of JSON enums, using crazy operators, or getting deep into reflection. And we did it all in 100-some-odd lines of code.</p>
+<p>Today we’re going to use <em>protocol-oriented programming</em> to take it even further.</p>
+<p>Last time we created our own class, <code>JSONObject</code>, to encapsulate a JSON dictionary and to hold our <code>valueForKey</code> family of helpers. This encapsulation had several benefits, however, it also came with the baggage of having to constantly wrap our basic <code>[String:AnyObject]</code> JSON dictionaries. This can become especially tedious when we have nested JSON objects we want to extract.</p>
+<p>This time let’s use the power of protocols in Swift to extend <code>Dictionary</code>. Of course, we don’t want to extend all instances of <code>Dictionary</code>, just the instances that look like <code>[String:AnyObject]</code>.</p>
+<h2 id="json-keys">JSON Keys</h2>
+<p>Although Swift allows us to restrict extensions on generic types, it only allows us to restrict the types based on protocols. Thus, we need a protocol to describe our <code>Key</code> type.</p>
+<pre><code>public protocol JSONKeyType: Hashable {
+    var stringValue: String { get }
+}
+
+extension String: JSONKeyType {
+    public var stringValue: String {
+        return self
+    }
+}
+</code></pre>
+<p>We’ll never make anything other than <code>String</code> conform to <code>JSONKeyType</code>. It’s a little bit of a work around, but it will allow us do this:</p>
+<pre><code>extension Dictionary where Key: JSONKeyType {
+    // functions available only on instances where Key is a String
+}
+</code></pre>
+<h2 id="json-values">JSON Values</h2>
+<p>We defined a protocol for our key type, so let’s define a protocol for our value type.</p>
+<pre><code>public protocol JSONValueType {
+    typealias _JSONValue = Self
+
+    static func JSONValue(object: Any) throws -&gt; _JSONValue
+}
+</code></pre>
+<p>In order for a type to conform to <code>JSONValueType</code>, it must implement a function that constructs itself given an <code>Any</code>, or throw an error if it can’t. The <code>typealias</code> is there to help the compiler out with some of the things we’ll do later.</p>
+<p>Many of the types we’ll be dealing with are directly bridgeable from their <code>Any</code> counterpart. We can extend the <code>JSONValueType</code> protocol to provide a default implementation for these cases, then simply add conformance to said types.</p>
+<pre><code>extension JSONValueType {
+    public static func JSONValue(object: Any) throws -&gt; _JSONValue {
+        guard let objectValue = object as? _JSONValue else {
+            throw JSONError.TypeMismatch(expected: JSONValue.self,
+                                         actual: object.dynamicType)
+        }
+        return objectValue
+    }
+}
+
+extension String: JSONValueType {}
+extension Int: JSONValueType {}
+extension UInt: JSONValueType {}
+extension Float: JSONValueType {}
+extension Double: JSONValueType {}
+extension Bool: JSONValueType {}
+</code></pre>
+<p>Et voila!</p>
+<p>If there are other types we wish to extract from our JSON, we can add conformance to <code>JSONValueType</code> for them as well.</p>
+<pre><code>extension NSURL: JSONValueType {
+    public static func JSONValue(object: Any) throws -&gt; NSURL {
+        guard let urlString = object as? String,
+              objectValue = NSURL(string: urlString) else {
+            throw JSONError.TypeMismatch(expected: self,
+                                         actual: object.dynamicType)
+        }
+        return objectValue
+    }
+}
+</code></pre>
+<p>This extension allows us to extract <code>NSURL</code>s when the <code>Any</code> is a valid URL string. We can write similar extension for <code>NSDate</code>, and even <code>Array</code> and <code>Dictionary</code>. (You can find implementations for the last two in the <a rel="external" href="https://gist.github.com/jarsen/0f0919d3f43b2a2268e6">gist</a>. I have not included an <code>NSDate</code> implementation because of the plethora of date-time representations, but writing your own for your specific should be straightforward.)</p>
+<h2 id="extending-dictionary">Extending Dictionary</h2>
+<p>Now to the heart of the matter: actually extending <code>Dictionary</code>.</p>
+<pre><code>extension Dictionary where Key: JSONKeyType {
+    private func anyForKey(key: Key) throws -&gt; Any {
+        let pathComponents = key.stringValue.characters
+                                .split(&quot;.&quot;).map(String.init)
+        var accumulator: Any = self
+
+        for component in pathComponents {
+            if let componentData = accumulator as? [Key: Value],
+                   value = componentData[component as! Key] {
+                accumulator = value
+                continue
+            }
+
+            throw JSONError.KeyNotFound(key: key)
+        }
+
+        return accumulator
+    }
+
+    public func JSONValueForKey&lt;A: JSONValueType&gt;(key: Key) throws -&gt; A {
+        let any = try anyForKey(key)
+        guard let result = try A.JSONValue(any) as? A else {
+            throw JSONError.TypeMismatchWithKey(key: key,
+                                                expected: A.self,
+                                                actual: any.dynamicType)
+        }
+
+        if let _ = result as? NSNull {
+            throw JSONError.NullValue(key: key)
+        }
+
+        return result
+    }
+
+    public func JSONValueForKey&lt;A: JSONValueType&gt;(key: Key) throws -&gt; [A] {
+        let any = try anyForKey(key)
+        return try Array&lt;A&gt;.JSONValue(any)
+    }
+
+    public func JSONValueForKey&lt;A: JSONValueType&gt;(key: Key) throws -&gt; A? {
+        do {
+            return try self.JSONValueForKey(key) as A
+        }
+        catch JSONError.KeyNotFound {
+            return nil
+        }
+        catch JSONError.NullValue {
+            return nil
+        }
+        catch {
+            throw error
+        }
+    }
+}
+</code></pre>
+<p>This should look mostly familiar if you followed along with <a rel="external" href="https://jasonlarsen.me/2015/06/23/no-magic-json-parsing-with-swift-part-2">Part 2</a>. What’s new is us restricting <code>A</code> to conform to <code>JSONValueType</code>. Now it is impossible for us to try and extract a value from our JSON and shove it into a non-JSONValueType conforming box. For example:</p>
+<pre><code>// the old way let this compile
+let firstName: UILabel = json.valueForKey(&quot;first_name&quot;)
+</code></pre>
+<p>With our code in Part 2, this code would compile, even though we would likely figure it out down the road when we tried to use <code>firstName</code>. The fact that <code>A</code> must be a <code>JSONValueType</code> gives us a little bit more safety here.</p>
+<p>Some more changes that have been made are to consolidate the public API to just one function signature: <code>JSONValueForKey</code>. The compiler will figure out which version of the function to call based off of the type it is being assigned to—be it a plain ol’ <code>A</code>, optional <code>A?</code>, or even an array of <code>[A]</code>! (The latter requires <code>Array</code> to conform to <code>JSONValueType</code>. You can find this in the <a rel="external" href="https://gist.github.com/jarsen/0f0919d3f43b2a2268e6">gist</a>).</p>
+<p>Finally, use the power of <code>typealias</code> to make it more clear what we’re talking about when dealing with our JSON dictionaries.</p>
+<pre><code>public typealias JSONObject = [String: AnyObject]
+</code></pre>
+<p>And now your JSON code can look like this:</p>
+<pre><code>var json: JSONObject = [&quot;url&quot;: &quot;http://apple.com&quot;, &quot;foo&quot;: (2 as NSNumber), &quot;str&quot;: &quot;Hello, World!&quot;, &quot;array&quot;: [1,2,3,4,7], &quot;object&quot;: [&quot;foo&quot;: (3 as NSNumber), &quot;str&quot;: &quot;Hello, World!&quot;], &quot;bool&quot;: (true as NSNumber)]
+do {
+    var str: String = try json.JSONValueForKey(&quot;str&quot;)
+    var foo2: Int = try json.JSONValueForKey(&quot;foo&quot;)
+    var foo3: Int? = try json.JSONValueForKey(&quot;foo&quot;)
+    var foo4: Int? = try json.JSONValueForKey(&quot;bar&quot;)
+    var arr: [Int] = try json.JSONValueForKey(&quot;array&quot;)
+    var obj: JSONObject? = try json.JSONValueForKey(&quot;object&quot;)
+    let innerfoo: Int = try obj!.JSONValueForKey(&quot;foo&quot;)
+    let innerfoo2: Int = try json.JSONValueForKey(&quot;object.foo&quot;)
+    let bool: Bool = try json.JSONValueForKey(&quot;bool&quot;)
+    let url: NSURL = try json.JSONValueForKey(&quot;url&quot;)
+}
+catch {
+    // ...
+}
+</code></pre>
+<p>You can find the full code in this <a rel="external" href="https://gist.github.com/jarsen/0f0919d3f43b2a2268e6">gist</a>, and most likely in a more permanent Github repo home soon.</p>
+<p>Please share this if you like it and leave me feedback below in the comments or on the twitters <a rel="external" href="https://twitter.com/jarsen">@jarsen</a>!</p>
+<p>I hope this makes Crusty proud.</p>
+<p>A special thanks to a bunch of local Utah iOS developers who have been working on this and giving lots of great ideas, especially: Bart Whiteley, Brian Mullen, BJ Homer, Derrick Hathaway, Dave DeLong, Mark Schultz and Tim Shadel.</p>
+</div>
+</article>
+</main>
+</body>
+</html>

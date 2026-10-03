@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>No-Magic JSON Parsing with Swift Part II · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>No-Magic JSON Parsing with Swift Part II</h1>
+    <time datetime="2015-06-15T00:00:00Z">2015-06-15</time>
+    
+    <span class="tags"><a href="https://jarsen.github.io/jarsen-engineer-pages/tags/swift/">#swift</a></span>
+    
+  </header>
+  <div class="prose"><p>Last time we talked about how we could <a rel="external" href="https://jarsen.engineer/no-magic-json-parsing-with-swift/">simplify our JSON parsing</a> with Swift 2 error handling and get rid of all the magic. Today we’re going to use the power of type inference to take our old <code>JSONObject</code> struct from having 12 methods (or more, if you want to add methods for values like CGFloat, etc.) to only 4!</p>
+<p>Let’s look at our <code>valueForKey</code> function.</p>
+<pre><code>func valueForKey&lt;A&gt;(key: String, type: A.Type) throws -&gt; A {
+    let pathComponents = key.componentsSeparatedByString(&quot;.&quot;)
+
+    var accumulator: Any = dictionary
+
+    for component in pathComponents {
+        if let dict = accumulator as? [String:AnyObject] {
+            if let value = dict[component] {
+                accumulator = value
+                continue
+            }
+        }
+        throw JSONError.NoValueForKey(key)
+    }
+
+    if let value = accumulator as? A {
+        return value
+    }
+    else {
+        throw JSONError.TypeMismatch
+    }
+}
+</code></pre>
+<p>With this function we tell our struct what type we are looking to get out and and what key. But the Swift compiler is smart. Real smart. Given just the minimum amount of information, it can <em>infer</em> what types we’re talking about.</p>
+<p>It turns out we can actually remove the <code>type</code> argument completely, and as long as we give the compiler a little help at the function’s callsite by specifying the type that the return value will be assigned to, it can infer <code>A</code> for us.</p>
+<pre><code>func valueForKey&lt;A&gt;(key: String) throws -&gt; A {
+    let pathComponents = key.componentsSeparatedByString(&quot;.&quot;)
+
+    var accumulator: Any = dictionary
+
+    for component in pathComponents {
+        if let dict = accumulator as? [String:AnyObject] {
+            if let value = dict[component] {
+                accumulator = value
+                continue
+            }
+        }
+        throw JSONError.NoValueForKey(key)
+    }
+
+    if let value = accumulator as? A {
+        return value
+    }
+    else {
+        throw JSONError.TypeMismatch
+    }
+}
+</code></pre>
+<p>And we can use it like so:</p>
+<pre><code>let street: String = try json.valueForKey(&quot;address.street&quot;)
+</code></pre>
+<p>Et voila.</p>
+<p>This means that we can remove all of our <code>intForKey</code>, <code>stringForKey</code>, etc. And, if we revamp our <code>optionalForKey</code> in the same way by also removing the <code>type</code>argument, we can do the same for all our calls to <code>optionalForKey</code>. The only functions I didn’t remove in my implementation were <code>objectForKey</code> and <code>optionalObjectForKey</code> because since the values there are really <code>[String:AnyObject]</code> you can’t get a <code>JSONObject</code> out without the initializer.</p>
+<p>Here’s what our updated <code>Person</code> model might look like:</p>
+<pre><code>struct Person {
+    var name: String
+    var age: Int
+    var height: Double
+    var street: String?
+
+    static func fromJSON(json: JSONObject) throws -&gt; Person {
+        let name: String = try json.valueForKey(&quot;name&quot;)
+        let age: Int = try json.valueForKey(&quot;age&quot;)
+        let height: Double = try json.valueForKey(&quot;height&quot;)
+        let street: String = try json.valueForKey(&quot;address.street&quot;)
+        return Person(name: name, age: age, height: height, street: street)
+    }
+}
+</code></pre>
+<p>Now, having to specify the type in two places is a little much, don’t you think? Surely we can do better. Since the items we’re assigning them to already have types, why not use those?</p>
+<pre><code>struct Person {
+    var name = &quot;&quot;
+    var age = 0
+    var height = 0.0
+    var street = String?.None
+
+    static func fromJSON(json: JSONObject) throws -&gt; Person {
+        var person = Person()
+        person.name = try json.valueForKey(&quot;name&quot;)
+        person.age = try json.valueForKey(&quot;age&quot;)
+        person.height = try json.valueForKey(&quot;height&quot;)
+        person.street = try json.optionalForKey(&quot;address.street&quot;)
+        return person
+    }
+}
+</code></pre>
+<p>So, to do that we had to assign default values… which is a little weird as well. What does it mean to have a “default height”? This also is a little unsafe because now the API allows for <code>Person</code>s to be created without any arguments.</p>
+<p>Let’s try again, but let’s forget about <code>fromJSON</code></p>
+<pre><code>struct Person {
+    var name: String
+    var age: Int
+    var height: Double
+    var street: String?
+
+    init(json: JSONObject) throws {
+        try name = json.valueForKey(&quot;name&quot;)
+        try age = json.valueForKey(&quot;age&quot;)
+        try height = json.valueForKey(&quot;height&quot;)
+        try street = json.optionalForKey(&quot;address.street&quot;)
+    }
+}
+</code></pre>
+<p>We got rid of <code>fromJSON</code> in favor of <code>init</code>. This gives us the opportunity to set all the values before the object is initialized—the only trick is that our initializer now throws.</p>
+<p>I like that. I hope you do too.</p>
+<p>As always, comments are welcome—either down below or on <a rel="external" href="http://twitter.com/jarsen">twitter</a> (<a rel="external" href="http://twitter.com/jarsen">@jarsen</a>)</p>
+<p>You can get the <a rel="external" href="https://gist.github.com/jarsen/b27de2ed9e84b84086ae">full code here</a></p>
+</div>
+</article>
+</main>
+</body>
+</html>

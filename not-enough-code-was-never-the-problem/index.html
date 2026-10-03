@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Not Enough Code Was Never the Problem · Jason Larsen — Engineer</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="https://jarsen.github.io/jarsen-engineer-pages/style.css">
+  <link rel="alternate" type="application/atom+xml" title="Jason Larsen — Engineer" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-title" href="https://jarsen.github.io/jarsen-engineer-pages">~/$jarsen.engineer</a>
+    <nav aria-label="Primary">
+      <a href="https://jarsen.github.io/jarsen-engineer-pages">index</a>
+      <a href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml">feed</a>
+    </nav>
+  </header>
+  <main>
+<article>
+  <header class="article-header">
+    <h1>Not Enough Code Was Never the Problem</h1>
+    <time datetime="2026-02-15T15:59:07Z">2026-02-15</time>
+    
+  </header>
+  <div class="prose"><p>A new term has been making the rounds, one anybody who has been using agents to do any serious work over the past year will immediately understand:<br />
+<br />
+Cognitive Debt.</p>
+<blockquote>
+<p><em>“…by weeks 7 or 8, one team hit a wall. They could no longer make even simple changes without breaking something unexpected. When I met with them, the team initially blamed technical debt: messy code, poor architecture, hurried implementations. But as we dug deeper, the real problem emerged: no one on the team could explain why certain design decisions had been made or how different parts of the system were supposed to work together. The code might have been messy, but the bigger issue was that the theory of the system, their shared understanding, had fragmented or disappeared entirely. They had accumulated cognitive debt faster than technical debt, and it paralyzed them.” -</em> <a rel="external" href="https://margaretstorey.com/blog/2026/02/09/cognitive-debt/">Margaret-Anne Storey</a></p>
+</blockquote>
+<p>I love this term. Feels like what I’ve been calling “<em>AI Brain-Fog</em>.” It’s this weird feeling—which I imagine to be almost like some amnesia or Alzheimer’s—where I can’t quite put my finger on how something is working or why, or am surprised when some module can or can’t do something unexpected. It’s like, “I know this component’s name intimately, I grew up with it, but all of a sudden I can’t remember the name of the school we went to together.” And sure, when you work long enough in a system you will always have “I have no memory of this place” moments where you git blame and realize you wrote this code, but not with this frequency or depth.</p>
+<p>One might argue that all you need to do is go <em>deeper</em> into the crevasse, that “more AI is the solution!” Or folks familiar with moving up the human abstraction ladder (management) might say this is just like having to let go of the implementation details, that it’s about the verification/feedback loops in place and measuring actual product outcomes. Every good engineer knows you should measure things before you optimize. Clean code is a spectrum, and <a rel="external" href="https://jarsen.engineer/what-is-good-code-in-the-age-of-agents/">the goal of clean code is working code that is easy to change</a> so as long as the product works well and we can continue to change quickly… is there debt?<br />
+<br />
+And I would agree with a lot of that (I do think leadership has a lot of overlap with agent management), <em>but</em>… the problem is humans are still the real ones with agency. Humans are the ones who will make the judgment calls about what to build and why, and be held accountable for those decisions. The AI will never be accountable. You could say the AI will make the judgment calls about what to build and why… but <strong>can you imagine being the human who is accountable, but not responsible for what is built?</strong> No, that is hellish. The incentives will never allow it. No one will ever allow themselves to long term be in a position of accountability over a system they do not drive.<br />
+<br />
+Human value, good judgement, and wisdom remain as valuable as ever. AI will never change this. It might make them more rare, but that will only increase it’s value.</p>
+<p>And all this forgets something important, something every high performing software team and organization has always known: <strong>Writing code was never the bottleneck.</strong></p>
+<p>This was the common argument for Pair Programming. The argument was “why would I have <em>two</em> developers working on the same task when I could parallelize them onto separate tasks?”</p>
+<p>Leaving aside the complexities of parallelization and arguments about at what scale you actually see system improvements in throughput, the main argument in favor of Pair Programming boiled down to: <strong>two heads are better than one.</strong></p>
+<p>With Pair Programming you essentially have <em>built-in, continuous code review. C</em>ode review has always been one of the real bottlenecks in software. And what should you do when something hurts? <a rel="external" href="https://martinfowler.com/bliki/FrequencyReducesDifficulty.html">Do it more often.</a><br />
+<br />
+So going “slower” in this way actually can make us go faster. This will surprise no one familiar with the Theory of Constraints, or who from Goldratt’s that you should put the slowest Boy Scout in front.\</p>
+<p>Pair Programming also helps with another category of problem—the <a rel="external" href="https://en.wikipedia.org/wiki/Bus_factor">Bus Factor</a> risk. When done right, after Pair Programming not only did two people design a better system, two people now are intimately familiar with and have working mental models of the new system. If someone in the pair is sick, switches teams, or moves companies, we still have someone who helped build the thing around. Every person who has moved up the human abstraction ladder understands what a bad idea it is for business to have only one person who understands the thing.</p>
+<p>In stark contrast to that in overly AI assisted programming workflows you are already at Bus Factor of 0. Sure you can spin up an army of agents to try to “understand the system” or bring you up to speed, but that’s still expensive and more importantly you are in <strong>the darkness of unknown unknowns</strong>. You have to know you need to know something before you know to ask the AI for it. Having Humans with working mental models is key for keeping things in the realm of knowns and known unknowns.<br />
+<br />
+I don’t think this is a case of Pair Programming VS. AI Agents, I think there are ways to work with AI that are less conducive to this Cognitive Debt problem. It includes <strong>spending more time at whiteboards</strong>. <strong>Spending MORE time doing code review.</strong> Not just more time doing code review but getting better at detecting and <strong>reviewing the right things</strong> (like focus on core architectural and design decisions, not getting lost in the weeds of naming and other bikeshedding type activities). Of course there are many ways AI can already and will continue to make code review easier+cheaper. But in the same way working out smarter not harder can get your body better results… you can never outsource the actual workout. Your trainer can not lift the weights for you.<br />
+<br />
+Writing code was not only about the ends (working code), but the means was an end in and of itself (building understanding of the socio-technical system). If we throw out too much, we remove some very important benefits.<br />
+<br />
+I think Pair Programming is a very interesting practice to explore in conjunction with agents—perhaps it can counter-balance the cost of abstraction. Martin Fowler <a rel="external" href="https://martinfowler.com/fragments/2026-02-13.html">muses</a> the same thing:</p>
+<blockquote>
+<p>There seems to be a common notion that the best way to work is to have one programmer driving a few (or many) LLM agents. But I wonder if two humans driving a bunch of agents would be better, combining the benefits of pairing with the greater code-generative ability of The Genies.</p>
+</blockquote>
+<p>I am really interested in Pairing with another human. I had already been finding my XP Pair Programming skills valuable with agents. Thinking of the AI as the driver and of myself as the navigator, or trying ping-pong-esque TDD. Doing this with two humans might become more like Mob Programming than Pairing, but it would be really fun to experiment with.</p>
+<p>But anyways, back to the main point:<br />
+<br />
+Code has always been relatively cheap. People forget this. Or they are folks who never actually understood software development and always just wondered “why does this take so long?” And then they finally set up OpenClaw and are riding the initial high. People post about how they cloned Twitter/Reddit in a day (now clone the user base), or how Garry Tan spend a bajillion tokens and a week building a… newsletter?… when in 2005 DHH posted a video on how to use Ruby on Rails to make a blog in 15 minutes.<br />
+<br />
+Always explore and embrace new ways of working. Have fun, play! But the more things change, the more they stay the same. There are certain immutable laws here at play and you will not change them. We are rediscovering things we already knew faster than ever.</p>
+</div>
+</article>
+</main>
+</body>
+</html>

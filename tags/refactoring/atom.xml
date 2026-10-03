@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Jason Larsen — Engineer - Refactoring</title>
+    <subtitle>Thoughts about the art of software engineering and design.</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://jarsen.github.io/jarsen-engineer-pages/tags/refactoring/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2016-08-08T00:00:00+00:00</updated>
+    <id>https://jarsen.github.io/jarsen-engineer-pages/tags/refactoring/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Refactoring: Replace Enum with Polymorphism</title>
+        <published>2016-08-08T00:00:00+00:00</published>
+        <updated>2016-08-08T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/">&lt;p&gt;Enums in Swift are great—love me some sweet, sweet enums. However, as with all great things, one can go too far.&lt;/p&gt;
+&lt;p&gt;Let’s look at the following contrived example:&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;swift&quot;&gt;enum Animal {
+
+    enum Size {
+        case small
+        case medium
+        case large
+    }
+
+    case dog
+    case cat
+    case cow
+
+    var noise: String {
+        switch self {
+        case .dog:
+            return &amp;quot;woof&amp;quot;
+        case .cat:
+            return &amp;quot;meow&amp;quot;
+        case .cow:
+            return &amp;quot;moo&amp;quot;
+        }
+    }
+
+    var size: Size {
+        switch self {
+        case .dog:
+            return .medium
+        case .cat:
+            return .small
+        case .cow:
+            return .large
+        }
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I’ve seen a lot of enums like this. Well, not animals maybe. But you know what I mean.&lt;/p&gt;
+&lt;p&gt;Let’s do a mental exercise: how do you add a fox to your list of animals? Pretty straightforward: add a new case, the compiler will tell you your cases are no longer exhaustive and you fill out those cases… and done.&lt;/p&gt;
+&lt;p&gt;Unless you’re switching on it somewhere else in your code. Then you have to update those too.&lt;/p&gt;
+&lt;p&gt;And if you have lots of vars/funcs… That’s a lot of work to add a case to to each.&lt;/p&gt;
+&lt;p&gt;And now that you look at it, there’s a lot of duplicate code involved to setup the switches and define all the cases.&lt;/p&gt;
+&lt;p&gt;And can you imagine what will happen if you have to throw logic and associated types into the mix?&lt;/p&gt;
+&lt;p&gt;This could get unwieldy quickly.&lt;/p&gt;
+&lt;h2 id=&quot;let-s-rewind&quot;&gt;Let’s Rewind&lt;/h2&gt;
+&lt;p&gt;Why are we using an enum in the first place? Is it just because I want a way to group lots of the same type together that have the same properties?&lt;/p&gt;
+&lt;p&gt;There is a way to do this that has existed since the dawn of time: &lt;em&gt;protocols&lt;/em&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;swift&quot;&gt;enum AnimalSize {
+    case small
+    case medium
+    case large
+}
+
+protocol Animal {
+    var noise: String { get }
+    var size: AnimalSize { get }
+}
+
+struct Dog: Animal {
+    var noise = &amp;quot;woof&amp;quot;
+    var size = AnimalSize.medium
+}
+
+struct Cat: Animal {
+    var noise = &amp;quot;meow&amp;quot;
+    var size = AnimalSize.small
+}
+
+struct Cow: Animal {
+    var noise = &amp;quot;moo&amp;quot;
+    var size = AnimalSize.large
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This ancient refactoring technique is known as &lt;a rel=&quot;external&quot; href=&quot;https://sourcemaking.com/refactoring/replace-conditional-with-polymorphism&quot;&gt;Replace Conditional with Polymorphism&lt;/a&gt;, and it can make your code cleaner, if you will let it in your heart. But I’ll call it Protocol Oriented Programming so we can get people to use it and increase traffic to this article.&lt;/p&gt;
+&lt;p&gt;As you can see:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;We remove lots of duplicate switch code.&lt;/li&gt;
+&lt;li&gt;Adding a new case is as simple as adding a new type — no need to refactor other methods. This is the Open/Closed Principle.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;swift&quot;&gt;struct Fox: Animal {
+    var noise = &amp;quot;wa-pa-pa-pa-pa-pa-pow&amp;quot;
+    var size = AnimalSize.medium
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;when-should-you-use-enums&quot;&gt;When Should You Use Enums?&lt;/h2&gt;
+&lt;p&gt;As I said before, enums are great. You just need to use them appropriately. They are great for scenarios where you specifically do not want flexibility, or awesome things like ADTs.&lt;/p&gt;
+&lt;p&gt;Notice that when we refactored we kept an AnimalSize enum lingering around; we only ever want those 3 types, so that’s a good use case for an enum.&lt;/p&gt;
+&lt;p&gt;So, ask yourself first:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Do I know all cases and want to make sure every possibility is accounted for—but never more?”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;If so, you very well might want to use an enum!&lt;/p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Enums are an awesome, essential part of Swift, but it seems that this new shininess can sometimes lead to using enums where they aren’t the best fit.&lt;/p&gt;
+&lt;p&gt;Let us go forth and use enums greatly, but also not forget the lessons of the past.&lt;/p&gt;
+&lt;h2 id=&quot;further-reading&quot;&gt;Further Reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;external&quot; href=&quot;http://www.jessesquires.com/enums-as-configs/&quot;&gt;Enums as configuration: the anti-pattern&lt;/a&gt; by &lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/jesse_squires&quot;&gt;Jesse Squires&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        
+    </entry>
+</feed>

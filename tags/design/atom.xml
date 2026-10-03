@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Jason Larsen — Engineer - Design</title>
+    <subtitle>Thoughts about the art of software engineering and design.</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://jarsen.github.io/jarsen-engineer-pages/tags/design/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2021-04-24T00:00:00+00:00</updated>
+    <id>https://jarsen.github.io/jarsen-engineer-pages/tags/design/atom.xml</id>
+    <entry xml:lang="en">
+        <title>The Beauty of Fragility</title>
+        <published>2021-04-24T00:00:00+00:00</published>
+        <updated>2021-04-24T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/the-beauty-of-fragility-2/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/the-beauty-of-fragility-2/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/the-beauty-of-fragility-2/">&lt;h2 id=&quot;and-learning-to-love-legacy-systems&quot;&gt;And Learning to Love “Legacy” Systems&lt;/h2&gt;
+&lt;p&gt;Antifragility has been an incredibly important idea to me over the &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/finding-peace-in-a-world-of-unknowns&quot;&gt;past year&lt;/a&gt;. It has deeply influenced how I think about things ranging from my career, to my finances, to my relationships with loved ones, myself, and my spirituality.&lt;/p&gt;
+&lt;p&gt;To me, the value behind the principle of antifragility is summed up in Taleb’s words, &lt;strong&gt;“I want to live happily in a world I don’t understand.”&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I want to learn to live peacefully in a world full of volatility and chaos. But I cannot control the world. I can only “control” me. Antifragility is not ordering the system around myself to keep me safe. Antifragility is learning to embrace change.&lt;/p&gt;
+&lt;p&gt;Modern industrial society feels based on the idea that humanity lives in competition with the natural world. Humanity seeks to subjugate nature through its understanding of empirical principles gathered through scientific discovery. The principles often sit on top of consumerist values: what we have is never enough, and we always need to find ways to produce more and/or better things for consumption. Nature itself is one of those consumables.&lt;/p&gt;
+&lt;p&gt;As our quality of living has improved (?) and gained momentum over the past couple centuries, we sometimes begin to operate under the illusion that we are winning. It takes a dramatic event—an earthquake, unexpected weather, disease, perpetually &lt;a rel=&quot;external&quot; href=&quot;https://www.cnn.com/2021/03/30/business/suez-container-ship-sizes-ever-given/index.html&quot;&gt;larger ships&lt;/a&gt; creating new patterns and clogging a canal—to remind us that we not, in fact, running the show. All the world’s a stage, but there is no human director.&lt;/p&gt;
+&lt;p&gt;The idea that humans are in control is a coping mechanism for existential angst at scale. We live in a world of unknowns, but one thing we know for sure is that we all die. The fear of death and anxiety around the unknown is an extremely powerful motivator—&lt;em&gt;perhaps the fundamental motivator&lt;/em&gt;—and is deeply reinforced into our very being via evolution. Seeking to play the meta-game through our abilities of pattern recognition is what has led us to not just survive, but thrive. The evolutionary gift of anxiety may be a great gift for survival, but evolution did not design us to find peace in a world of volatility.&lt;/p&gt;
+&lt;p&gt;People who still maintain deeper rooted connections to the earth—farmers, mariners, serious outdoors folk, or those in developing countries who don’t have the luxury of the illusion that humans are in charge, etc.—all understand that attempting to tame nature is a ultimately a fools errand. If your purpose is some variation of rule over nature, you will die unfulfilled.&lt;/p&gt;
+&lt;p&gt;This doesn’t mean that humans should just keel over and give up. It means is that we need to replace fragile philosophies seeking to dominate nature with antifragile philosophies that create systems in &lt;em&gt;harmony&lt;/em&gt; with the world.&lt;/p&gt;
+&lt;p&gt;Those who work in software often find themselves somewhere on an analogous spectrum when it comes to technical debt and “legacy” systems. There is an eternal tug-of-war between the ideal that we at least control this world of our own creation, and the recognition that software is never purely technical. Software is part of the real-world human systems that create, maintain, and operate it.&lt;/p&gt;
+&lt;p&gt;There is certainly more to life than our occupation, but our occupation is part of our life. Learning to love—to work in alignment with (harmony), instead of against (dissonance)—the systems we work with a form of radical acceptance that will improve of our lives, and our software.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;wabi-sabi&quot;&gt;Wabi-sabi&lt;/h2&gt;
+&lt;p&gt;I think many are familiar with the pop-sensation around Marie Kondo and her techniques for tidying. What I wasn’t familiar with—and still only have a terribly basic understanding of—are the deeper principles from traditional Japanese philosophies in which her tidying practices are rooted.&lt;/p&gt;
+&lt;p&gt;One of these key philosophies is &lt;a rel=&quot;external&quot; href=&quot;https://konmari.com/wabi-sabi-and-the-art-of-kintsugi/&quot;&gt;wabi-sabi&lt;/a&gt;. Wabi-sabi is a philosophy stemming from Zen Buddhism that celebrates the transient nature of reality—it is focused on finding beauty in change over time.&lt;/p&gt;
+&lt;p&gt;“Wabi-sabi nurtures all that is authentic by acknowledging three simple realities: nothing lasts, nothing is finished, and nothing is perfect.” — &lt;a rel=&quot;external&quot; href=&quot;https://en.wikipedia.org/wiki/Wabi-sabi&quot;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;One of the most observable practices based on wabi-sabi is &lt;a rel=&quot;external&quot; href=&quot;https://japanahome.com/journal/how-to-kintsugi-dyi-japanese-art-of-kintsukuroi-repair/&quot;&gt;kintsugi&lt;/a&gt;—which means “golden joinery.” Kintsugi is the practice of taking broken pottery and putting it back together with beautiful golden lacquer. The result is a new iteration of the object that not only respects the original object and the service it provided, but &lt;em&gt;celebrates&lt;/em&gt; the cracks and age by highlighting the faults and enables it to serve further. The “new” item is perhaps even more beautiful than before, and the lengthened history of service increases the connection between the object and the user.&lt;/p&gt;
+&lt;p&gt;This celebration is a critical principle that often gets missed when we watch Marie Kondo on Netflix. Mostly Westerners see a technique for achieving a sort of minimalism of only living with things that bring us joy—but just as critical is the practice of taking the time to thank the objects being removed for the service they provided. The value is the connection between humans and their environment underneath, not the practices on the observable portion of the iceberg.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;memento-mori&quot;&gt;Memento Mori&lt;/h2&gt;
+&lt;p&gt;Similar ideas can be found in western philosophy. There is a latin saying common in stoicism: memento mori. It means “remember that you die.”&lt;/p&gt;
+&lt;p&gt;Many stoics will carry around physical trinkets, get tattoos, or adopt practices such as visiting cemeteries to serve as a reminder to meditate on life and death. This meditation is a chance to ponder our mortality, and to refocus energy on the things that really matter in our short, unpredictable lives.&lt;/p&gt;
+&lt;p&gt;While not specifically referencing the stoic formulation of the philosophy, I think we see the same underlying principles present when we display urns, photos of lost loved ones, genealogy, etc.&lt;/p&gt;
+&lt;p&gt;The recognition of death is at the same time a recognition of life—as two sides of the same coin one cannot exist without the other. Memento mori is a &lt;a rel=&quot;external&quot; href=&quot;https://whatisstoicism.com/stoicism-resources/memento-mori-reminder-to-live/&quot;&gt;reminder to live&lt;/a&gt;, fully (whatever that means to you), and in harmony with the world around us.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;legacy-software-systems&quot;&gt;“Legacy” Software Systems&lt;/h2&gt;
+&lt;p&gt;The principles behind &lt;a rel=&quot;external&quot; href=&quot;https://agilemanifesto.org/principles.html&quot;&gt;agile&lt;/a&gt;, &lt;a rel=&quot;external&quot; href=&quot;https://en.wikipedia.org/wiki/Extreme_programming#Principles&quot;&gt;Extreme Programming&lt;/a&gt;, &lt;a rel=&quot;external&quot; href=&quot;https://continuousdelivery.com/principles/&quot;&gt;Continuous Delivery&lt;/a&gt;, and DevOps all embrace change. But they are more than that: just as life and death are two parts of a whole, antifragility is just as much about non-change as much as it is change. &lt;strong&gt;Antifragility is embracing the whole&lt;/strong&gt;. Don’t purposely drop a bowl for an excuse to do kintsugi. Don’t wait for loved ones to leave to appreciate them.&lt;/p&gt;
+&lt;p&gt;Antifragile things love change, but if a thing breaks under the status quo how can it hope to survive change? A working-philosophy of software that struggles to approach “technical debt”—both on how to accept it and how to pay it off—can only lead to personal stress and anxiety, and poor business outcomes. Agile, XP, and CD all seek to help us live happily in a world of actual software systems. They are philosophies for iteration that encourage us to ponder the transience of our software, and to identify the most important thing to try to change next, while accepting the rest—for now.&lt;/p&gt;
+&lt;p&gt;The very first value of Extreme Programming is humanity. As we shift our views around the systems we work with, we must recognize that code is an artifact produced by human systems. Software Architecture is a sociotechnical system, not a purely technical one. Trash-talking the systems they wrote can damage the social system. It is also a blinding act of ego—I can’t tell you how many times I thought I understood and was going to redesign an amazing new solution… and in the process rediscovered the wisdom of the original authors. Amazing how many times technical debt means “code &lt;em&gt;I&lt;/em&gt;don’t understand.”&lt;/p&gt;
+&lt;p&gt;We need to learn acceptance, but also we want to continuously improve. We need to develop the wisdom to know what to change, and when. We need to learn to work in harmony with the sociotechnical system, rather than in dissonance.&lt;/p&gt;
+&lt;p&gt;I don’t need to big-bang “refactor” the status quo. In fact, Martin Fowler would like to remind you:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Every refactoring is a change that is so small that it’s not worth doing.” — Martin Fowler&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In other words, any change you are making that you cannot commit and move on from at a moment’s notice is not a refactor. Small, iterative changes to a working system are more likely to bring about the changes to the system that we desire in a sustainable way.&lt;/p&gt;
+&lt;p&gt;“Legacy” is often used to describe software systems as a pejorative, but the classic joke is also that “legacy code means the code that makes money.” What legacy almost always seems to mean is: the way things actually are, but not the way I want them to be. This dissonance between what I want and what is, is the source of unhappiness.&lt;/p&gt;
+&lt;p&gt;There are myriad of reasons why we have an emotional response to “tech debt” and “legacy code.” The dissonance between us and perceived tech debt can certainly cause friction. This misalignment causes actual pain, and we do need strategies to tackle it. I want to tackle these strategies more in depth in the future.&lt;/p&gt;
+&lt;p&gt;For now I will generalize and say that we often don’t understand legacy systems—and that fear from the lack of understanding is the software development version of existential angst. All systems will fail. We should think about systems memento mori often—not in manner resigned to a fated, cynical view that all computers are trash—but in a way that allows us to be realistic about what we can expect from complex systems generated by humans.&lt;/p&gt;
+&lt;p&gt;Finding harmony in the give-and-take of our expectations and the reality of the systems we live with/in will start us on the path of internal peace.&lt;/p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>The Truth About Microservices Will Shock You!</title>
+        <published>2020-02-02T00:00:00+00:00</published>
+        <updated>2020-02-02T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/the-truth-about-microservices-will-shock-you/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/the-truth-about-microservices-will-shock-you/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/the-truth-about-microservices-will-shock-you/">&lt;p&gt;It’s that time again… monolith vs microservices architecture debate on twitter! What better time to throw my hat into the ring and scream my raw, non-peer-reviewed thoughts into the void?&lt;/p&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/i/web/status/1222966700913479681&quot;&gt;Referenced post on X&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Like all patterns, implementing a microservices architecture pattern is a transaction that exchanges one set of problems for a different set of problems. The cost and benefits together are known as “tradeoffs.” If anyone ever talks about a pattern without talking about its tradeoffs, slowly back away until you are at a safe distance. Then flee.&lt;/p&gt;
+&lt;p&gt;Given that choosing a design pattern is about trading problem sets, &lt;em&gt;before you implement a solution you must know what problem you have&lt;/em&gt;. If you are starting with a solution looking for problems, you are in for a long dark journey ahead.&lt;/p&gt;
+&lt;p&gt;One of the common problems people try to address with a microservices architecture is “shitty code.” More specifically, your monolith has become a tangled mess of connections between various “boundaries.” ¹ (I am rather fond of the german word kabelsalat, meaning literally “cable-salad,” refering to the hellscape of tangled cables behind your TV, etc. Wouldn’t it be fun refer to our spaghetti code as kōdsalat?)&lt;/p&gt;
+&lt;p&gt;Here’s the thing, the microservices architecture is a pattern about &lt;em&gt;deployment&lt;/em&gt;, not code boundaries. The problems microservices seek to give away by changing deployment strategy are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;bad performance in critical bottlenecks where you may want to switch language, or scale the number of servers/pods etc.&lt;/li&gt;
+&lt;li&gt;critical inefficiencies for teams in delivering software due to awkward mappings between large codebases and large org structures (see &lt;a rel=&quot;external&quot; href=&quot;https://en.wikipedia.org/wiki/Conway%27s_law&quot;&gt;Conway’s Law&lt;/a&gt; and the Inverse Conway Maneuver)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you think microservices are the solution to your kōdsalat problem, you will find yourself filled with regret on your dying bed, slain by your new &lt;strong&gt;distributed monolith&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;This quote from Kelsey Hightower’s &lt;a rel=&quot;external&quot; href=&quot;https://changelog.com/posts/monoliths-are-the-future&quot;&gt;interview called “Monoliths are the future”&lt;/a&gt; is priceless:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Now you went from writing bad code to building bad infrastructure that you deploy the bad code on top of.”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The irony of the distributed monolith is that now you have all the problems of a microservices architecture, but with none of the benefits. You paid the price for none of the gain.&lt;/p&gt;
+&lt;p&gt;If the problems you are trying to address are not focused on increasing the ability for a team to ship (an organizational and human challenge, not a code one), or critical performance bottlenecks affecting users (a user problem, not a code one), then you should pack up your microservice bags and leave—all you are going to do is trade problems you don’t have for new problems. If one or both of these are the problems you are trying to solve, microservices &lt;em&gt;may&lt;/em&gt; be the solution for you. You may now proceed to weigh the tradeoffs.&lt;/p&gt;
+&lt;p&gt;The problems you receive as part of your trade when introducing a microservices architecture include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;complexity of debugging/tracing events across a distributed system ²&lt;/li&gt;
+&lt;li&gt;complexity of dealing with failure in a distributed system.&lt;/li&gt;
+&lt;li&gt;complexity of more integration/system testing.&lt;/li&gt;
+&lt;li&gt;complexity of creating and maintaining your new infrastructure (e.g. going from a single simple deploy to heroku vs rolling and managing your own k8s behemoth).&lt;/li&gt;
+&lt;li&gt;complex new toolchains.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;p&gt;The conversation about clean code is orthogonal to the deployment conversation. If your kōdsalat is causing you to lose sleep, instead of reading about microservices, pick up your dusty copy of &lt;a rel=&quot;external&quot; href=&quot;https://www.amazon.com/Design-Patterns-Object-Oriented-Addison-Wesley-Professional-ebook/dp/B000SEIBB8&quot;&gt;Gang of Four&lt;/a&gt;, or your fresh, wonderful smelling new edition of &lt;a rel=&quot;external&quot; href=&quot;https://pragprog.com/book/tpp20/the-pragmatic-programmer-20th-anniversary-edition&quot;&gt;The Pragmatic Programmer&lt;/a&gt;. In them you can find decades old solutions to your decades old problems.&lt;/p&gt;
+&lt;p&gt;To deal with the tangled mess of code, what you need are better boundaries in your code. What are boundaries? &lt;strong&gt;Boundaries are interfaces around an abstraction.&lt;/strong&gt; In other words, boundaries are an API. Often in the web world we use API exclusively to refer to endpoints on a server somewhere, but used more broadly, the interface of a boundary is its public API. You must interact with a boundary &lt;em&gt;only&lt;/em&gt; via its public interface—that’s what makes it a “boundary.” The opposite of a boundary is a spaghetti or a salad.&lt;/p&gt;
+&lt;p&gt;A boundary also dictates a method of transport. &lt;strong&gt;Transport is the method by which you send data and receive data from a boundary.&lt;/strong&gt; ³ Sometimes communicating with a boundary is as simple as internal message passing to a class/module, or a function call. Sometimes it may look like sharing memory ⁴, or inter-process communication. Other times it may be a calling out across a network to a REST API, gRPC, web sockets, etc.&lt;/p&gt;
+&lt;p&gt;When boundaries are well defined, the context in which they execute (same process, different process, different core, different machine) becomes irrelevant from the perspective of the caller.⁵ The only thing that matters to the caller is the contract established by the API, and the method of transport so that it knows by what method to actually speak to the boundary. This means, with proper boundaries in a monolith, microservices can be extracted as necessary by changing the location of execution, and having the caller send its data via a new transport.&lt;/p&gt;
+&lt;p&gt;For a more concrete example, imagine a Billing module in my monolith. If it defines a good interface, then one day if extracting it to a microservice will help me solve a team problem or performance bottleneck and is worth the tradeoffs, I can pull the module’s logic into a new microservice, and then I change the Billing module to make calls to the microservice. Neato.&lt;/p&gt;
+&lt;p&gt;Granted, this is potentially an oversimplification. Often there are implicit APIs relying on shared memory/data that we forget about when designing boundaries. A prime example is the database, especially when involving foreign key constraints.&lt;/p&gt;
+&lt;p&gt;Considering execution an implementation detail of a boundary is a blade that cuts both ways. Practicing Domain Driven Design and developing strong &lt;a rel=&quot;external&quot; href=&quot;https://martinfowler.com/bliki/BoundedContext.html&quot;&gt;Bounded Contexts&lt;/a&gt; means that to truly get the benefits of strong boundaries, you must also accept the tradeoffs as well. These tradeoffs can start to look like some of the tradeoffs you might expect from microservices. In fact, when going full DDD and ending up with things like an event message bus, it starts to look an awful like a distributed system in spite of it perhaps executing in the same system process. But, unlike microservices, you will not need new complex infrastructure, and you will be focused on creating boundaries, so you should not be led to a distributed monolith.&lt;/p&gt;
+&lt;p&gt;Anyway, now that we’ve come full circle and I have seemingly undermined my own arguments, I have two final points to make.&lt;/p&gt;
+&lt;h2 id=&quot;1-there-is-no-single-right-answer-and-anyone-who-doesn-t-talk-about-decisions-in-terms-of-tradeoffs-is-either-a-dogmatist-and-or-is-selling-you-something&quot;&gt;1. There is no single “right” answer and anyone who doesn’t talk about decisions in terms of tradeoffs is either a dogmatist and/or is selling you something.&lt;/h2&gt;
+&lt;p&gt;It’s easy to think we’re fancy and treading new ground with our “modern” monolith vs microservices debates. But really it’s just a variation of the same age-old debates that have been going on for decades: monolithic kernels vs microkernels, lots of small specialized tools vs one integrated one, etc. The benefits of boundaries comes with a cost; abstraction is not free. If we are still having the same fundamental debate after decades, it’s likely because there is no one size fits all solution, and ultimately you need to choose what problems you want to have. ⁶&lt;/p&gt;
+&lt;h2 id=&quot;2-if-this-problem-is-not-a-pain-that-affects-your-users-it-s-not-a-problem-to-be-spending-time-on&quot;&gt;2. If this problem is not a pain that affects your users, it’s not a problem to be spending time on.&lt;/h2&gt;
+&lt;p&gt;Yehuda Katz went on an interesting twitter rant the other day spurred by the recent resurgence in microservice debate.&lt;/p&gt;
+&lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/i/web/status/1223051812862861312&quot;&gt;Referenced post on X&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I find these thoughts off-putting because it illustrates a fundamental misalignment amongst many engineering organizations—a world in which not not everyone on the team (including design, product, qa, tech writing–not just engineering disciplines) feel they have a seat at the table. If you’re not sitting at the same table as a team&lt;a rel=&quot;external&quot; href=&quot;https://jasonlarsen.me/2020/02/2/the-truth-about-microservices-will-shock-you#footnote-7133&quot;&gt;⁷&lt;/a&gt; what are you doing? It’s a dark world where employees are siloed and bickering and unhappy, and it will surely show in the product.&lt;/p&gt;
+&lt;p&gt;Start with problems that affect your customers, not solutions. Learn to state your problems in terms of customer benefit.&lt;/p&gt;
+&lt;p&gt;Fortunately, the problems microservices intend to address are easily measurable. Trouble shipping? Track deployment frequency. Stay focused on how frequent deployment benefits the user. Performance bottlenecks? Start measuring times from a user’s perspective. Now that you have a problem identified and a baseline you can begin to explore solutions, including microservices.&lt;/p&gt;
+&lt;p&gt;Aligning on the problems to solve and tracking key metrics will help ensure the focus is driven by business priorities, not by siloed engineering street cred, hype, or fun with computers. Don’t let microservices become an intellectual flex that hurts people you care about.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li&gt;I use air quotes here because in all likelihood if you are feeling this pain we should be using the term very loosely.&lt;/li&gt;
+&lt;li&gt;See: &lt;a rel=&quot;external&quot; href=&quot;https://www.honeycomb.io/wp-content/uploads/2018/07/Honeycomb-Guide-Achieving-Observability-v1.pdf&quot;&gt;observability&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;In practice, the line between an API and it’s transport mechanism is pretty blurred. For example, the fact a service uses GraphQL both defines the API, and the transport mechanism.&lt;/li&gt;
+&lt;li&gt;Sharing memory is usually a good example of a lack of boundaries—a sort of implicit API.&lt;/li&gt;
+&lt;li&gt;Working a lot in Elixir has really helped me start to understand better the difference between code and its execution–a function is just a function, and module a module. Whether it executes in a new process or not is an implementation detail hidden behind my public interface.&lt;/li&gt;
+&lt;li&gt;Choosing what problems you want to have is a great way to think about life, as well. Accepting that all decisions come with a price, and being intentional about those decisions can lead to much peace and understanding. 🧘🏻‍♂️&lt;/li&gt;
+&lt;li&gt;metaphorically, although this could be taken literally and be very beneficial as well.&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Refactoring: Replace Enum with Polymorphism</title>
+        <published>2016-08-08T00:00:00+00:00</published>
+        <updated>2016-08-08T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/">&lt;p&gt;Enums in Swift are great—love me some sweet, sweet enums. However, as with all great things, one can go too far.&lt;/p&gt;
+&lt;p&gt;Let’s look at the following contrived example:&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;swift&quot;&gt;enum Animal {
+
+    enum Size {
+        case small
+        case medium
+        case large
+    }
+
+    case dog
+    case cat
+    case cow
+
+    var noise: String {
+        switch self {
+        case .dog:
+            return &amp;quot;woof&amp;quot;
+        case .cat:
+            return &amp;quot;meow&amp;quot;
+        case .cow:
+            return &amp;quot;moo&amp;quot;
+        }
+    }
+
+    var size: Size {
+        switch self {
+        case .dog:
+            return .medium
+        case .cat:
+            return .small
+        case .cow:
+            return .large
+        }
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I’ve seen a lot of enums like this. Well, not animals maybe. But you know what I mean.&lt;/p&gt;
+&lt;p&gt;Let’s do a mental exercise: how do you add a fox to your list of animals? Pretty straightforward: add a new case, the compiler will tell you your cases are no longer exhaustive and you fill out those cases… and done.&lt;/p&gt;
+&lt;p&gt;Unless you’re switching on it somewhere else in your code. Then you have to update those too.&lt;/p&gt;
+&lt;p&gt;And if you have lots of vars/funcs… That’s a lot of work to add a case to to each.&lt;/p&gt;
+&lt;p&gt;And now that you look at it, there’s a lot of duplicate code involved to setup the switches and define all the cases.&lt;/p&gt;
+&lt;p&gt;And can you imagine what will happen if you have to throw logic and associated types into the mix?&lt;/p&gt;
+&lt;p&gt;This could get unwieldy quickly.&lt;/p&gt;
+&lt;h2 id=&quot;let-s-rewind&quot;&gt;Let’s Rewind&lt;/h2&gt;
+&lt;p&gt;Why are we using an enum in the first place? Is it just because I want a way to group lots of the same type together that have the same properties?&lt;/p&gt;
+&lt;p&gt;There is a way to do this that has existed since the dawn of time: &lt;em&gt;protocols&lt;/em&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;swift&quot;&gt;enum AnimalSize {
+    case small
+    case medium
+    case large
+}
+
+protocol Animal {
+    var noise: String { get }
+    var size: AnimalSize { get }
+}
+
+struct Dog: Animal {
+    var noise = &amp;quot;woof&amp;quot;
+    var size = AnimalSize.medium
+}
+
+struct Cat: Animal {
+    var noise = &amp;quot;meow&amp;quot;
+    var size = AnimalSize.small
+}
+
+struct Cow: Animal {
+    var noise = &amp;quot;moo&amp;quot;
+    var size = AnimalSize.large
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This ancient refactoring technique is known as &lt;a rel=&quot;external&quot; href=&quot;https://sourcemaking.com/refactoring/replace-conditional-with-polymorphism&quot;&gt;Replace Conditional with Polymorphism&lt;/a&gt;, and it can make your code cleaner, if you will let it in your heart. But I’ll call it Protocol Oriented Programming so we can get people to use it and increase traffic to this article.&lt;/p&gt;
+&lt;p&gt;As you can see:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;We remove lots of duplicate switch code.&lt;/li&gt;
+&lt;li&gt;Adding a new case is as simple as adding a new type — no need to refactor other methods. This is the Open/Closed Principle.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code data-lang=&quot;swift&quot;&gt;struct Fox: Animal {
+    var noise = &amp;quot;wa-pa-pa-pa-pa-pa-pow&amp;quot;
+    var size = AnimalSize.medium
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&quot;when-should-you-use-enums&quot;&gt;When Should You Use Enums?&lt;/h2&gt;
+&lt;p&gt;As I said before, enums are great. You just need to use them appropriately. They are great for scenarios where you specifically do not want flexibility, or awesome things like ADTs.&lt;/p&gt;
+&lt;p&gt;Notice that when we refactored we kept an AnimalSize enum lingering around; we only ever want those 3 types, so that’s a good use case for an enum.&lt;/p&gt;
+&lt;p&gt;So, ask yourself first:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Do I know all cases and want to make sure every possibility is accounted for—but never more?”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;If so, you very well might want to use an enum!&lt;/p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Enums are an awesome, essential part of Swift, but it seems that this new shininess can sometimes lead to using enums where they aren’t the best fit.&lt;/p&gt;
+&lt;p&gt;Let us go forth and use enums greatly, but also not forget the lessons of the past.&lt;/p&gt;
+&lt;h2 id=&quot;further-reading&quot;&gt;Further Reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;external&quot; href=&quot;http://www.jessesquires.com/enums-as-configs/&quot;&gt;Enums as configuration: the anti-pattern&lt;/a&gt; by &lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/jesse_squires&quot;&gt;Jesse Squires&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        
+    </entry>
+</feed>

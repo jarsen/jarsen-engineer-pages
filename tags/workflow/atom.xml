@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Jason Larsen — Engineer - Workflow</title>
+    <subtitle>Thoughts about the art of software engineering and design.</subtitle>
+    <link rel="self" type="application/atom+xml" href="https://jarsen.github.io/jarsen-engineer-pages/tags/workflow/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2015-07-22T00:00:00+00:00</updated>
+    <id>https://jarsen.github.io/jarsen-engineer-pages/tags/workflow/atom.xml</id>
+    <entry xml:lang="en">
+        <title>The Church of Xcode - Simple Emacs Keybindings</title>
+        <published>2015-07-22T00:00:00+00:00</published>
+        <updated>2015-07-22T00:00:00+00:00</updated>
+        
+        <author>
+          <name>Unknown</name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/the-church-of-xcode-simple-emacs-keybindings/"/>
+        <id>https://jarsen.github.io/jarsen-engineer-pages/the-church-of-xcode-simple-emacs-keybindings/</id>
+        
+        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/the-church-of-xcode-simple-emacs-keybindings/">&lt;p&gt;Long has the holy war between emacs and vi been waged. I’ve used both, and I don’t really care either way. However, OS X text fields everywhere come with secret support for limited (and sometimes modified) Emacs keybindings. So, regardless of your position in the great text editor wars you might as well learn a few keybindings because &lt;em&gt;you can use them anywhere you see a text field&lt;/em&gt;. Learning a few basic keybindings will empower you as an iOS/Mac developer and as an OS X user.&lt;/p&gt;
+&lt;h2 id=&quot;emacs-modifier-keys&quot;&gt;Emacs Modifier Keys&lt;/h2&gt;
+&lt;p&gt;Whenever you look at emacs shortcuts you’ll see something like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;C-v
+M-v
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A little translation is needed: C is the control key (⌃) and M is the “META” key, which in our case is the alt/option key (⌥). Since we’re not really a member of the church of emacs, from now on we’ll refer to our modifier keys using ⌃ and ⌥.&lt;/p&gt;
+&lt;h2 id=&quot;remapping-caps-lock&quot;&gt;Remapping Caps Lock&lt;/h2&gt;
+&lt;p&gt;The ⌃ key is not in the easiest position to stretch your fingers to, and it gets used a lot as a key modifier. So much so, you might want to consider remapping a less useful key that’s in a good position. A common choice for this is the Caps Lock key. If you’re like me you don’t do a lot of shouting when you type, and when you do you can hold down the shift key for a minute. So, it’s a prime choice.&lt;/p&gt;
+&lt;p&gt;Simply go to your Keyboard preferences, hit the modifier keys button in the bottom right, and change the Caps Lock dropdown to “⌃ Control”.&lt;/p&gt;
+&lt;p&gt;Remapping your keyboard is really easy, and your friends will think you’re hardcore.&lt;/p&gt;
+&lt;h2 id=&quot;cursor-movement&quot;&gt;Cursor Movement&lt;/h2&gt;
+&lt;p&gt;The point of keybindings is to keep your fingers on the keyboard where they belong; you want to avoid as much as possible moving your hand to mouse. Even using the arrow keys requires you to move your fingers away from their home row, and should be avoided where possible.&lt;/p&gt;
+&lt;p&gt;⌃F | Move Cursor &lt;strong&gt;F&lt;/strong&gt;orward |&lt;br /&gt;
+⌃B | Move Cursor &lt;strong&gt;B&lt;/strong&gt;ackward |&lt;br /&gt;
+⌃P | Move Cursor U&lt;strong&gt;p&lt;/strong&gt; |&lt;br /&gt;
+⌃N | Move Cursor Dow&lt;strong&gt;n&lt;/strong&gt; |&lt;br /&gt;
+⌃E | Move to &lt;strong&gt;E&lt;/strong&gt;nd of Line (also ⌘→) |&lt;br /&gt;
+⌃A | Move to Beginning of Line … (&lt;strong&gt;A&lt;/strong&gt; is the first letter of the alphabet?) (also ⌘←)&lt;/p&gt;
+&lt;p&gt;If you hold down shift with any of these, you will move the selection as you move your cursor.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;You can also use ⌃P and ⌃N to move the selection in your autocomplete results up and down!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Nobody likes to move the cursor one character at a time when you have a long ways to go. In Emacs, if you use the meta key instead of control, you can move forward and back by entire words. If you try to do this in Mac ⌥F and ⌥B instead insert the fancy characters ƒ and ∫, respectively. This is a little tricky because Mac also allows users to use the ⌥ key to insert special characters.&lt;/p&gt;
+&lt;p&gt;We can add our own keybindings to override this behavior in Xcode by adding out own Key Bindings in Xcode preferences (which I do suggest), but part of our goal here is to learn key bindings that work across the system. These key bindings are available system wide, although in modified form—you must hold down both the control and meta modifier keys.&lt;/p&gt;
+&lt;p&gt;⌥⌃F | Move Cursor &lt;strong&gt;F&lt;/strong&gt;orward a word (also ⌥→) |&lt;br /&gt;
+⌥⌃B | Move Cursor &lt;strong&gt;B&lt;/strong&gt;ackward a word (also ⌥←) |&lt;/p&gt;
+&lt;p&gt;Once again, holding shift while using either of these will move your selection. (Although it requires holding down 3 modifier keys! You’ll get lots of finger dexterity).&lt;/p&gt;
+&lt;h2 id=&quot;text-deletion&quot;&gt;Text Deletion&lt;/h2&gt;
+&lt;p&gt;Sometimes you want to delete text. These keybindings will help you delete efficiently.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Deleting by &lt;em&gt;word&lt;/em&gt; deletes whole words delimited by whitespace or other non-word characters.&lt;/li&gt;
+&lt;li&gt;Deleting by &lt;em&gt;subword&lt;/em&gt; will delete individual words in camelCasedWords (camel, Cased, and Words are each in subwords)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;⌃⌫ | Backward delete a subword |&lt;br /&gt;
+⌃⌦ | Forward delete a subword |&lt;br /&gt;
+⌥⌫ | Backward delete a word |&lt;br /&gt;
+⌥⌦ | Forward delete a word |&lt;br /&gt;
+⌃k | Delete to end of line (&lt;strong&gt;k&lt;/strong&gt;ill) (also ⌘⌦) |&lt;br /&gt;
+⌘⌫ | Delete to beginning of line (this is not really an Emacs binding, but a must-know nonetheless) |&lt;/p&gt;
+&lt;p&gt;(⌫ is the backspace key, and ⌦ is the Delete key)&lt;/p&gt;
+&lt;h2 id=&quot;exercise&quot;&gt;Exercise&lt;/h2&gt;
+&lt;p&gt;You can look over these shortcuts till the cows come home, but unless you practice them you will never realize their utility.&lt;/p&gt;
+&lt;p&gt;One exercise I like to do is to &lt;em&gt;try not to use the arrow keys at all&lt;/em&gt;. Now, sometimes I find using the arrow keys to be more efficient (like moving forward/back by word or in the cases of ⌘↑ and ⌘↓ to move to the top and bottom of the file), but forcing myself to not use them helps me practice my other keybindings and I realize which operations I can actually do more quickly without the arrow keys.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Emacs of course has many, many more keybindings. With Xcode’s Key Binding preferences you can try to imitate more of them, but these are just some standard OS-wide key bindings that will help you text edit more efficiently.&lt;/p&gt;
+</content>
+        
+    </entry>
+</feed>
