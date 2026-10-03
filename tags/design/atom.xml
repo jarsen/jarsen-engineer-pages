@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Jason Larsen — Engineer - Design</title>
     <subtitle>Thoughts about the art of software engineering and design.</subtitle>
-    <link rel="self" type="application/atom+xml" href="https://jarsen.github.io/jarsen-engineer-pages/tags/design/atom.xml"/>
-    <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages"/>
+    <link rel="self" type="application/atom+xml" href="https://jarsen.engineer/tags/design/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://jarsen.engineer"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2021-04-24T00:00:00+00:00</updated>
-    <id>https://jarsen.github.io/jarsen-engineer-pages/tags/design/atom.xml</id>
+    <id>https://jarsen.engineer/tags/design/atom.xml</id>
     <entry xml:lang="en">
         <title>The Beauty of Fragility</title>
         <published>2021-04-24T00:00:00+00:00</published>
@@ -16,10 +16,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/the-beauty-of-fragility-2/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/the-beauty-of-fragility-2/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/the-beauty-of-fragility-2/"/>
+        <id>https://jarsen.engineer/the-beauty-of-fragility-2/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/the-beauty-of-fragility-2/">&lt;h2 id=&quot;and-learning-to-love-legacy-systems&quot;&gt;And Learning to Love “Legacy” Systems&lt;/h2&gt;
+        <content type="html" xml:base="https://jarsen.engineer/the-beauty-of-fragility-2/">&lt;h2 id=&quot;and-learning-to-love-legacy-systems&quot;&gt;And Learning to Love “Legacy” Systems&lt;/h2&gt;
 &lt;p&gt;Antifragility has been an incredibly important idea to me over the &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/finding-peace-in-a-world-of-unknowns&quot;&gt;past year&lt;/a&gt;. It has deeply influenced how I think about things ranging from my career, to my finances, to my relationships with loved ones, myself, and my spirituality.&lt;/p&gt;
 &lt;p&gt;To me, the value behind the principle of antifragility is summed up in Taleb’s words, &lt;strong&gt;“I want to live happily in a world I don’t understand.”&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;I want to learn to live peacefully in a world full of volatility and chaos. But I cannot control the world. I can only “control” me. Antifragility is not ordering the system around myself to keep me safe. Antifragility is learning to embrace change.&lt;/p&gt;
@@ -70,10 +70,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/the-truth-about-microservices-will-shock-you/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/the-truth-about-microservices-will-shock-you/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/the-truth-about-microservices-will-shock-you/"/>
+        <id>https://jarsen.engineer/the-truth-about-microservices-will-shock-you/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/the-truth-about-microservices-will-shock-you/">&lt;p&gt;It’s that time again… monolith vs microservices architecture debate on twitter! What better time to throw my hat into the ring and scream my raw, non-peer-reviewed thoughts into the void?&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/the-truth-about-microservices-will-shock-you/">&lt;p&gt;It’s that time again… monolith vs microservices architecture debate on twitter! What better time to throw my hat into the ring and scream my raw, non-peer-reviewed thoughts into the void?&lt;/p&gt;
 &lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/i/web/status/1222966700913479681&quot;&gt;Referenced post on X&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Like all patterns, implementing a microservices architecture pattern is a transaction that exchanges one set of problems for a different set of problems. The cost and benefits together are known as “tradeoffs.” If anyone ever talks about a pattern without talking about its tradeoffs, slowly back away until you are at a safe distance. Then flee.&lt;/p&gt;
 &lt;p&gt;Given that choosing a design pattern is about trading problem sets, &lt;em&gt;before you implement a solution you must know what problem you have&lt;/em&gt;. If you are starting with a solution looking for problems, you are in for a long dark journey ahead.&lt;/p&gt;
@@ -138,10 +138,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/refactoring-replace-enum-with-polymorphism/"/>
+        <id>https://jarsen.engineer/refactoring-replace-enum-with-polymorphism/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/">&lt;p&gt;Enums in Swift are great—love me some sweet, sweet enums. However, as with all great things, one can go too far.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/refactoring-replace-enum-with-polymorphism/">&lt;p&gt;Enums in Swift are great—love me some sweet, sweet enums. However, as with all great things, one can go too far.&lt;/p&gt;
 &lt;p&gt;Let’s look at the following contrived example:&lt;/p&gt;
 &lt;pre&gt;&lt;code data-lang=&quot;swift&quot;&gt;enum Animal {
 

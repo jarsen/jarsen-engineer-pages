@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Jason Larsen — Engineer</title>
     <subtitle>Thoughts about the art of software engineering and design.</subtitle>
-    <link rel="self" type="application/atom+xml" href="https://jarsen.github.io/jarsen-engineer-pages/atom.xml"/>
-    <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages"/>
+    <link rel="self" type="application/atom+xml" href="https://jarsen.engineer/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://jarsen.engineer"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2026-02-15T15:59:07+00:00</updated>
-    <id>https://jarsen.github.io/jarsen-engineer-pages/atom.xml</id>
+    <id>https://jarsen.engineer/atom.xml</id>
     <entry xml:lang="en">
         <title>Not Enough Code Was Never the Problem</title>
         <published>2026-02-15T15:59:07+00:00</published>
@@ -16,10 +16,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/not-enough-code-was-never-the-problem/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/not-enough-code-was-never-the-problem/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/not-enough-code-was-never-the-problem/"/>
+        <id>https://jarsen.engineer/not-enough-code-was-never-the-problem/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/not-enough-code-was-never-the-problem/">&lt;p&gt;A new term has been making the rounds, one anybody who has been using agents to do any serious work over the past year will immediately understand:&lt;br /&gt;
+        <content type="html" xml:base="https://jarsen.engineer/not-enough-code-was-never-the-problem/">&lt;p&gt;A new term has been making the rounds, one anybody who has been using agents to do any serious work over the past year will immediately understand:&lt;br /&gt;
 &lt;br /&gt;
 Cognitive Debt.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -66,10 +66,10 @@ Always explore and embrace new ways of working. Have fun, play! But the more thi
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/ai-sidecar-workspaces/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/ai-sidecar-workspaces/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/ai-sidecar-workspaces/"/>
+        <id>https://jarsen.engineer/ai-sidecar-workspaces/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/ai-sidecar-workspaces/">&lt;p&gt;&lt;em&gt;Creating a (buzzword warning&lt;/em&gt; 🤢&lt;em&gt;) “AI-Native” workspace without touching existing stuff or giving a fully autonomous agent unhinged access.&lt;/em&gt;&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/ai-sidecar-workspaces/">&lt;p&gt;&lt;em&gt;Creating a (buzzword warning&lt;/em&gt; 🤢&lt;em&gt;) “AI-Native” workspace without touching existing stuff or giving a fully autonomous agent unhinged access.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;A few weeks ago, I sat down to help show our Head of Product how he could use Claude Code for… Not Code. I gave the usual rant about how it was poorly named, and to back up my argument days later Anthropic released Claude CoWork which is extra-sandboxed Claude Code with an opinionated UX and friendly name.&lt;br /&gt;
 &lt;br /&gt;
 Anyway, after walking through and setting up an environment with him (which ended with him submitting his first teeny PR fix within an hour of starting) I thought about how I might help other colleagues (data, compliance, marketing) set up similar workspaces… and I realized that I should put together something everyone at work could just copy and share.&lt;br /&gt;
@@ -175,10 +175,10 @@ What do you think? let me know on &lt;a rel=&quot;external&quot; href=&quot;http
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/pay-attention-to-incentives/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/pay-attention-to-incentives/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/pay-attention-to-incentives/"/>
+        <id>https://jarsen.engineer/pay-attention-to-incentives/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/pay-attention-to-incentives/">&lt;p&gt;Have you ever seen one of those YouTube videos from some 21 year old day trader standing in front of a (rented) lambo, selling you a course on how to become rich?&lt;br /&gt;
+        <content type="html" xml:base="https://jarsen.engineer/pay-attention-to-incentives/">&lt;p&gt;Have you ever seen one of those YouTube videos from some 21 year old day trader standing in front of a (rented) lambo, selling you a course on how to become rich?&lt;br /&gt;
 &lt;br /&gt;
 Have you ever asked yourself, “if they are so rich from day trading, why are they selling me a course?” You would be asking the correct question.&lt;br /&gt;
 &lt;br /&gt;
@@ -253,10 +253,10 @@ Above all, learn to pause, be in silence, trust your own gut, and build your own
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/getting-into-vibes/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/getting-into-vibes/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/getting-into-vibes/"/>
+        <id>https://jarsen.engineer/getting-into-vibes/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/getting-into-vibes/">&lt;p&gt;So it’s the year of our Lord 2026 and you’ve decided you procrastinated understanding how AI is going to change your career as a software engineer for too long. Now you want to learn to vibe code or vibe engineer or whatever people are calling it these days…&lt;br /&gt;
+        <content type="html" xml:base="https://jarsen.engineer/getting-into-vibes/">&lt;p&gt;So it’s the year of our Lord 2026 and you’ve decided you procrastinated understanding how AI is going to change your career as a software engineer for too long. Now you want to learn to vibe code or vibe engineer or whatever people are calling it these days…&lt;br /&gt;
 &lt;br /&gt;
 Well, depending on your attitude I have bad or good news for you… even Andrew Karpathy, the man who coined “vibe coding,” &lt;a rel=&quot;external&quot; href=&quot;https://x.com/karpathy/status/2004607146781278521&quot;&gt;tweeted&lt;/a&gt; that he feels behind:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -317,10 +317,10 @@ If you get really comfy, maybe you start to learn about claude skills, or open u
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/what-is-good-code-in-the-age-of-agents/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/what-is-good-code-in-the-age-of-agents/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/what-is-good-code-in-the-age-of-agents/"/>
+        <id>https://jarsen.engineer/what-is-good-code-in-the-age-of-agents/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/what-is-good-code-in-the-age-of-agents/">&lt;p&gt;At a work offsite in mid-2023 I gave a talk to the engineering team about how AI was already changing coding. I advised that, like all change in the industry before it, there was no reason to be afraid, but you need to stay on the board and ride the wave or you are going to get left behind.&lt;br /&gt;
+        <content type="html" xml:base="https://jarsen.engineer/what-is-good-code-in-the-age-of-agents/">&lt;p&gt;At a work offsite in mid-2023 I gave a talk to the engineering team about how AI was already changing coding. I advised that, like all change in the industry before it, there was no reason to be afraid, but you need to stay on the board and ride the wave or you are going to get left behind.&lt;br /&gt;
 &lt;br /&gt;
 Last year was insane. Even without model improvements, just the growth in our understanding of agentic workflows pushed us faster than I could have believed. We are so beyond tab completions. Now, on Jan 1, 2026, I am more bullish than ever.&lt;br /&gt;
 &lt;br /&gt;
@@ -357,10 +357,10 @@ Anyway, just a quick start of the year post. I’m hoping to write a lot more th
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/the-beauty-of-fragility-2/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/the-beauty-of-fragility-2/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/the-beauty-of-fragility-2/"/>
+        <id>https://jarsen.engineer/the-beauty-of-fragility-2/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/the-beauty-of-fragility-2/">&lt;h2 id=&quot;and-learning-to-love-legacy-systems&quot;&gt;And Learning to Love “Legacy” Systems&lt;/h2&gt;
+        <content type="html" xml:base="https://jarsen.engineer/the-beauty-of-fragility-2/">&lt;h2 id=&quot;and-learning-to-love-legacy-systems&quot;&gt;And Learning to Love “Legacy” Systems&lt;/h2&gt;
 &lt;p&gt;Antifragility has been an incredibly important idea to me over the &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/finding-peace-in-a-world-of-unknowns&quot;&gt;past year&lt;/a&gt;. It has deeply influenced how I think about things ranging from my career, to my finances, to my relationships with loved ones, myself, and my spirituality.&lt;/p&gt;
 &lt;p&gt;To me, the value behind the principle of antifragility is summed up in Taleb’s words, &lt;strong&gt;“I want to live happily in a world I don’t understand.”&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;I want to learn to live peacefully in a world full of volatility and chaos. But I cannot control the world. I can only “control” me. Antifragility is not ordering the system around myself to keep me safe. Antifragility is learning to embrace change.&lt;/p&gt;
@@ -411,10 +411,10 @@ Anyway, just a quick start of the year post. I’m hoping to write a lot more th
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-delivery/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-delivery/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/antifragile-continuous-delivery/"/>
+        <id>https://jarsen.engineer/antifragile-continuous-delivery/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-delivery/">&lt;blockquote&gt;
+        <content type="html" xml:base="https://jarsen.engineer/antifragile-continuous-delivery/">&lt;blockquote&gt;
 &lt;p&gt;Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.&lt;br /&gt;
 &lt;br /&gt;
 — First Principle of the &lt;a rel=&quot;external&quot; href=&quot;https://agilemanifesto.org/principles.html&quot;&gt;Agile Manifesto&lt;/a&gt;&lt;/p&gt;
@@ -529,10 +529,10 @@ Anyway, just a quick start of the year post. I’m hoping to write a lot more th
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-integration/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-integration/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/antifragile-continuous-integration/"/>
+        <id>https://jarsen.engineer/antifragile-continuous-integration/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-integration/">&lt;h2 id=&quot;big-changes-are-fragile&quot;&gt;Big Changes Are Fragile&lt;/h2&gt;
+        <content type="html" xml:base="https://jarsen.engineer/antifragile-continuous-integration/">&lt;h2 id=&quot;big-changes-are-fragile&quot;&gt;Big Changes Are Fragile&lt;/h2&gt;
 &lt;p&gt;Big changes carry more risk than small changes.&lt;/p&gt;
 &lt;p&gt;Ambitious, “big bang” style changes often fail, or generate more organizational ill-will than they do business value. There’s a reason just whispering the word refactor can send a Product Manager into a fugue state.&lt;/p&gt;
 &lt;p&gt;Merging and deploying months worth of work is much riskier than merging in a days worth; a 5 line PR is less risky than a 500 line PR.&lt;/p&gt;
@@ -611,10 +611,10 @@ Anyway, just a quick start of the year post. I’m hoping to write a lot more th
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/antifragile-software-teams/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/antifragile-software-teams/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/antifragile-software-teams/"/>
+        <id>https://jarsen.engineer/antifragile-software-teams/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/antifragile-software-teams/">&lt;p&gt;A Black Swan is an unpredictable event—a massive shock to our systems.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/antifragile-software-teams/">&lt;p&gt;A Black Swan is an unpredictable event—a massive shock to our systems.&lt;/p&gt;
 &lt;p&gt;Things that are fragile do not like change. Change hurts. Chaos, volatility, randomness, entropy, the unknown, time—all involve friction and forces that pull at the seams, threatening to destroy the fragile. Sometimes the destruction is abrupt and impossible to predict (what Taleb calls a Black Swan). Sometimes its death by a thousand cuts.&lt;/p&gt;
 &lt;p&gt;When we think of things that are not fragile, we tend to think of things that are robust and resilient. Robust things are not affected negatively by change. They yawn as the tides of chaos break on their shores, and shrug as they recede.&lt;/p&gt;
 &lt;p&gt;However, robust things are also not affected by change positively. In their apathy towards the waves of volatility, they fail to recognize and take advantage of opportunities as they briefly flit in and out of the unknown.&lt;/p&gt;
@@ -660,10 +660,10 @@ Anyway, just a quick start of the year post. I’m hoping to write a lot more th
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/let-constraints-set-you-free/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/let-constraints-set-you-free/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/let-constraints-set-you-free/"/>
+        <id>https://jarsen.engineer/let-constraints-set-you-free/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/let-constraints-set-you-free/">&lt;p&gt;This morning I rested my chin on the sill of the open window as I showered. The lights were off and the only illumination came from the soft warm glow of the early sun rising over the distant mountains, filtered through the trees. Gazing aimlessly into the backyard through the steam, I wondered, as I have for months, is this the right thing to do?&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/let-constraints-set-you-free/">&lt;p&gt;This morning I rested my chin on the sill of the open window as I showered. The lights were off and the only illumination came from the soft warm glow of the early sun rising over the distant mountains, filtered through the trees. Gazing aimlessly into the backyard through the steam, I wondered, as I have for months, is this the right thing to do?&lt;/p&gt;
 &lt;p&gt;I closed my eyes and let the hot water rush over me. I breathed deep to inhale the crisp morning air, still humid from a night of warm summer thunderstorms. Taking in the smell of the damp trees and earth, I held my breath as long as I could, knowing that I could never have that exact moment again. Then I exhaled.&lt;/p&gt;
 &lt;p&gt;Tomorrow we are listing our home for sale. Yes, &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/castles-of-abstraction&quot;&gt;the one that has dirt under it&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Our home was built in 1931 and has “character.” I love that character, even if said character sometimes means costly maintenance. I love the giant, old trees that line our neighborhood. I love the smell of them, even if my sinuses do not agree with their pollens. I love the experiences we’ve had here, in our first home. I love that my home is a duplex: we have had some fun experiences as Airbnb hosts, with guests from all over the world staying next door.&lt;/p&gt;
@@ -689,10 +689,10 @@ Anyway, just a quick start of the year post. I’m hoping to write a lot more th
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/finding-peace-in-a-world-of-unknowns/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/finding-peace-in-a-world-of-unknowns/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/finding-peace-in-a-world-of-unknowns/"/>
+        <id>https://jarsen.engineer/finding-peace-in-a-world-of-unknowns/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/finding-peace-in-a-world-of-unknowns/">&lt;p&gt;I’ve been thinking a lot about change of late.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/finding-peace-in-a-world-of-unknowns/">&lt;p&gt;I’ve been thinking a lot about change of late.&lt;/p&gt;
 &lt;p&gt;At work, I’m always thinking about change: how to communicate about changes, how to plan changes, and how to implement change.&lt;/p&gt;
 &lt;p&gt;The last few years for me have been a fraught with major personal life changes.&lt;/p&gt;
 &lt;p&gt;Socially… Well, it feels like it’s been a long, downward spiral (since 2016?), picking up momentum at a dizzying pace.&lt;/p&gt;
@@ -734,10 +734,10 @@ Anyway, just a quick start of the year post. I’m hoping to write a lot more th
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/castles-of-abstraction/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/castles-of-abstraction/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/castles-of-abstraction/"/>
+        <id>https://jarsen.engineer/castles-of-abstraction/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/castles-of-abstraction/">&lt;p&gt;A few months ago I had a moment of existential crisis.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/castles-of-abstraction/">&lt;p&gt;A few months ago I had a moment of existential crisis.&lt;/p&gt;
 &lt;p&gt;We were remodeling our basement bathroom and wanted the toilet moved. The contractors came, jackhammered the cement, and laid new pipes. I got home from work and wanted to see the progress, so I poked my head in and saw… dirt.&lt;/p&gt;
 &lt;p&gt;There was dirt under my house.&lt;/p&gt;
 &lt;p&gt;I closed the door slowly and backed away.&lt;/p&gt;
@@ -786,10 +786,10 @@ Individuals and interactions over processes and tools&lt;/p&gt;
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/software-is-made-by-humans-part-i/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/software-is-made-by-humans-part-i/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/software-is-made-by-humans-part-i/"/>
+        <id>https://jarsen.engineer/software-is-made-by-humans-part-i/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/software-is-made-by-humans-part-i/">&lt;p&gt;The reason I got into programming as a teenager was because of video games.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/software-is-made-by-humans-part-i/">&lt;p&gt;The reason I got into programming as a teenager was because of video games.&lt;/p&gt;
 &lt;p&gt;I mean, I always liked computers generally–I was fortunate to grow up in the Cupertino area, and my dad was a software developer who would build random computers for my brother and I out of old hardware from work–but it was really video games that got me excited about computers.&lt;/p&gt;
 &lt;p&gt;In particular I loved Blizzard games: I remember begging for the Warcraft II Battlechest at Costco, Starcraft, Diablo II (which I was not “allowed” to play so played at friends’ houses). These were all games that I spent many of my waking hours obsessing over. When I would hit my limit for hours I was allowed to spend on the computer, I would pull out the manuals and read them over and over, trying to understand the mechanics and analyzing the rules systems, copying the art in notebooks, and imagining playing and making my own games.&lt;/p&gt;
 &lt;p&gt;In middle school a group of my friends made a website for their Diablo II clan, and it was &lt;em&gt;rad&lt;/em&gt;. It had all these cool dropdowns, little animations and dynamic widgets, persistence, authentication… I asked them how they made it and they were like “wouldn’t you like to know.” I had done some HTML, but didn’t know about Javascript or any backends or databases. This exclusion from some secret knowledge, in tandem with the announcement of Warcraft III¹, drove me to ask my dad for some help. My dad responded by printing out a stack of pages for a PHP tutorial from the PHP DevShed forums (I didn’t have internet access on my computer). He had a very throw you in deep end of the pool and let you drown for a bit style of teaching.² This was my introduction to “real” programming.&lt;/p&gt;
@@ -850,10 +850,10 @@ Individuals and interactions over processes and tools&lt;/p&gt;
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/ship-faster-with-this-one-weird-trick/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/ship-faster-with-this-one-weird-trick/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/ship-faster-with-this-one-weird-trick/"/>
+        <id>https://jarsen.engineer/ship-faster-with-this-one-weird-trick/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/ship-faster-with-this-one-weird-trick/">&lt;p&gt;Last year our team decided to start documenting a list of our pain points as developers. We created a spreadsheet with columns for the original reporter, a quick description, and a pain rating on scale of 1-10 of how bad it hurts. We started to review the the document weekly in our team Dev Discussion meeting, using it to decide if there were techincal problems we needed to prioritize and address.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/ship-faster-with-this-one-weird-trick/">&lt;p&gt;Last year our team decided to start documenting a list of our pain points as developers. We created a spreadsheet with columns for the original reporter, a quick description, and a pain rating on scale of 1-10 of how bad it hurts. We started to review the the document weekly in our team Dev Discussion meeting, using it to decide if there were techincal problems we needed to prioritize and address.&lt;/p&gt;
 &lt;p&gt;As some time passed we started to recognize a cluster of pains. They looked something like this:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;MERGE CONFLICTS :( - 10/10&lt;/li&gt;
@@ -1002,10 +1002,10 @@ With a couple days’ practice, we gain confidence in our shiny new TCR skills. 
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/the-truth-about-microservices-will-shock-you/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/the-truth-about-microservices-will-shock-you/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/the-truth-about-microservices-will-shock-you/"/>
+        <id>https://jarsen.engineer/the-truth-about-microservices-will-shock-you/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/the-truth-about-microservices-will-shock-you/">&lt;p&gt;It’s that time again… monolith vs microservices architecture debate on twitter! What better time to throw my hat into the ring and scream my raw, non-peer-reviewed thoughts into the void?&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/the-truth-about-microservices-will-shock-you/">&lt;p&gt;It’s that time again… monolith vs microservices architecture debate on twitter! What better time to throw my hat into the ring and scream my raw, non-peer-reviewed thoughts into the void?&lt;/p&gt;
 &lt;p&gt;&lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/i/web/status/1222966700913479681&quot;&gt;Referenced post on X&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Like all patterns, implementing a microservices architecture pattern is a transaction that exchanges one set of problems for a different set of problems. The cost and benefits together are known as “tradeoffs.” If anyone ever talks about a pattern without talking about its tradeoffs, slowly back away until you are at a safe distance. Then flee.&lt;/p&gt;
 &lt;p&gt;Given that choosing a design pattern is about trading problem sets, &lt;em&gt;before you implement a solution you must know what problem you have&lt;/em&gt;. If you are starting with a solution looking for problems, you are in for a long dark journey ahead.&lt;/p&gt;
@@ -1070,10 +1070,10 @@ With a couple days’ practice, we gain confidence in our shiny new TCR skills. 
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/i-did-not-shoot-the-marshal/"/>
+        <id>https://jarsen.engineer/i-did-not-shoot-the-marshal/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/">&lt;h2 id=&quot;json-in-swift-4-and-open-source-thoughts&quot;&gt;JSON in Swift 4 and Open Source Thoughts&lt;/h2&gt;
+        <content type="html" xml:base="https://jarsen.engineer/i-did-not-shoot-the-marshal/">&lt;h2 id=&quot;json-in-swift-4-and-open-source-thoughts&quot;&gt;JSON in Swift 4 and Open Source Thoughts&lt;/h2&gt;
 &lt;p&gt;Swift 4 brings a cornucopia of welcome (and a few unwelcome) updates. One of the ones I am excited about is the introduction of Codable. As the owner of a &lt;a rel=&quot;external&quot; href=&quot;https://github.com/utahiosmac/Marshal&quot;&gt;popular open source JSON mapping framework&lt;/a&gt;, I really look forward to Codable making my work obsolete. It’s the death of an era, but it is a necessary death.&lt;/p&gt;
 &lt;p&gt;Here is what mapping JSON to an object looks like using Marshal.&lt;/p&gt;
 &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
@@ -1150,10 +1150,10 @@ With a couple days’ practice, we gain confidence in our shiny new TCR skills. 
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/optimistic-networking-with-reactor/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/optimistic-networking-with-reactor/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/optimistic-networking-with-reactor/"/>
+        <id>https://jarsen.engineer/optimistic-networking-with-reactor/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/optimistic-networking-with-reactor/">&lt;h2 id=&quot;a-love-story&quot;&gt;A Love Story&lt;/h2&gt;
+        <content type="html" xml:base="https://jarsen.engineer/optimistic-networking-with-reactor/">&lt;h2 id=&quot;a-love-story&quot;&gt;A Love Story&lt;/h2&gt;
 &lt;p&gt;Last time we talked about some pretty cool stuff we can do to build a more reactive iOS application using the &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Reactor&quot;&gt;Reactor&lt;/a&gt; architecture. Today we’ll investigate how we can keep in sync with data from the network and &lt;em&gt;make our app faster with the power of optimism!&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Let’s look at the Reactor architecture diagram for a quick refresher:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;┌──────────────────┐                                 ┌──────────────────┐
@@ -1256,10 +1256,10 @@ With a couple days’ practice, we gain confidence in our shiny new TCR skills. 
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/react-native-native/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/react-native-native/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/react-native-native/"/>
+        <id>https://jarsen.engineer/react-native-native/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/react-native-native/">&lt;h2 id=&quot;making-your-swift-app-more-react-nativey&quot;&gt;Making your Swift app more React Nativey&lt;/h2&gt;
+        <content type="html" xml:base="https://jarsen.engineer/react-native-native/">&lt;h2 id=&quot;making-your-swift-app-more-react-nativey&quot;&gt;Making your Swift app more React Nativey&lt;/h2&gt;
 &lt;h2 id=&quot;confessions&quot;&gt;Confessions&lt;/h2&gt;
 &lt;p&gt;I’m going to let you in on a dirty little secret. Sometimes I think longingly about React Native.&lt;/p&gt;
 &lt;p&gt;I know, I know. Feels so wrong. But some of it feels so right. *Reactive, declarative UI code? Hot reloading? Updates that can bypass the app store?*And even though Javascript isn’t as sweet in a lot of ways as Swift, it’s getting pretty good (new async/wait and gradual type checking with &lt;a rel=&quot;external&quot; href=&quot;https://flowtype.org/&quot;&gt;Flow&lt;/a&gt;). I keep trying it out from time to time, wanting it to be amazing and save me from all the things that drive me nuts in iOS development. &lt;a rel=&quot;external&quot; href=&quot;http://artsy.github.io/blog/2016/08/15/React-Native-at-Artsy/&quot;&gt;Of course it’s not without its share of cons&lt;/a&gt;, but certain features are awful fun and productive—and who doesn’t want to have fun and be productive?&lt;/p&gt;
@@ -1323,10 +1323,10 @@ With a couple days’ practice, we gain confidence in our shiny new TCR skills. 
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/refactoring-replace-enum-with-polymorphism/"/>
+        <id>https://jarsen.engineer/refactoring-replace-enum-with-polymorphism/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/">&lt;p&gt;Enums in Swift are great—love me some sweet, sweet enums. However, as with all great things, one can go too far.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/refactoring-replace-enum-with-polymorphism/">&lt;p&gt;Enums in Swift are great—love me some sweet, sweet enums. However, as with all great things, one can go too far.&lt;/p&gt;
 &lt;p&gt;Let’s look at the following contrived example:&lt;/p&gt;
 &lt;pre&gt;&lt;code data-lang=&quot;swift&quot;&gt;enum Animal {
 
@@ -1438,10 +1438,10 @@ struct Cow: Animal {
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/protocol-oriented-json-in-swift/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/protocol-oriented-json-in-swift/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/protocol-oriented-json-in-swift/"/>
+        <id>https://jarsen.engineer/protocol-oriented-json-in-swift/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/protocol-oriented-json-in-swift/">&lt;p&gt;Previously we &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/&quot;&gt;explored&lt;/a&gt; how to use Swift’s amazing type system to simplify our JSON code. We came up with a solution that was concise, without building a complicated tree of JSON enums, using crazy operators, or getting deep into reflection. And we did it all in 100-some-odd lines of code.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/protocol-oriented-json-in-swift/">&lt;p&gt;Previously we &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/&quot;&gt;explored&lt;/a&gt; how to use Swift’s amazing type system to simplify our JSON code. We came up with a solution that was concise, without building a complicated tree of JSON enums, using crazy operators, or getting deep into reflection. And we did it all in 100-some-odd lines of code.&lt;/p&gt;
 &lt;p&gt;Today we’re going to use &lt;em&gt;protocol-oriented programming&lt;/em&gt; to take it even further.&lt;/p&gt;
 &lt;p&gt;Last time we created our own class, &lt;code&gt;JSONObject&lt;/code&gt;, to encapsulate a JSON dictionary and to hold our &lt;code&gt;valueForKey&lt;/code&gt; family of helpers. This encapsulation had several benefits, however, it also came with the baggage of having to constantly wrap our basic &lt;code&gt;[String:AnyObject]&lt;/code&gt; JSON dictionaries. This can become especially tedious when we have nested JSON objects we want to extract.&lt;/p&gt;
 &lt;p&gt;This time let’s use the power of protocols in Swift to extend &lt;code&gt;Dictionary&lt;/code&gt;. Of course, we don’t want to extend all instances of &lt;code&gt;Dictionary&lt;/code&gt;, just the instances that look like &lt;code&gt;[String:AnyObject]&lt;/code&gt;.&lt;/p&gt;
@@ -1603,10 +1603,10 @@ catch {
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/the-church-of-xcode-simple-emacs-keybindings/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/the-church-of-xcode-simple-emacs-keybindings/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/the-church-of-xcode-simple-emacs-keybindings/"/>
+        <id>https://jarsen.engineer/the-church-of-xcode-simple-emacs-keybindings/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/the-church-of-xcode-simple-emacs-keybindings/">&lt;p&gt;Long has the holy war between emacs and vi been waged. I’ve used both, and I don’t really care either way. However, OS X text fields everywhere come with secret support for limited (and sometimes modified) Emacs keybindings. So, regardless of your position in the great text editor wars you might as well learn a few keybindings because &lt;em&gt;you can use them anywhere you see a text field&lt;/em&gt;. Learning a few basic keybindings will empower you as an iOS/Mac developer and as an OS X user.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/the-church-of-xcode-simple-emacs-keybindings/">&lt;p&gt;Long has the holy war between emacs and vi been waged. I’ve used both, and I don’t really care either way. However, OS X text fields everywhere come with secret support for limited (and sometimes modified) Emacs keybindings. So, regardless of your position in the great text editor wars you might as well learn a few keybindings because &lt;em&gt;you can use them anywhere you see a text field&lt;/em&gt;. Learning a few basic keybindings will empower you as an iOS/Mac developer and as an OS X user.&lt;/p&gt;
 &lt;h2 id=&quot;emacs-modifier-keys&quot;&gt;Emacs Modifier Keys&lt;/h2&gt;
 &lt;p&gt;Whenever you look at emacs shortcuts you’ll see something like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;C-v
@@ -1663,10 +1663,10 @@ M-v
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift-part-ii/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift-part-ii/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/"/>
+        <id>https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift-part-ii/">&lt;p&gt;Last time we talked about how we could &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/no-magic-json-parsing-with-swift/&quot;&gt;simplify our JSON parsing&lt;/a&gt; with Swift 2 error handling and get rid of all the magic. Today we’re going to use the power of type inference to take our old &lt;code&gt;JSONObject&lt;/code&gt; struct from having 12 methods (or more, if you want to add methods for values like CGFloat, etc.) to only 4!&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/">&lt;p&gt;Last time we talked about how we could &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/no-magic-json-parsing-with-swift/&quot;&gt;simplify our JSON parsing&lt;/a&gt; with Swift 2 error handling and get rid of all the magic. Today we’re going to use the power of type inference to take our old &lt;code&gt;JSONObject&lt;/code&gt; struct from having 12 methods (or more, if you want to add methods for values like CGFloat, etc.) to only 4!&lt;/p&gt;
 &lt;p&gt;Let’s look at our &lt;code&gt;valueForKey&lt;/code&gt; function.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;func valueForKey&amp;lt;A&amp;gt;(key: String, type: A.Type) throws -&amp;gt; A {
     let pathComponents = key.componentsSeparatedByString(&amp;quot;.&amp;quot;)
@@ -1786,10 +1786,10 @@ M-v
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/result-vs-throws/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/result-vs-throws/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/result-vs-throws/"/>
+        <id>https://jarsen.engineer/result-vs-throws/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/result-vs-throws/">&lt;p&gt;Swift 2.0 is causing a lot of well deserved excitement. Chris and the folks over at apple have been doing an &lt;em&gt;amazing&lt;/em&gt; job. I have been loving Swift the past year and am really excited about all the new features—and, of course, the open source announcement.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/result-vs-throws/">&lt;p&gt;Swift 2.0 is causing a lot of well deserved excitement. Chris and the folks over at apple have been doing an &lt;em&gt;amazing&lt;/em&gt; job. I have been loving Swift the past year and am really excited about all the new features—and, of course, the open source announcement.&lt;/p&gt;
 &lt;p&gt;When the &lt;code&gt;do&lt;/code&gt;/&lt;code&gt;catch&lt;/code&gt; model for error handling was announced, there was a bit of frustration that &lt;code&gt;Result&lt;/code&gt; was not the adopted model. Since then, several developers have come out with &lt;a rel=&quot;external&quot; href=&quot;http://www.sunsetlakesoftware.com/2015/06/12/swift-2-error-handling-practice&quot;&gt;articles&lt;/a&gt; detailing what they &lt;a rel=&quot;external&quot; href=&quot;http://owensd.io/2015/06/12/swift-throws-get-it.html&quot;&gt;like better&lt;/a&gt; about it that have got &lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/clattner_llvm/status/610154161552756736&quot;&gt;quite a bit of attention&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;While I am excited about the prospect of standardized error handling, I still am not convinced that throwing errors is a better approach than &lt;code&gt;Result&lt;/code&gt;. I have a lot of mixed feelings. I’m sure there will be errors and counter-points I have yet to consider, in which case please leave a comment at the bottom or ping me on twitter (&lt;a rel=&quot;external&quot; href=&quot;http://twitter.com/jarsen&quot;&gt;@jarsen&lt;/a&gt;), but here are my thoughts so far.&lt;/p&gt;
 &lt;h2 id=&quot;what-is-result&quot;&gt;What is Result?&lt;/h2&gt;
@@ -1978,10 +1978,10 @@ fetchJSON(&amp;quot;/api/v3/users&amp;quot;) { result in
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/swift-data-pipelines/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/swift-data-pipelines/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/swift-data-pipelines/"/>
+        <id>https://jarsen.engineer/swift-data-pipelines/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/swift-data-pipelines/">&lt;p&gt;The forward pipe operator is an infix operator taken from languages like F# and Elixir. I’ve been working on a &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Pipes&quot;&gt;Swift implementation&lt;/a&gt; that will help clean up data processing pipelines.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/swift-data-pipelines/">&lt;p&gt;The forward pipe operator is an infix operator taken from languages like F# and Elixir. I’ve been working on a &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Pipes&quot;&gt;Swift implementation&lt;/a&gt; that will help clean up data processing pipelines.&lt;/p&gt;
 &lt;p&gt;In order to understand the motivation for the forward pipe operator, let’s first look at some regular looking code.&lt;/p&gt;
 &lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;let students = Database.allStudents()
 let grades = Grades.forStudents(students)
@@ -2091,10 +2091,10 @@ func divide(denominator: Double)(numerator: Double) -&amp;gt; Double {
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/no-magic-json-parsing-with-swift/"/>
+        <id>https://jarsen.engineer/no-magic-json-parsing-with-swift/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift/">&lt;p&gt;Since the beginning, JSON parsing has been a common pain point for many Swift developers. This is largely due to difficulties in dealing with a strict type system (which JSON does not have) and optionals, as well as a lack of a consistent error handling approach.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/no-magic-json-parsing-with-swift/">&lt;p&gt;Since the beginning, JSON parsing has been a common pain point for many Swift developers. This is largely due to difficulties in dealing with a strict type system (which JSON does not have) and optionals, as well as a lack of a consistent error handling approach.&lt;/p&gt;
 &lt;p&gt;Several great JSON parsing libraries have surfaced which avoid the mess of tangled if-lets (a.k.a. the infamous “pyramid of doom”). I really like the approach taken by thoughtbot in their &lt;a rel=&quot;external&quot; href=&quot;https://robots.thoughtbot.com/efficient-json-in-swift-with-functional-concepts-and-generics&quot;&gt;JSON&lt;/a&gt; &lt;a rel=&quot;external&quot; href=&quot;https://robots.thoughtbot.com/real-world-json-parsing-with-swift&quot;&gt;parsing&lt;/a&gt; articles, which ultimately led to their &lt;a rel=&quot;external&quot; href=&quot;https://github.com/thoughtbot/Argo&quot;&gt;Argo&lt;/a&gt; library on github (although I don’t like everything about Argo).&lt;/p&gt;
 &lt;p&gt;However, most solutions tend to rely on a lot of magic: the magic of applicatives, functors, and monads; the magic of unfamiliar custom operators; the magic of a complex nested enum structure; the magic of multiple external dependencies.&lt;/p&gt;
 &lt;p&gt;Now that swift 2.0 has brought error handling to us, we can implement much less magical JSON parsing. Here is an example of what your JSON parsing code might look like with just a thin error-throwing layer over &lt;code&gt;[String:AnyObject]&lt;/code&gt;.&lt;/p&gt;

@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Jason Larsen — Engineer - DevOps</title>
     <subtitle>Thoughts about the art of software engineering and design.</subtitle>
-    <link rel="self" type="application/atom+xml" href="https://jarsen.github.io/jarsen-engineer-pages/tags/devops/atom.xml"/>
-    <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages"/>
+    <link rel="self" type="application/atom+xml" href="https://jarsen.engineer/tags/devops/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://jarsen.engineer"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2021-01-25T00:00:00+00:00</updated>
-    <id>https://jarsen.github.io/jarsen-engineer-pages/tags/devops/atom.xml</id>
+    <id>https://jarsen.engineer/tags/devops/atom.xml</id>
     <entry xml:lang="en">
         <title>antifrAGILE: Continuous Delivery</title>
         <published>2021-01-25T00:00:00+00:00</published>
@@ -16,10 +16,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-delivery/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-delivery/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/antifragile-continuous-delivery/"/>
+        <id>https://jarsen.engineer/antifragile-continuous-delivery/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-delivery/">&lt;blockquote&gt;
+        <content type="html" xml:base="https://jarsen.engineer/antifragile-continuous-delivery/">&lt;blockquote&gt;
 &lt;p&gt;Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.&lt;br /&gt;
 &lt;br /&gt;
 — First Principle of the &lt;a rel=&quot;external&quot; href=&quot;https://agilemanifesto.org/principles.html&quot;&gt;Agile Manifesto&lt;/a&gt;&lt;/p&gt;
@@ -134,10 +134,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-integration/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-integration/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/antifragile-continuous-integration/"/>
+        <id>https://jarsen.engineer/antifragile-continuous-integration/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-integration/">&lt;h2 id=&quot;big-changes-are-fragile&quot;&gt;Big Changes Are Fragile&lt;/h2&gt;
+        <content type="html" xml:base="https://jarsen.engineer/antifragile-continuous-integration/">&lt;h2 id=&quot;big-changes-are-fragile&quot;&gt;Big Changes Are Fragile&lt;/h2&gt;
 &lt;p&gt;Big changes carry more risk than small changes.&lt;/p&gt;
 &lt;p&gt;Ambitious, “big bang” style changes often fail, or generate more organizational ill-will than they do business value. There’s a reason just whispering the word refactor can send a Product Manager into a fugue state.&lt;/p&gt;
 &lt;p&gt;Merging and deploying months worth of work is much riskier than merging in a days worth; a 5 line PR is less risky than a 500 line PR.&lt;/p&gt;

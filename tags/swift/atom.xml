@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Jason Larsen — Engineer - Swift</title>
     <subtitle>Thoughts about the art of software engineering and design.</subtitle>
-    <link rel="self" type="application/atom+xml" href="https://jarsen.github.io/jarsen-engineer-pages/tags/swift/atom.xml"/>
-    <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages"/>
+    <link rel="self" type="application/atom+xml" href="https://jarsen.engineer/tags/swift/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://jarsen.engineer"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2017-06-06T00:00:00+00:00</updated>
-    <id>https://jarsen.github.io/jarsen-engineer-pages/tags/swift/atom.xml</id>
+    <id>https://jarsen.engineer/tags/swift/atom.xml</id>
     <entry xml:lang="en">
         <title>I Did Not Shoot the Marshal</title>
         <published>2017-06-06T00:00:00+00:00</published>
@@ -16,10 +16,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/i-did-not-shoot-the-marshal/"/>
+        <id>https://jarsen.engineer/i-did-not-shoot-the-marshal/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/">&lt;h2 id=&quot;json-in-swift-4-and-open-source-thoughts&quot;&gt;JSON in Swift 4 and Open Source Thoughts&lt;/h2&gt;
+        <content type="html" xml:base="https://jarsen.engineer/i-did-not-shoot-the-marshal/">&lt;h2 id=&quot;json-in-swift-4-and-open-source-thoughts&quot;&gt;JSON in Swift 4 and Open Source Thoughts&lt;/h2&gt;
 &lt;p&gt;Swift 4 brings a cornucopia of welcome (and a few unwelcome) updates. One of the ones I am excited about is the introduction of Codable. As the owner of a &lt;a rel=&quot;external&quot; href=&quot;https://github.com/utahiosmac/Marshal&quot;&gt;popular open source JSON mapping framework&lt;/a&gt;, I really look forward to Codable making my work obsolete. It’s the death of an era, but it is a necessary death.&lt;/p&gt;
 &lt;p&gt;Here is what mapping JSON to an object looks like using Marshal.&lt;/p&gt;
 &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;
@@ -96,10 +96,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/optimistic-networking-with-reactor/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/optimistic-networking-with-reactor/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/optimistic-networking-with-reactor/"/>
+        <id>https://jarsen.engineer/optimistic-networking-with-reactor/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/optimistic-networking-with-reactor/">&lt;h2 id=&quot;a-love-story&quot;&gt;A Love Story&lt;/h2&gt;
+        <content type="html" xml:base="https://jarsen.engineer/optimistic-networking-with-reactor/">&lt;h2 id=&quot;a-love-story&quot;&gt;A Love Story&lt;/h2&gt;
 &lt;p&gt;Last time we talked about some pretty cool stuff we can do to build a more reactive iOS application using the &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Reactor&quot;&gt;Reactor&lt;/a&gt; architecture. Today we’ll investigate how we can keep in sync with data from the network and &lt;em&gt;make our app faster with the power of optimism!&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Let’s look at the Reactor architecture diagram for a quick refresher:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;┌──────────────────┐                                 ┌──────────────────┐
@@ -202,10 +202,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/react-native-native/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/react-native-native/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/react-native-native/"/>
+        <id>https://jarsen.engineer/react-native-native/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/react-native-native/">&lt;h2 id=&quot;making-your-swift-app-more-react-nativey&quot;&gt;Making your Swift app more React Nativey&lt;/h2&gt;
+        <content type="html" xml:base="https://jarsen.engineer/react-native-native/">&lt;h2 id=&quot;making-your-swift-app-more-react-nativey&quot;&gt;Making your Swift app more React Nativey&lt;/h2&gt;
 &lt;h2 id=&quot;confessions&quot;&gt;Confessions&lt;/h2&gt;
 &lt;p&gt;I’m going to let you in on a dirty little secret. Sometimes I think longingly about React Native.&lt;/p&gt;
 &lt;p&gt;I know, I know. Feels so wrong. But some of it feels so right. *Reactive, declarative UI code? Hot reloading? Updates that can bypass the app store?*And even though Javascript isn’t as sweet in a lot of ways as Swift, it’s getting pretty good (new async/wait and gradual type checking with &lt;a rel=&quot;external&quot; href=&quot;https://flowtype.org/&quot;&gt;Flow&lt;/a&gt;). I keep trying it out from time to time, wanting it to be amazing and save me from all the things that drive me nuts in iOS development. &lt;a rel=&quot;external&quot; href=&quot;http://artsy.github.io/blog/2016/08/15/React-Native-at-Artsy/&quot;&gt;Of course it’s not without its share of cons&lt;/a&gt;, but certain features are awful fun and productive—and who doesn’t want to have fun and be productive?&lt;/p&gt;
@@ -269,10 +269,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/refactoring-replace-enum-with-polymorphism/"/>
+        <id>https://jarsen.engineer/refactoring-replace-enum-with-polymorphism/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/">&lt;p&gt;Enums in Swift are great—love me some sweet, sweet enums. However, as with all great things, one can go too far.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/refactoring-replace-enum-with-polymorphism/">&lt;p&gt;Enums in Swift are great—love me some sweet, sweet enums. However, as with all great things, one can go too far.&lt;/p&gt;
 &lt;p&gt;Let’s look at the following contrived example:&lt;/p&gt;
 &lt;pre&gt;&lt;code data-lang=&quot;swift&quot;&gt;enum Animal {
 
@@ -384,10 +384,10 @@ struct Cow: Animal {
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/protocol-oriented-json-in-swift/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/protocol-oriented-json-in-swift/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/protocol-oriented-json-in-swift/"/>
+        <id>https://jarsen.engineer/protocol-oriented-json-in-swift/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/protocol-oriented-json-in-swift/">&lt;p&gt;Previously we &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/&quot;&gt;explored&lt;/a&gt; how to use Swift’s amazing type system to simplify our JSON code. We came up with a solution that was concise, without building a complicated tree of JSON enums, using crazy operators, or getting deep into reflection. And we did it all in 100-some-odd lines of code.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/protocol-oriented-json-in-swift/">&lt;p&gt;Previously we &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/&quot;&gt;explored&lt;/a&gt; how to use Swift’s amazing type system to simplify our JSON code. We came up with a solution that was concise, without building a complicated tree of JSON enums, using crazy operators, or getting deep into reflection. And we did it all in 100-some-odd lines of code.&lt;/p&gt;
 &lt;p&gt;Today we’re going to use &lt;em&gt;protocol-oriented programming&lt;/em&gt; to take it even further.&lt;/p&gt;
 &lt;p&gt;Last time we created our own class, &lt;code&gt;JSONObject&lt;/code&gt;, to encapsulate a JSON dictionary and to hold our &lt;code&gt;valueForKey&lt;/code&gt; family of helpers. This encapsulation had several benefits, however, it also came with the baggage of having to constantly wrap our basic &lt;code&gt;[String:AnyObject]&lt;/code&gt; JSON dictionaries. This can become especially tedious when we have nested JSON objects we want to extract.&lt;/p&gt;
 &lt;p&gt;This time let’s use the power of protocols in Swift to extend &lt;code&gt;Dictionary&lt;/code&gt;. Of course, we don’t want to extend all instances of &lt;code&gt;Dictionary&lt;/code&gt;, just the instances that look like &lt;code&gt;[String:AnyObject]&lt;/code&gt;.&lt;/p&gt;
@@ -549,10 +549,10 @@ catch {
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift-part-ii/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift-part-ii/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/"/>
+        <id>https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift-part-ii/">&lt;p&gt;Last time we talked about how we could &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/no-magic-json-parsing-with-swift/&quot;&gt;simplify our JSON parsing&lt;/a&gt; with Swift 2 error handling and get rid of all the magic. Today we’re going to use the power of type inference to take our old &lt;code&gt;JSONObject&lt;/code&gt; struct from having 12 methods (or more, if you want to add methods for values like CGFloat, etc.) to only 4!&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/">&lt;p&gt;Last time we talked about how we could &lt;a rel=&quot;external&quot; href=&quot;https://jarsen.engineer/no-magic-json-parsing-with-swift/&quot;&gt;simplify our JSON parsing&lt;/a&gt; with Swift 2 error handling and get rid of all the magic. Today we’re going to use the power of type inference to take our old &lt;code&gt;JSONObject&lt;/code&gt; struct from having 12 methods (or more, if you want to add methods for values like CGFloat, etc.) to only 4!&lt;/p&gt;
 &lt;p&gt;Let’s look at our &lt;code&gt;valueForKey&lt;/code&gt; function.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;func valueForKey&amp;lt;A&amp;gt;(key: String, type: A.Type) throws -&amp;gt; A {
     let pathComponents = key.componentsSeparatedByString(&amp;quot;.&amp;quot;)
@@ -672,10 +672,10 @@ catch {
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/result-vs-throws/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/result-vs-throws/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/result-vs-throws/"/>
+        <id>https://jarsen.engineer/result-vs-throws/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/result-vs-throws/">&lt;p&gt;Swift 2.0 is causing a lot of well deserved excitement. Chris and the folks over at apple have been doing an &lt;em&gt;amazing&lt;/em&gt; job. I have been loving Swift the past year and am really excited about all the new features—and, of course, the open source announcement.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/result-vs-throws/">&lt;p&gt;Swift 2.0 is causing a lot of well deserved excitement. Chris and the folks over at apple have been doing an &lt;em&gt;amazing&lt;/em&gt; job. I have been loving Swift the past year and am really excited about all the new features—and, of course, the open source announcement.&lt;/p&gt;
 &lt;p&gt;When the &lt;code&gt;do&lt;/code&gt;/&lt;code&gt;catch&lt;/code&gt; model for error handling was announced, there was a bit of frustration that &lt;code&gt;Result&lt;/code&gt; was not the adopted model. Since then, several developers have come out with &lt;a rel=&quot;external&quot; href=&quot;http://www.sunsetlakesoftware.com/2015/06/12/swift-2-error-handling-practice&quot;&gt;articles&lt;/a&gt; detailing what they &lt;a rel=&quot;external&quot; href=&quot;http://owensd.io/2015/06/12/swift-throws-get-it.html&quot;&gt;like better&lt;/a&gt; about it that have got &lt;a rel=&quot;external&quot; href=&quot;https://twitter.com/clattner_llvm/status/610154161552756736&quot;&gt;quite a bit of attention&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;While I am excited about the prospect of standardized error handling, I still am not convinced that throwing errors is a better approach than &lt;code&gt;Result&lt;/code&gt;. I have a lot of mixed feelings. I’m sure there will be errors and counter-points I have yet to consider, in which case please leave a comment at the bottom or ping me on twitter (&lt;a rel=&quot;external&quot; href=&quot;http://twitter.com/jarsen&quot;&gt;@jarsen&lt;/a&gt;), but here are my thoughts so far.&lt;/p&gt;
 &lt;h2 id=&quot;what-is-result&quot;&gt;What is Result?&lt;/h2&gt;
@@ -864,10 +864,10 @@ fetchJSON(&amp;quot;/api/v3/users&amp;quot;) { result in
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/swift-data-pipelines/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/swift-data-pipelines/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/swift-data-pipelines/"/>
+        <id>https://jarsen.engineer/swift-data-pipelines/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/swift-data-pipelines/">&lt;p&gt;The forward pipe operator is an infix operator taken from languages like F# and Elixir. I’ve been working on a &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Pipes&quot;&gt;Swift implementation&lt;/a&gt; that will help clean up data processing pipelines.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/swift-data-pipelines/">&lt;p&gt;The forward pipe operator is an infix operator taken from languages like F# and Elixir. I’ve been working on a &lt;a rel=&quot;external&quot; href=&quot;https://github.com/jarsen/Pipes&quot;&gt;Swift implementation&lt;/a&gt; that will help clean up data processing pipelines.&lt;/p&gt;
 &lt;p&gt;In order to understand the motivation for the forward pipe operator, let’s first look at some regular looking code.&lt;/p&gt;
 &lt;pre&gt;&lt;code data-lang=&quot;Swift&quot;&gt;let students = Database.allStudents()
 let grades = Grades.forStudents(students)
@@ -977,10 +977,10 @@ func divide(denominator: Double)(numerator: Double) -&amp;gt; Double {
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/no-magic-json-parsing-with-swift/"/>
+        <id>https://jarsen.engineer/no-magic-json-parsing-with-swift/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift/">&lt;p&gt;Since the beginning, JSON parsing has been a common pain point for many Swift developers. This is largely due to difficulties in dealing with a strict type system (which JSON does not have) and optionals, as well as a lack of a consistent error handling approach.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/no-magic-json-parsing-with-swift/">&lt;p&gt;Since the beginning, JSON parsing has been a common pain point for many Swift developers. This is largely due to difficulties in dealing with a strict type system (which JSON does not have) and optionals, as well as a lack of a consistent error handling approach.&lt;/p&gt;
 &lt;p&gt;Several great JSON parsing libraries have surfaced which avoid the mess of tangled if-lets (a.k.a. the infamous “pyramid of doom”). I really like the approach taken by thoughtbot in their &lt;a rel=&quot;external&quot; href=&quot;https://robots.thoughtbot.com/efficient-json-in-swift-with-functional-concepts-and-generics&quot;&gt;JSON&lt;/a&gt; &lt;a rel=&quot;external&quot; href=&quot;https://robots.thoughtbot.com/real-world-json-parsing-with-swift&quot;&gt;parsing&lt;/a&gt; articles, which ultimately led to their &lt;a rel=&quot;external&quot; href=&quot;https://github.com/thoughtbot/Argo&quot;&gt;Argo&lt;/a&gt; library on github (although I don’t like everything about Argo).&lt;/p&gt;
 &lt;p&gt;However, most solutions tend to rely on a lot of magic: the magic of applicatives, functors, and monads; the magic of unfamiliar custom operators; the magic of a complex nested enum structure; the magic of multiple external dependencies.&lt;/p&gt;
 &lt;p&gt;Now that swift 2.0 has brought error handling to us, we can implement much less magical JSON parsing. Here is an example of what your JSON parsing code might look like with just a thin error-throwing layer over &lt;code&gt;[String:AnyObject]&lt;/code&gt;.&lt;/p&gt;

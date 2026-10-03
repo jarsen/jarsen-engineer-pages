@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Jason Larsen — Engineer - Agile</title>
     <subtitle>Thoughts about the art of software engineering and design.</subtitle>
-    <link rel="self" type="application/atom+xml" href="https://jarsen.github.io/jarsen-engineer-pages/tags/agile/atom.xml"/>
-    <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages"/>
+    <link rel="self" type="application/atom+xml" href="https://jarsen.engineer/tags/agile/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://jarsen.engineer"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2021-01-25T00:00:00+00:00</updated>
-    <id>https://jarsen.github.io/jarsen-engineer-pages/tags/agile/atom.xml</id>
+    <id>https://jarsen.engineer/tags/agile/atom.xml</id>
     <entry xml:lang="en">
         <title>antifrAGILE: Continuous Delivery</title>
         <published>2021-01-25T00:00:00+00:00</published>
@@ -16,10 +16,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-delivery/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-delivery/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/antifragile-continuous-delivery/"/>
+        <id>https://jarsen.engineer/antifragile-continuous-delivery/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-delivery/">&lt;blockquote&gt;
+        <content type="html" xml:base="https://jarsen.engineer/antifragile-continuous-delivery/">&lt;blockquote&gt;
 &lt;p&gt;Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.&lt;br /&gt;
 &lt;br /&gt;
 — First Principle of the &lt;a rel=&quot;external&quot; href=&quot;https://agilemanifesto.org/principles.html&quot;&gt;Agile Manifesto&lt;/a&gt;&lt;/p&gt;
@@ -134,10 +134,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-integration/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-integration/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/antifragile-continuous-integration/"/>
+        <id>https://jarsen.engineer/antifragile-continuous-integration/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-integration/">&lt;h2 id=&quot;big-changes-are-fragile&quot;&gt;Big Changes Are Fragile&lt;/h2&gt;
+        <content type="html" xml:base="https://jarsen.engineer/antifragile-continuous-integration/">&lt;h2 id=&quot;big-changes-are-fragile&quot;&gt;Big Changes Are Fragile&lt;/h2&gt;
 &lt;p&gt;Big changes carry more risk than small changes.&lt;/p&gt;
 &lt;p&gt;Ambitious, “big bang” style changes often fail, or generate more organizational ill-will than they do business value. There’s a reason just whispering the word refactor can send a Product Manager into a fugue state.&lt;/p&gt;
 &lt;p&gt;Merging and deploying months worth of work is much riskier than merging in a days worth; a 5 line PR is less risky than a 500 line PR.&lt;/p&gt;
@@ -216,10 +216,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/antifragile-software-teams/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/antifragile-software-teams/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/antifragile-software-teams/"/>
+        <id>https://jarsen.engineer/antifragile-software-teams/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/antifragile-software-teams/">&lt;p&gt;A Black Swan is an unpredictable event—a massive shock to our systems.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/antifragile-software-teams/">&lt;p&gt;A Black Swan is an unpredictable event—a massive shock to our systems.&lt;/p&gt;
 &lt;p&gt;Things that are fragile do not like change. Change hurts. Chaos, volatility, randomness, entropy, the unknown, time—all involve friction and forces that pull at the seams, threatening to destroy the fragile. Sometimes the destruction is abrupt and impossible to predict (what Taleb calls a Black Swan). Sometimes its death by a thousand cuts.&lt;/p&gt;
 &lt;p&gt;When we think of things that are not fragile, we tend to think of things that are robust and resilient. Robust things are not affected negatively by change. They yawn as the tides of chaos break on their shores, and shrug as they recede.&lt;/p&gt;
 &lt;p&gt;However, robust things are also not affected by change positively. In their apathy towards the waves of volatility, they fail to recognize and take advantage of opportunities as they briefly flit in and out of the unknown.&lt;/p&gt;
@@ -265,10 +265,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/software-is-made-by-humans-part-i/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/software-is-made-by-humans-part-i/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/software-is-made-by-humans-part-i/"/>
+        <id>https://jarsen.engineer/software-is-made-by-humans-part-i/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/software-is-made-by-humans-part-i/">&lt;p&gt;The reason I got into programming as a teenager was because of video games.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/software-is-made-by-humans-part-i/">&lt;p&gt;The reason I got into programming as a teenager was because of video games.&lt;/p&gt;
 &lt;p&gt;I mean, I always liked computers generally–I was fortunate to grow up in the Cupertino area, and my dad was a software developer who would build random computers for my brother and I out of old hardware from work–but it was really video games that got me excited about computers.&lt;/p&gt;
 &lt;p&gt;In particular I loved Blizzard games: I remember begging for the Warcraft II Battlechest at Costco, Starcraft, Diablo II (which I was not “allowed” to play so played at friends’ houses). These were all games that I spent many of my waking hours obsessing over. When I would hit my limit for hours I was allowed to spend on the computer, I would pull out the manuals and read them over and over, trying to understand the mechanics and analyzing the rules systems, copying the art in notebooks, and imagining playing and making my own games.&lt;/p&gt;
 &lt;p&gt;In middle school a group of my friends made a website for their Diablo II clan, and it was &lt;em&gt;rad&lt;/em&gt;. It had all these cool dropdowns, little animations and dynamic widgets, persistence, authentication… I asked them how they made it and they were like “wouldn’t you like to know.” I had done some HTML, but didn’t know about Javascript or any backends or databases. This exclusion from some secret knowledge, in tandem with the announcement of Warcraft III¹, drove me to ask my dad for some help. My dad responded by printing out a stack of pages for a PHP tutorial from the PHP DevShed forums (I didn’t have internet access on my computer). He had a very throw you in deep end of the pool and let you drown for a bit style of teaching.² This was my introduction to “real” programming.&lt;/p&gt;
@@ -329,10 +329,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/ship-faster-with-this-one-weird-trick/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/ship-faster-with-this-one-weird-trick/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/ship-faster-with-this-one-weird-trick/"/>
+        <id>https://jarsen.engineer/ship-faster-with-this-one-weird-trick/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/ship-faster-with-this-one-weird-trick/">&lt;p&gt;Last year our team decided to start documenting a list of our pain points as developers. We created a spreadsheet with columns for the original reporter, a quick description, and a pain rating on scale of 1-10 of how bad it hurts. We started to review the the document weekly in our team Dev Discussion meeting, using it to decide if there were techincal problems we needed to prioritize and address.&lt;/p&gt;
+        <content type="html" xml:base="https://jarsen.engineer/ship-faster-with-this-one-weird-trick/">&lt;p&gt;Last year our team decided to start documenting a list of our pain points as developers. We created a spreadsheet with columns for the original reporter, a quick description, and a pain rating on scale of 1-10 of how bad it hurts. We started to review the the document weekly in our team Dev Discussion meeting, using it to decide if there were techincal problems we needed to prioritize and address.&lt;/p&gt;
 &lt;p&gt;As some time passed we started to recognize a cluster of pains. They looked something like this:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;MERGE CONFLICTS :( - 10/10&lt;/li&gt;

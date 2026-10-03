@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
     <title>Jason Larsen — Engineer - Open Source</title>
     <subtitle>Thoughts about the art of software engineering and design.</subtitle>
-    <link rel="self" type="application/atom+xml" href="https://jarsen.github.io/jarsen-engineer-pages/tags/open-source/atom.xml"/>
-    <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages"/>
+    <link rel="self" type="application/atom+xml" href="https://jarsen.engineer/tags/open-source/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://jarsen.engineer"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2017-06-06T00:00:00+00:00</updated>
-    <id>https://jarsen.github.io/jarsen-engineer-pages/tags/open-source/atom.xml</id>
+    <id>https://jarsen.engineer/tags/open-source/atom.xml</id>
     <entry xml:lang="en">
         <title>I Did Not Shoot the Marshal</title>
         <published>2017-06-06T00:00:00+00:00</published>
@@ -16,10 +16,10 @@
           <name>Unknown</name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/"/>
-        <id>https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/</id>
+        <link rel="alternate" type="text/html" href="https://jarsen.engineer/i-did-not-shoot-the-marshal/"/>
+        <id>https://jarsen.engineer/i-did-not-shoot-the-marshal/</id>
         
-        <content type="html" xml:base="https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/">&lt;h2 id=&quot;json-in-swift-4-and-open-source-thoughts&quot;&gt;JSON in Swift 4 and Open Source Thoughts&lt;/h2&gt;
+        <content type="html" xml:base="https://jarsen.engineer/i-did-not-shoot-the-marshal/">&lt;h2 id=&quot;json-in-swift-4-and-open-source-thoughts&quot;&gt;JSON in Swift 4 and Open Source Thoughts&lt;/h2&gt;
 &lt;p&gt;Swift 4 brings a cornucopia of welcome (and a few unwelcome) updates. One of the ones I am excited about is the introduction of Codable. As the owner of a &lt;a rel=&quot;external&quot; href=&quot;https://github.com/utahiosmac/Marshal&quot;&gt;popular open source JSON mapping framework&lt;/a&gt;, I really look forward to Codable making my work obsolete. It’s the death of an era, but it is a necessary death.&lt;/p&gt;
 &lt;p&gt;Here is what mapping JSON to an object looks like using Marshal.&lt;/p&gt;
 &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;

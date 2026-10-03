@@ -1,139 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/</loc>
+        <loc>https://jarsen.engineer/</loc>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/ai-sidecar-workspaces/</loc>
+        <loc>https://jarsen.engineer/ai-sidecar-workspaces/</loc>
         <lastmod>2026-02-13T18:20:23Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-delivery/</loc>
+        <loc>https://jarsen.engineer/antifragile-continuous-delivery/</loc>
         <lastmod>2021-01-25T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/antifragile-continuous-integration/</loc>
+        <loc>https://jarsen.engineer/antifragile-continuous-integration/</loc>
         <lastmod>2020-12-17T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/antifragile-software-teams/</loc>
+        <loc>https://jarsen.engineer/antifragile-software-teams/</loc>
         <lastmod>2020-12-10T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/castles-of-abstraction/</loc>
+        <loc>https://jarsen.engineer/castles-of-abstraction/</loc>
         <lastmod>2020-05-28T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/finding-peace-in-a-world-of-unknowns/</loc>
+        <loc>https://jarsen.engineer/finding-peace-in-a-world-of-unknowns/</loc>
         <lastmod>2020-06-10T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/getting-into-vibes/</loc>
+        <loc>https://jarsen.engineer/getting-into-vibes/</loc>
         <lastmod>2026-01-08T05:26:29Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/i-did-not-shoot-the-marshal/</loc>
+        <loc>https://jarsen.engineer/i-did-not-shoot-the-marshal/</loc>
         <lastmod>2017-06-06T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/let-constraints-set-you-free/</loc>
+        <loc>https://jarsen.engineer/let-constraints-set-you-free/</loc>
         <lastmod>2020-06-18T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift-part-ii/</loc>
+        <loc>https://jarsen.engineer/no-magic-json-parsing-with-swift-part-ii/</loc>
         <lastmod>2015-06-15T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/no-magic-json-parsing-with-swift/</loc>
+        <loc>https://jarsen.engineer/no-magic-json-parsing-with-swift/</loc>
         <lastmod>2015-05-14T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/not-enough-code-was-never-the-problem/</loc>
+        <loc>https://jarsen.engineer/not-enough-code-was-never-the-problem/</loc>
         <lastmod>2026-02-15T15:59:07Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/optimistic-networking-with-reactor/</loc>
+        <loc>https://jarsen.engineer/optimistic-networking-with-reactor/</loc>
         <lastmod>2016-09-08T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/pay-attention-to-incentives/</loc>
+        <loc>https://jarsen.engineer/pay-attention-to-incentives/</loc>
         <lastmod>2026-02-08T19:50:14Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/protocol-oriented-json-in-swift/</loc>
+        <loc>https://jarsen.engineer/protocol-oriented-json-in-swift/</loc>
         <lastmod>2015-10-15T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/react-native-native/</loc>
+        <loc>https://jarsen.engineer/react-native-native/</loc>
         <lastmod>2016-08-29T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/refactoring-replace-enum-with-polymorphism/</loc>
+        <loc>https://jarsen.engineer/refactoring-replace-enum-with-polymorphism/</loc>
         <lastmod>2016-08-08T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/result-vs-throws/</loc>
+        <loc>https://jarsen.engineer/result-vs-throws/</loc>
         <lastmod>2015-06-14T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/ship-faster-with-this-one-weird-trick/</loc>
+        <loc>https://jarsen.engineer/ship-faster-with-this-one-weird-trick/</loc>
         <lastmod>2020-02-16T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/software-is-made-by-humans-part-i/</loc>
+        <loc>https://jarsen.engineer/software-is-made-by-humans-part-i/</loc>
         <lastmod>2020-02-22T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/swift-data-pipelines/</loc>
+        <loc>https://jarsen.engineer/swift-data-pipelines/</loc>
         <lastmod>2015-05-23T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/tags/</loc>
+        <loc>https://jarsen.engineer/tags/</loc>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/tags/agile/</loc>
+        <loc>https://jarsen.engineer/tags/agile/</loc>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/tags/design/</loc>
+        <loc>https://jarsen.engineer/tags/design/</loc>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/tags/devops/</loc>
+        <loc>https://jarsen.engineer/tags/devops/</loc>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/tags/macos/</loc>
+        <loc>https://jarsen.engineer/tags/macos/</loc>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/tags/open-source/</loc>
+        <loc>https://jarsen.engineer/tags/open-source/</loc>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/tags/philosophy/</loc>
+        <loc>https://jarsen.engineer/tags/philosophy/</loc>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/tags/refactoring/</loc>
+        <loc>https://jarsen.engineer/tags/refactoring/</loc>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/tags/swift/</loc>
+        <loc>https://jarsen.engineer/tags/swift/</loc>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/tags/teams/</loc>
+        <loc>https://jarsen.engineer/tags/teams/</loc>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/tags/workflow/</loc>
+        <loc>https://jarsen.engineer/tags/workflow/</loc>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/the-beauty-of-fragility-2/</loc>
+        <loc>https://jarsen.engineer/the-beauty-of-fragility-2/</loc>
         <lastmod>2021-04-24T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/the-church-of-xcode-simple-emacs-keybindings/</loc>
+        <loc>https://jarsen.engineer/the-church-of-xcode-simple-emacs-keybindings/</loc>
         <lastmod>2015-07-22T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/the-truth-about-microservices-will-shock-you/</loc>
+        <loc>https://jarsen.engineer/the-truth-about-microservices-will-shock-you/</loc>
         <lastmod>2020-02-02T00:00:00Z</lastmod>
     </url>
     <url>
-        <loc>https://jarsen.github.io/jarsen-engineer-pages/what-is-good-code-in-the-age-of-agents/</loc>
+        <loc>https://jarsen.engineer/what-is-good-code-in-the-age-of-agents/</loc>
         <lastmod>2026-01-01T16:20:11Z</lastmod>
     </url>
 </urlset>
